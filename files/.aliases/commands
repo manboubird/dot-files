@@ -1,0 +1,4 @@
+alias df='df -h'
+alias ll='ls -alth'
+alias here='open .'
+alias clip="nkf -w | pbcopy"

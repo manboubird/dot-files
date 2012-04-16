@@ -1,0 +1,9 @@
+if [ "$HADOOP_HOME" != '' ]; then
+ alias dfsls='$HADOOP_HOME/bin/hadoop dfs -ls'
+ alias dfsrm='$HADOOP_HOME/bin/hadoop dfs -rm'
+ alias dfscat='$HADOOP_HOME/bin/hadoop dfs -cat'
+ alias dfsrmr='$HADOOP_HOME/bin/hadoop dfs -rmr'
+ alias dfsmkdir='$HADOOP_HOME/bin/hadoop dfs -mkdir'
+ alias dfsput='$HADOOP_HOME/bin/hadoop dfs -put'
+ alias dfsget='$HADOOP_HOME/bin/hadoop dfs -get'
+fi
