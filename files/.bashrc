@@ -4,6 +4,8 @@ export JLESSCHARSET=japanese
 
 # to prevent garbled characters in lein repl
 export _JAVA_OPTIONS=-Dfile.encoding=UTF-8 
+# for cascalog on repl
+export JAVA_OPTS="-Xmx768m"
 
 # disable C-s 
 stty stop undef
