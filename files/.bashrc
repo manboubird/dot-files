@@ -10,8 +10,13 @@ export JAVA_OPTS="-Xmx768m"
 # disable C-s 
 stty stop undef
 
-# screen name assgnment 
+# start a screen with screen name
 function scrn() { /usr/bin/screen -t "$@"; }
+
+# find on git/svn managed directory.
+function git-find() { find $1 | grep -v '.git'; }
+function svn-find() { find $1 | grep -v '.svn'; }
+
 
 . ~/.aliases/commands
 . ~/.aliases/hadoop
