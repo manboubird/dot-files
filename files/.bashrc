@@ -37,11 +37,11 @@ function svn-find() { find $1 | grep -v '.svn'; }
 case "${OSTYPE}" in
   # Mac(Unix)
   darwin*)
-    [ -f ~/.dot-files/.bashrc.osx ] && source ~/.dot-files/.bashrc.osx
+    [ -f ~/.dot-files/files/.os-types/.bashrc.osx ] && source ~/.dot-files/files/.os-types/.bashrc.osx
     ;;
   # Linux
   linux*)
-    [ -f ~/.dot-files/.bashrc.linux ] && source ~/.dot-files/.bashrc.linux
+    [ -f ~/.dot-files/files/.os-types/.bashrc.linux ] && source ~/.dot-files/files/.os-types/.bashrc.linux
     ;;
 esac
 
@@ -51,7 +51,7 @@ esac
 ##
 # load alias files. Some need export env vars.
 ALIAS_FILES=(commands hadoop)
-for file in ${DOT_FILES[@]}; do
+for file in ${ALIAS_FILES[@]}; do
   source ~/.aliases/$file
 done
 
