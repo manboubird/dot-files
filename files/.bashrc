@@ -21,6 +21,9 @@ export _JAVA_OPTIONS=-Dfile.encoding=UTF-8
 #
 # disable C-s 
 stty stop undef
+
+# show [username@hostname:workspace]
+PS1='\u@\h:\w\$ '
 ##
 
 ##
