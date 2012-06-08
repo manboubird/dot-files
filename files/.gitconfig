@@ -1,0 +1,9 @@
+[user]
+  name = Toshiaki Toyama
+  email = ttoyama@knownstylenolife.com
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[github]
+  user = manboubird
