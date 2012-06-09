@@ -1,1 +1,9 @@
-# TODO MacOsX specific settings
+
+# open current dir in Finder
+alias here="open ."
+
+# utf8 chars pbcopy
+alias clip="nkf -w | pbcopy"
+
+# store screenshot in a file
+function scrn-cap() { screencapture -w -i $1; }

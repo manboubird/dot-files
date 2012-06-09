@@ -1,9 +1,13 @@
 [user]
-  name = Toshiaki Toyama
-  email = ttoyama@knownstylenolife.com
+  name = 
+  email = 
 [color]
   diff = auto
+  sh = auto
   status = auto
   branch = auto
 [github]
   user = manboubird
+[include]
+  # git ver >= 1.7.10 
+  path = .gitconfig.local
