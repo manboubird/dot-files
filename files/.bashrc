@@ -35,6 +35,17 @@ function scrn() { /usr/bin/screen -t "$@"; }
 # find on git/svn managed directory.
 function git-find() { find $1 | grep -v '.git'; }
 function svn-find() { find $1 | grep -v '.svn'; }
+# dsh utils
+function dsh-grp-ls() { ls $HOME/.dsh/group/; }
+function dsh-grp-cat() { 
+ if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
+   cat "$HOME/.dsh/group/$1";
+ else
+   echo "no such group: $1"
+   echo "dsh-grp-ls:"
+   dsh-grp-ls
+ fi
+}
 ##
 
 # os specific setting
