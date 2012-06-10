@@ -19,11 +19,12 @@ export _JAVA_OPTIONS=-Dfile.encoding=UTF-8
 ##
 # etc
 #
-# disable C-s 
-stty stop undef
-
-# show [username@hostname:workspace]
-PS1='\u@\h:\w\$ '
+if tty -s ; then
+  # show [username@hostname:workspace]
+  PS1='\u@\h:\w\$ '
+  # disable C-s 
+  stty stop undef
+fi
 ##
 
 ##
