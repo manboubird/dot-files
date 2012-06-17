@@ -1,3 +1,13 @@
+"================================================= 
+" Vundle plugin for plugin management 
+""================================================="
+:source <sfile>:h/.vim/bundles.vim
+
+"================================================= 
+" Others
+"=================================================
+
+
 set nocompatible
 
 set backspace=indent,eol,start
