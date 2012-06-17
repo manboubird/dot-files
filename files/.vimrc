@@ -1,9 +1,41 @@
 "================================================= 
 " Vundle plugin for plugin management 
-""================================================="
+" First vim invocation command with:
+"   vim -u ~/.vim/bundles.vim +BundleInstall +q
+"=================================================
 :source <sfile>:h/.vim/bundles.vim
 
 "================================================= 
+" qfixapp
+"=================================================
+set runtimepath+=h/.vim/bundle/qfixapp
+
+" キーマップリーダー
+let QFixHowm_Key = ','
+
+" howm_dirはファイルを保存したいディレクトリを設定
+let howm_dir             = '~/howm'
+let howm_filename        = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
+let howm_fileencoding    = 'utf-8'
+let howm_fileformat      = 'unix'
+
+"=================================================
+" neocomplcache
+"=================================================
+
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_quick_match = 1
+let g:NeoComplCache_EnableCamelCaseCompletion = 1
+let g:NeoComplCache_EnableUnderbarCompletion = 1
+
+highlight Pmenu ctermbg=8
+highlight PmenuSel ctermbg=1
+highlight PmenuSbar ctermbg=0
+
+imap <C-k> <Plug>(neocomplcache_snippets_expand)
+smap <C-k> <Plug>(neocomplcache_snippets_expand)
+
+"=================================================
 " Others
 "=================================================
 
