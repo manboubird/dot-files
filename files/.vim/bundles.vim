@@ -9,6 +9,7 @@ call vundle#rc()
 " github repos
 Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
+Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'thinca/vim-quickrun'
 Bundle 'Shougo/vimproc'
