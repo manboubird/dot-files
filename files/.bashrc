@@ -35,18 +35,7 @@ function scrn() { /usr/bin/screen -t "$@"; }
 # find on git/svn managed directory.
 function git-find() { find $1 | grep -v '.git'; }
 function svn-find() { find $1 | grep -v '.svn'; }
-# dsh utils
-function dsh-grp-ls() { ls $HOME/.dsh/group/; }
-function dsh-grp-cat() { 
- if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
-   cat "$HOME/.dsh/group/$1";
- else
-   echo "no such group: $1"
-   echo "dsh-grp-ls:"
-   dsh-grp-ls
- fi
-}
-##
+#
 
 # os specific setting
 case "${OSTYPE}" in
@@ -64,10 +53,15 @@ esac
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
 
 ##
-# load alias files. Some need export env vars.
-ALIAS_FILES=(commands hadoop)
-for file in ${ALIAS_FILES[@]}; do
+# Load alias files. Some need export env vars.
+# To apply all aliases, add below into .bashrc.local  
+#
+#    DOT_FILES_ALIAS_FILES=(ls ~/.dot-files/files/.aliases/)
+#
+if [ -z "${DOT_FILES_ALIAS_FILES}" ]; then 
+  DOT_FILES_ALIAS_FILES=(commands hadoop pdsh)
+fi
+for file in ${DOT_FILES_ALIAS_FILES[@]}; do
   source ~/.aliases/$file
 done
-
 

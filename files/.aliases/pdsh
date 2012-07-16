@@ -1,0 +1,16 @@
+function pdsh-grp-ls() { ls $HOME/.dsh/group/; }
+
+function pdsh-grp-cat() {
+  if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
+    cat "$HOME/.dsh/group/$1";
+  else
+    echo "no such group: $1"
+    echo "pdsh-grp-ls:"
+    pdsh-grp-ls
+  fi
+}
+
+# prety print with dshbak
+function pdsh-pp() {
+  pdsh $@ | dshbak 
+}
