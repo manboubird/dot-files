@@ -30,6 +30,9 @@ bind -c resize k eval 'resize -1' 'command -c resize'
 # disable resizing window width when screen is called
 termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 
+# enable mouse scrolling
+termcapinfo xterm* ti@:te@
+
 # history buffer
 #defscrollback 5000
 

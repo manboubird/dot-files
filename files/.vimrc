@@ -34,6 +34,15 @@ highlight PmenuSbar ctermbg=0
 
 imap <C-k> <Plug>(neocomplcache_snippets_expand)
 smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"=================================================
+" indent-guides 
+"=================================================
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_color_change_percent = 30
+let g:indent_guides_guide_size = 1
+hi IndentGuidesOdd ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
 
 "=================================================
 " Others
@@ -42,11 +51,6 @@ smap <C-k> <Plug>(neocomplcache_snippets_expand)
 " change color of status line
 au InsertEnter * hi statusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=Blue ctermbg=Yellow cterm=none
 au InsertLeave * hi statusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=Blue ctermbg=DarkGray cterm=none
-
-" indent-guides plugin
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 30
-let g:indent_guides_guide_size = 1
 
 "=================================================
 "
