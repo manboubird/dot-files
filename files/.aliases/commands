@@ -1,10 +1,14 @@
 alias df='df -h'
 alias du='du -h'
-alias ll='ls -alth'
 alias here='open .'
 case "${OSTYPE}" in
   darwin*)
   # Mac(Unix)
   alias clip="nkf -w | pbcopy"
+  alias ll='ls -G -alth'
+  ;;
+  linux*)
+  alias ll='ls --color=always -alth'
+  alias ls='ls --color=always'
   ;;
 esac

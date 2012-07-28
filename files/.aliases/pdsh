@@ -14,3 +14,66 @@ function pdsh-grp-cat() {
 function pdsh-pp() {
   pdsh $@ | dshbak 
 }
+
+function pdsh-grp-cmd() {
+  while getopts "s" opts; do
+    case $opts in
+      s)
+        USE_SUDO="true"
+        ;;
+      \?)
+        echo "Unknown opts."
+        exit 1
+        ;;
+    esac
+  done
+  shift `expr $OPTIND - 1`
+
+  if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
+    hosts=`cat "$HOME/.dsh/group/$1"`
+    shift
+    echo "HOSTS:"
+    echo "$hosts"
+    echo ""
+    echo "Execute command:" 
+    echo ""
+
+    if [ "$USE_SUDO" == "true" ]; then
+      echo " ssh -t HOST \"echo PWD | sudo -S $*\""
+      read -s -p "Enter sudo password: " mypwd
+      echo ""
+    else
+      echo " ssh -t HOST \"$*\""
+    fi
+    echo ""
+
+    while true; do
+      read -p "Do you execute the command on all hosts? " yn
+      case $yn in
+        [Yy]* ) 
+          for h in $hosts; do
+            if [ "$USE_SUDO" == "true" ]; then
+               echo "Execute on $h:"
+               ssh -t $h "echo $mypwd | sudo -S $*;echo $?"
+               echo "ret=$?"
+               if [ "$?" != "0" ]; then
+                 echo "Command is failed on $h"
+               fi
+            else
+              echo "Execute on $h:"
+              ssh -t $h $*
+            fi
+            echo "COMPLETE"
+            echo ""
+          done
+          break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+    done
+  else
+    echo "no such group: $1"
+    echo "pdsh-grp-ls:"
+    pdsh-grp-ls
+  fi
+}
