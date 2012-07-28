@@ -5,55 +5,16 @@
 "=================================================
 :source <sfile>:h/.vim/bundles.vim
 
-"================================================= 
-" qfixapp
-"=================================================
-set runtimepath+=h/.vim/bundle/qfixapp
-
-" キーマップリーダー
-let QFixHowm_Key = ','
-
-" howm_dirはファイルを保存したいディレクトリを設定
-let howm_dir             = '~/howm'
-let howm_filename        = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
-let howm_fileencoding    = 'utf-8'
-let howm_fileformat      = 'unix'
-
-"=================================================
-" neocomplcache
+" Source initialization files
+runtime! init/**.vim
 "=================================================
 
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_quick_match = 1
-let g:NeoComplCache_EnableCamelCaseCompletion = 1
-let g:NeoComplCache_EnableUnderbarCompletion = 1
+" Change the mapleader from \ to ,
+let mapleader=","
+      
+" show line number
+set nu
 
-highlight Pmenu ctermbg=8
-highlight PmenuSel ctermbg=1
-highlight PmenuSbar ctermbg=0
-
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
-"=================================================
-" indent-guides 
-"=================================================
-
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 30
-let g:indent_guides_guide_size = 1
-hi IndentGuidesOdd ctermbg=black
-hi IndentGuidesEven ctermbg=darkgrey
-
-"=================================================
-" Others
-"=================================================
-
-" change color of status line
-au InsertEnter * hi statusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=Blue ctermbg=Yellow cterm=none
-au InsertLeave * hi statusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=Blue ctermbg=DarkGray cterm=none
-
-"=================================================
-"
 set nocompatible
 
 set backspace=indent,eol,start
@@ -132,13 +93,10 @@ else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")
 
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P "show character code and new line character on status
-set laststatus=2 "always appear status line
-
 highlight Folded ctermfg=6 ctermbg=0
 highlight FoldColumn ctermfg=6 ctermbg=0
 
-"## highlight for completion
+" highlight for completion
 highlight Pmenu    ctermbg=darkgray ctermfg=white
 highlight PmenuSel ctermbg=lightcyan ctermfg=black cterm=bold,underline
 highlight PmenuSbar ctermfg=0 ctermbg=0
@@ -189,13 +147,4 @@ autocmd FileType perl,cgi :compiler perl
 autocmd FileType ruby     :compiler ruby
 nmap <silent> ,m :!clear<CR>:make -c %<CR>
 
-" for vimClojure
-syntax on
-filetype plugin indent on
-let clj_highlight_builtins = 1
-let clj_highlight_contrib = 1
-let clj_paren_rainbow = 1
-let clj_want_gorilla = 1
-let vimclojure#NailgunClient = '/usr/local/vimclojure/bin/ng'
-" let maplocalleader = '.'
 

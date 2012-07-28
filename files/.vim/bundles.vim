@@ -13,13 +13,16 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-markdown'
 Bundle 'suan/vim-instant-markdown'
 Bundle 'thinca/vim-quickrun'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'ervandew/screen'
 
-if v:version >= 720 
+" vim 7.2+
+if version >= 702
   Bundle 'nathanaelkane/vim-indent-guides'
 endif
 
-if v:version >= 730 
-  Bundle 'nathanaelkane/vim-indent-guides'
+" vim 7.3+
+if version >= 703
   Bundle 'Shougo/vimproc'
   Bundle 'Shougo/vimshell'
   Bundle 'Shougo/neocomplcache'
