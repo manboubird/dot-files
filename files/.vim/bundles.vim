@@ -8,6 +8,7 @@ call vundle#rc()
 
 " github repos
 Bundle 'gmarik/vundle'
+Bundle 'sudo.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-markdown'

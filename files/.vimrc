@@ -147,4 +147,6 @@ autocmd FileType perl,cgi :compiler perl
 autocmd FileType ruby     :compiler ruby
 nmap <silent> ,m :!clear<CR>:make -c %<CR>
 
+" local vim settings
+silent! source ~/.vimrc.local
 
