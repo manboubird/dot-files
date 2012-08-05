@@ -10,6 +10,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'sudo.vim'
 Bundle 'dbext.vim'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'surround.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-markdown'
