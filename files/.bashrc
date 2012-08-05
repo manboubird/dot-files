@@ -11,7 +11,7 @@ export JLESSCHARSET=utf-8
 # JAVA setting
 #
 # to prevent garbled characters in lein repl
-export _JAVA_OPTIONS=-Dfile.encoding=UTF-8 
+#export _JAVA_OPTIONS=-Dfile.encoding=UTF-8 
 # Dev settings should be in .barshrc.local
 #export JAVA_OPTS="-Xmx768m"
 ##

@@ -132,20 +132,20 @@ function! Filetype_eval_vsplit() range
 endfunction
 
 " turn off ',r' for vimClosure
-"vmap <silent> ,r       mz:call Filetype_eval_vsplit()<CR>`z
-"nmap <silent> ,r   mzggVG:call Filetype_eval_vsplit()<CR>`z
-nmap <silent> ,p   mz^ialert(<ESC>A)<ESC>`z
-nmap <silent> ,q   0iquit()<ESC>
-nmap <silent> ,d   :%s![“”]!"!g<CR>
+"vmap <silent> <Leader>r       mz:call Filetype_eval_vsplit()<CR>`z
+"nmap <silent> <Leader>r   mzggVG:call Filetype_eval_vsplit()<CR>`z
+nmap <silent> <Leader>p   mz^ialert(<ESC>A)<ESC>`z
+nmap <silent> <Leader>q   0iquit()<ESC>
+nmap <silent> <Leader>d   :%s![“”]!"!g<CR>
 nmap <silent> "    mzbi"<ESC>ea"<ESC>`z
 
-nmap <silent> ,c <C-W>l:bw<CR>
-nmap <silent> ,s :source $HOME/.vimrc<CR>
+nmap <silent> <Leader>c <C-W>l:bw<CR>
+nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
 
 " Quick Fix
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType ruby     :compiler ruby
-nmap <silent> ,m :!clear<CR>:make -c %<CR>
+nmap <silent> <Leader>m :!clear<CR>:make -c %<CR>
 
 " local vim settings
 silent! source ~/.vimrc.local
