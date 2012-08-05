@@ -6,10 +6,6 @@
   sh = auto
   status = auto
   branch = auto
-[diff]
-  external = gitdiffwrap.sh
-[pager]
-  diff =
 [github]
   user = manboubird
 [include]
@@ -26,4 +22,8 @@
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
+#[diff]
+#  external = gitdiffwrap.sh
+#[pager]
+#  diff =
 
