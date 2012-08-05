@@ -6,6 +6,10 @@
   sh = auto
   status = auto
   branch = auto
+[diff]
+  external = gitdiffwrap.sh
+[pager]
+  diff =
 [github]
   user = manboubird
 [include]
