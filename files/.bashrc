@@ -16,6 +16,7 @@ export JLESSCHARSET=utf-8
 #export JAVA_OPTS="-Xmx768m"
 ##
 
+PATH=$HOME/local/bin:$PATH
 ##
 # etc
 #
