@@ -1,3 +1,12 @@
+let hazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let hazVundle=0
+endif
 "================================================= 
 " Vundle plugin for plugin management 
 "=================================================
@@ -40,7 +49,6 @@ Bundle 'mattn/gist-vim'
 " Bundle 'vcscommand.vim'
 " http://nanasi.jp/articles/vim/filtering_vim.html
 Bundle 'vim-scripts/Quich-Filter'
-Bundle 'AutoClose'
 Bundle 'ervandew/supertab'
 " latest snipmate and its dependencies
 " https://github.com/garbas/vim-snipmate
@@ -48,8 +56,6 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
-" http://blog.blueblack.net/item_164/
-Bundle "AutoComplPop"
 
 " vim 7.2+
 if version >= 702
@@ -57,6 +63,8 @@ if version >= 702
   Bundle 'ddclones/vim-l9'
   Bundle 'vim-scripts/FuzzyFinder'
 
+  " http://blog.blueblack.net/item_164/
+  Bundle "AutoComplPop"
   " https://github.com/Lokaltog/vim-easymotion
   Bundle 'Lokaltog/vim-easymotion'
 
@@ -74,6 +82,12 @@ if version >= 703
 
   " https://github.com/sjl/gundo.vim
   " Bundle 'sjl/gundo.vim'
+endif
+
+if hazVundle == 0
+    echo "Bundles is not installed. Installing Bundles"
+    echo ""
+    :BundleInstall
 endif
 
 filetype plugin indent on
