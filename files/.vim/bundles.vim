@@ -8,7 +8,6 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'sudo.vim'
-Bundle 'dbext.vim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'surround.vim'
 Bundle 'xolox/vim-session'
@@ -24,6 +23,12 @@ Bundle 'ervandew/screen'
 " comment out due to collision of gist-vim  
 "Bundle 'suan/vim-instant-markdown'
 
+" database
+Bundle 'SQLComplete.vim'
+Bundle 'dbext.vim'
+Bundle "vim-scripts/SQLUtilities"
+Bundle "Align"
+
 " git
 Bundle 'tpope/vim-fugitive'
 Bundle 'mattn/webapi-vim'
@@ -35,7 +40,6 @@ Bundle 'mattn/gist-vim'
 " Bundle 'vcscommand.vim'
 " http://nanasi.jp/articles/vim/filtering_vim.html
 Bundle 'vim-scripts/Quich-Filter'
-Bundle 'SQLComplete.vim'
 Bundle 'AutoClose'
 Bundle 'ervandew/supertab'
 " latest snipmate and its dependencies
