@@ -23,7 +23,6 @@ Bundle 'xolox/vim-session'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'godlygeek/tabular'
-Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
@@ -39,9 +38,11 @@ Bundle "vim-scripts/SQLUtilities"
 Bundle "Align"
 
 " git
-Bundle 'tpope/vim-fugitive'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
+if (executable("git"))
+  Bundle 'tpope/vim-fugitive'
+  Bundle 'mattn/webapi-vim'
+  Bundle 'mattn/gist-vim'
+endif
 
 " exp
 "Bundle 'scrooloose/nerdcommenter'
@@ -57,14 +58,19 @@ Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 
+if version >= 701
+  " http://blog.blueblack.net/item_164/
+  Bundle "AutoComplPop"
+
+  Bundle 'scrooloose/syntastic'
+endif
+
 " vim 7.2+
 if version >= 702
   Bundle 'nathanaelkane/vim-indent-guides'
   Bundle 'ddclones/vim-l9'
   Bundle 'vim-scripts/FuzzyFinder'
 
-  " http://blog.blueblack.net/item_164/
-  Bundle "AutoComplPop"
   " https://github.com/Lokaltog/vim-easymotion
   Bundle 'Lokaltog/vim-easymotion'
 
