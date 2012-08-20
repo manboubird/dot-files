@@ -1,11 +1,11 @@
-let hazVundle=1
+let hasVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
     echo "Installing Vundle.."
     echo ""
     silent !mkdir -p ~/.vim/bundle
     silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let hazVundle=0
+    let hasVundle=0
 endif
 "================================================= 
 " Vundle plugin for plugin management 
@@ -48,6 +48,8 @@ endif
 "Bundle 'scrooloose/nerdcommenter'
 "Bundle 'LogViewer'
 " Bundle 'vcscommand.vim'
+" Bundle 'vim-scripts/BlockDiff'
+" Bundle 'DirDiff.vim'
 " http://nanasi.jp/articles/vim/filtering_vim.html
 Bundle 'vim-scripts/Quich-Filter'
 Bundle 'ervandew/supertab'
@@ -90,7 +92,7 @@ if version >= 703
   " Bundle 'sjl/gundo.vim'
 endif
 
-if hazVundle == 0
+if hasVundle == 0
     echo "Bundles is not installed. Installing Bundles"
     echo ""
     :BundleInstall
