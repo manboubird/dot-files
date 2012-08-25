@@ -1,7 +1,11 @@
-function pdsh-grp-ls() { ls $HOME/.dsh/group/; }
+function pdsh-is-grp-exists {
+  $([ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ])
+  echo $?
+}
+function pdsh-grp-ls { ls $HOME/.dsh/group/; }
 
-function pdsh-grp-cat() {
-  if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
+function pdsh-grp-cat {
+  if [ "$(pdsh-is-grp-exists $1)" == "0" ]; then
     cat "$HOME/.dsh/group/$1";
   else
     echo "no such group: $1"
@@ -11,17 +15,16 @@ function pdsh-grp-cat() {
 }
 
 # prety print with dshbak
-function pdsh-pp() {
-  pdsh $@ | dshbak 
-}
+function pdsh-pp { pdsh $@ | dshbak; }
+function pdsh-pp-c { pdsh $@ | dshbak -c; } # merge duplicated outputs
 
-function pdsh-grp-cmd() {
-
-  if [ ! -z $1 ] && [ -e "$HOME/.dsh/group/$1" ]; then
+function pdsh-grp-cmd {
+  if [ "$(pdsh-is-grp-exists $1)" == "0" ]; then
     hosts=`cat "$HOME/.dsh/group/$1"`
     shift
     echo "HOSTS:"
-    echo "  $hosts"
+    echo ""
+    echo "$hosts"
     echo ""
     echo "Execute command:" 
     echo ""
@@ -34,11 +37,41 @@ function pdsh-grp-cmd() {
           for h in $hosts; do
             echo "Execute on $h:"
             ssh -t $h $*
-            echo "COMPLETE"
+            echo "Completed on $h"
             echo ""
           done
           break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+      esac
+    done
+  else
+    echo "no such group: $1"
+    echo "pdsh-grp-ls:"
+    pdsh-grp-ls
+  fi
+}
+
+function pdsh-grp-expand-cmd-args {
+  if [ "$(pdsh-is-grp-exists $1)" == "0" ]; then
+    hosts=`cat "$HOME/.dsh/group/$1" | tr '\n' ' '`
+    shift
+    echo "HOSTS:"
+    echo ""
+    echo "  $hosts"
+    echo ""
+    echo "Execute command:" 
+    echo ""
+    echo "  $* $hosts"
+    echo ""
+    while true; do
+      read -p "Do you execute the command? " yn
+      case $yn in
+        [Yy]* ) 
+          $* $hosts
+          echo "COMPLETE pdsh-grp-expand-cmd-args"
+          break;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
       esac
     done
