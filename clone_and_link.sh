@@ -8,6 +8,7 @@ ls -1d $files/* $files/.* | while read f; do
   [ "$f" == "$files/." ] ||
   [ "$f" == "$files/.." ] ||
   [ "$f" == "$files/.git" ] ||
+  [[ "$f" == *".swp" ]] ||
   ln -vsf "$f" .
 done
 
@@ -19,6 +20,7 @@ ls -1d $bin/* | while read f; do
   [ "$f" == "$bin/." ] ||
   [ "$f" == "$bin/.." ] ||
   [ "$f" == "$bin/.git" ] ||
+  [[ "$f" == *".swp" ]] ||
   ln -vsf "$f" $HOME/local/bin/
 done
 

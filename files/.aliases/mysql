@@ -1,0 +1,17 @@
+function set_mysql_rlwrap {
+  local color=${white:-$1}
+  [ -z "${MYSQL_HOME}" ] && 
+    local mysql=mysql || 
+    local mysql=${MYSQL_HOME}/bin/mysql 
+  type rlwrap > /dev/null 2>&1 && alias mysql="rlwrap -a -p${color} ${mysql}" 
+}
+
+case "$MY_HOST_TYPE" in
+  "dev") set_mysql_rlwrap BLUE ;;
+  "stg") set_mysql_rlwrap YELLOW ;;
+  "prd") set_mysql_rlwrap RED ;;
+  "loc") set_mysql_rlwrap GREEN ;;
+  *) ;;
+esac
+
+
