@@ -15,6 +15,9 @@ let mapleader=","
 " show line number
 set nu
 
+" prevent auto newline
+set tw=0
+
 set nocompatible
 
 set backspace=indent,eol,start
