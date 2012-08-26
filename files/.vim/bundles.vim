@@ -44,6 +44,12 @@ if (executable("git"))
   Bundle 'mattn/gist-vim'
 endif
 
+" ack
+if (executable("ack"))
+  Bundle 'mileszs/ack.vim'
+endif
+
+
 " exp
 "Bundle 'scrooloose/nerdcommenter'
 "Bundle 'LogViewer'
