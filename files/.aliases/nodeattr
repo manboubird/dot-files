@@ -1,0 +1,2 @@
+alias na='nodeattr'
+alias nal='nodeattr -l'

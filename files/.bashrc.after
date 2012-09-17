@@ -5,7 +5,7 @@
 #    DOT_FILES_ALIAS_FILES=(ls ~/.dot-files/files/.aliases/)
 #
 if [ -z "${DOT_FILES_ALIAS_FILES}" ]; then 
-  DOT_FILES_ALIAS_FILES=(commands hadoop pdsh mysql)
+  DOT_FILES_ALIAS_FILES=(commands hadoop pdsh mysql nodeattr)
 fi
 for file in ${DOT_FILES_ALIAS_FILES[@]}; do
   source ~/.aliases/$file
