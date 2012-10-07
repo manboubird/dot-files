@@ -48,6 +48,28 @@ function pdsh-nodeattr-cmd {
   done
 }
 
+# copy public key string to specified remote user.
+function pdsh-nodeattr-cmd-copy-pubkey {
+  if [ $# -ne 3 ]; then
+    echo "USAGE: pdsh-nodeattr-cmd-copy-pubkey <nodeattr> <username> <public_key_string>"
+    exit 1
+  fi
+
+  NODE_ATTR_GRP_NAME=$1
+  USER=$2
+  PUB_KEY=$3
+  KEY=$(echo ${PUB_KEY} | awk '{print $2;}')
+  HOME_DIR=/home/${USER}
+
+  echo NODE_ATTR_GRP_NAME=${NODE_ATTR_GRP_NAME}
+  echo USER=${USER}
+  echo PUB_KEY=${PUB_KEY}
+  echo KEY=${KEY}
+  echo HOME_DIR=${HOME_DIR}
+  
+  pdsh-nodeattr-cmd ${NODE_ATTR_GRP_NAME} "sudo -u ${USER} bash -c 'mkdir -p ${HOME_DIR}/.ssh; chmod 700 ${HOME_DIR}/.ssh; touch ${HOME_DIR}/.ssh/authorized_keys; chmod 600 ${HOME_DIR}/.ssh/authorized_keys; if grep --quiet \\\"${KEY}\\\" ${HOME_DIR}/.ssh/authorized_keys ; then echo \\\"Public key already exists.\\\"; else echo \\\"Public key does not exists. Append it.\\\"; echo ${PUB_KEY} >> ${HOME_DIR}/.ssh/authorized_keys; fi'"
+}
+
 function pdsh-grp-cmd {
   if [ "$(pdsh-is-grp-exists $1)" == "0" ]; then
     hosts=`cat "$HOME/.dsh/group/$1"`
