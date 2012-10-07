@@ -52,7 +52,7 @@ function pdsh-nodeattr-cmd {
 function pdsh-nodeattr-cmd-copy-pubkey {
   if [ $# -ne 3 ]; then
     echo "USAGE: pdsh-nodeattr-cmd-copy-pubkey <nodeattr> <username> <public_key_string>"
-    exit 1
+    return
   fi
 
   NODE_ATTR_GRP_NAME=$1
@@ -67,7 +67,7 @@ function pdsh-nodeattr-cmd-copy-pubkey {
   echo KEY=${KEY}
   echo HOME_DIR=${HOME_DIR}
   
-  pdsh-nodeattr-cmd ${NODE_ATTR_GRP_NAME} "sudo -u ${USER} bash -c 'mkdir -p ${HOME_DIR}/.ssh; chmod 700 ${HOME_DIR}/.ssh; touch ${HOME_DIR}/.ssh/authorized_keys; chmod 600 ${HOME_DIR}/.ssh/authorized_keys; if grep --quiet \\\"${KEY}\\\" ${HOME_DIR}/.ssh/authorized_keys ; then echo \\\"Public key already exists.\\\"; else echo \\\"Public key does not exists. Append it.\\\"; echo ${PUB_KEY} >> ${HOME_DIR}/.ssh/authorized_keys; fi'"
+  pdsh-nodeattr-cmd ${NODE_ATTR_GRP_NAME} "sudo -u ${USER} bash -c 'mkdir -p ${HOME_DIR}/.ssh; chmod 700 ${HOME_DIR}/.ssh; touch ${HOME_DIR}/.ssh/authorized_keys; chmod 600 ${HOME_DIR}/.ssh/authorized_keys; if grep --quiet ${KEY} ${HOME_DIR}/.ssh/authorized_keys ; then echo Public key already exists.; else echo Public key does not exists. Append it.; echo ${PUB_KEY} >> ${HOME_DIR}/.ssh/authorized_keys; fi'"
 }
 
 function pdsh-grp-cmd {
