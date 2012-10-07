@@ -1,3 +1,4 @@
 alias na='nodeattr'
 alias nal='nodeattr -l'
 alias nan='nodeattr -n'
+alias nac='nodeattr -c'

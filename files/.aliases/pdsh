@@ -18,6 +18,36 @@ function pdsh-grp-cat {
 function pdsh-pp { pdsh $@ | dshbak; }
 function pdsh-pp-c { pdsh $@ | dshbak -c; } # merge duplicated outputs
 
+function pdsh-inet-addr { pdsh $@ 'bash -c '/sbin/ifconfig | egrep "inet addr" | grep -v "127.0.0.1"''; }
+
+function pdsh-nodeattr-cmd {
+  hosts=`nodeattr -n $1`
+  shift
+  echo "HOSTS:"
+  echo ""
+  echo "$hosts"
+  echo ""
+  echo "Execute command:" 
+  echo ""
+  echo "  ssh -t HOST \"$*\""
+  echo ""
+  while true; do
+    read -p "Do you execute the command on all hosts? " yn
+    case $yn in
+      [Yy]* ) 
+        for h in $hosts; do
+          echo "Execute on $h:"
+          ssh -t $h $*
+          echo "Completed on $h"
+          echo ""
+        done
+        break;;
+      [Nn]* ) break;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+}
+
 function pdsh-grp-cmd {
   if [ "$(pdsh-is-grp-exists $1)" == "0" ]; then
     hosts=`cat "$HOME/.dsh/group/$1"`
