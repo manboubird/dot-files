@@ -18,6 +18,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'sudo.vim'
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'derekwyatt/vim-scala'
 Bundle 'surround.vim'
 Bundle 'xolox/vim-session'
 Bundle 'scrooloose/nerdtree'
@@ -27,6 +28,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'ervandew/screen'
+Bundle 'Rainbow-Parenthesis'
 
 " comment out due to collision of gist-vim  
 "Bundle 'suan/vim-instant-markdown'
