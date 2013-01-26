@@ -1,0 +1,3 @@
+DRAKE_HOME=${DRAKE_HOME:-$HOME/local/Cellar/drake}
+echo java -cp ${DRAKE_HOME}/drake.jar drake.core $@
+java -cp ${DRAKE_HOME}/drake.jar drake.core $@
