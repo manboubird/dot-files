@@ -1,3 +1,4 @@
+JAVA_EXEC=${JAVA_EXEC:-java}
 DRAKE_HOME=${DRAKE_HOME:-$HOME/local/Cellar/drake}
-echo java -cp ${DRAKE_HOME}/drake.jar drake.core $@
-java -cp ${DRAKE_HOME}/drake.jar drake.core $@
+echo ${JAVA_EXEC} -cp ${DRAKE_HOME}/drake.jar drake.core $@
+${JAVA_EXEC} -cp ${DRAKE_HOME}/drake.jar drake.core $@
