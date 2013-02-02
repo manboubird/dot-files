@@ -67,6 +67,7 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
+Bundle "http://bitbucket.org/larsyencken/vim-drake-syntax.git"
 
 if version >= 701
   " http://blog.blueblack.net/item_164/
