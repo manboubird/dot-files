@@ -27,11 +27,20 @@ Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'ervandew/screen'
+
 Bundle 'Rainbow-Parenthesis'
 
 " comment out due to collision of gist-vim  
 "Bundle 'suan/vim-instant-markdown'
+
+" clojure
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-classpath'
+Bundle 'guns/vim-clojure-static'
+
+" screen/tmux sender
+Bundle 'jpalardy/vim-slime'
+"Bundle 'ervandew/screen'
 
 " database
 Bundle 'SQLComplete.vim'
