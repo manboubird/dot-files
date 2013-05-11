@@ -28,7 +28,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 
-Bundle 'Rainbow-Parenthesis'
+Bundle 'kien/rainbow_parentheses.vim'
 
 " comment out due to collision of gist-vim  
 "Bundle 'suan/vim-instant-markdown'
@@ -37,11 +37,11 @@ Bundle 'Rainbow-Parenthesis'
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-classpath'
 Bundle 'guns/vim-clojure-static'
-" Bundle 'liquidz/lein-vim'
+Bundle 'paredit.vim'
+Bundle 'liquidz/lein-vim'
 
-" screen/tmux sender
-"Bundle 'jpalardy/vim-slime'
-"Bundle 'ervandew/screen'
+" tmux sender
+Bundle 'benmills/vimux'
 
 " database
 Bundle 'SQLComplete.vim'
