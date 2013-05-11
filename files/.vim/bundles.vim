@@ -53,7 +53,7 @@ Bundle "Align"
 if (executable("git"))
   Bundle 'tpope/vim-fugitive'
   Bundle 'mattn/webapi-vim'
-  Bundle 'manboubird/gist-vim'
+  Bundle 'mattn/gist-vim'
 endif
 
 " ack
