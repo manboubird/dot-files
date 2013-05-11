@@ -51,4 +51,5 @@ esac
 
 # setup with local settings
 [ -f ~/.bashrc.after ] && source ~/.bashrc.after
+[ -f ~/.bashrc.after.local ] && source ~/.bashrc.after.local
 

@@ -5,3 +5,4 @@ files/.vim/bundle
 files/.vim/bundle/vundle
 files/.vim/sessions
 files/.lein/self-installs
+*.swp

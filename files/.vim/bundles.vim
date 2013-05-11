@@ -37,9 +37,10 @@ Bundle 'Rainbow-Parenthesis'
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-classpath'
 Bundle 'guns/vim-clojure-static'
+" Bundle 'liquidz/lein-vim'
 
 " screen/tmux sender
-Bundle 'jpalardy/vim-slime'
+"Bundle 'jpalardy/vim-slime'
 "Bundle 'ervandew/screen'
 
 " database
@@ -52,7 +53,7 @@ Bundle "Align"
 if (executable("git"))
   Bundle 'tpope/vim-fugitive'
   Bundle 'mattn/webapi-vim'
-  Bundle 'mattn/gist-vim'
+  Bundle 'manboubird/gist-vim'
 endif
 
 " ack

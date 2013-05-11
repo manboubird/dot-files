@@ -7,3 +7,6 @@
 
 # host env setting (dev|stg|prd)
 #export MY_HOST_TYPE=loc
+
+#HADOOP_HOME=
+

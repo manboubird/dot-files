@@ -1,17 +1,14 @@
-[user]
-	name = 
-	email = 
+[include]
+  path = ~/.gitconfig.local
 [color]
   diff = auto
   sh = auto
   status = auto
   branch = auto
-[github]
-  user = manboubird
-[include]
-  # git ver >= 1.7.10 
-  path = .gitconfig.local
- [alias]
+  interactive = auto
+  ui = auto
+[alias]
+  cl = clone 
   st = status
   ci = commit
   br = branch
@@ -22,8 +19,4 @@
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
-#[diff]
-#  external = gitdiffwrap.sh
-#[pager]
-#  diff =
 
