@@ -1,2 +1,4 @@
-alias dr='drake'
-alias drp='drake --preview'
+if [ $(is_command_exists drake) -eq 0 ];then
+  alias dr='drake'
+  alias drp='drake --preview'
+fi

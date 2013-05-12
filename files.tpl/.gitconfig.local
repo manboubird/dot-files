@@ -1,0 +1,16 @@
+[user]
+	user = 
+  name = 
+# email = 
+#	token = 
+[github]
+  user = 
+  apiurl = "https://api.github.com"
+[core]
+	excludesfile = ~/.gitignore.global
+#[difftool "sourcetree"]
+#	cmd = /Applications/MacVim.app/Contents/MacOS/vimdiff \"$LOCAL\" \"$REMOTE\"
+#	path = 
+#[mergetool "sourcetree"]
+#	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+#	trustExitCode = true

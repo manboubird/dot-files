@@ -28,16 +28,6 @@ if tty -s ; then
 fi
 ##
 
-##
-# functions
-#
-# start a screen with screen name
-function scrn() { /usr/bin/screen -t "$@"; }
-# find on git/svn managed directory.
-function find-git() { find $1 | grep -v '.git'; }
-function find-svn() { find $1 | grep -v '.svn'; }
-#
-
 # os specific setting
 case "${OSTYPE}" in
   # Mac(Unix)

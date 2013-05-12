@@ -1,4 +1,7 @@
-alias na='nodeattr'
-alias nal='nodeattr -l'
-alias nan='nodeattr -n'
-alias nac='nodeattr -c'
+if [ $(is_command_exists nodeattr) -eq 0 ];then
+  alias na='nodeattr'
+  alias nal='nodeattr -l'
+  alias nac='nodeattr -c'
+  alias nan='nodeattr -n'
+  alias nas='nodeattr -s'
+fi

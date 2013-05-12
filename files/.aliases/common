@@ -1,6 +1,10 @@
+source ~/.dot-files/files/.aliases/functions
+
+# common aliases
 alias df='df -h'
 alias du='du -h'
 alias here='open .'
+
 case "${OSTYPE}" in
   darwin*)
   # Mac(Unix)

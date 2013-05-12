@@ -1,0 +1,3 @@
+if [ $(is_command_exists screen) -eq 0 ];then
+  function scrn() { screen -t "$@"; }
+fi

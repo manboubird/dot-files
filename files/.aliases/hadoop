@@ -1,10 +1,16 @@
-if [ "$HADOOP_HOME" != '' ]; then
- alias dfsls='$HADOOP_HOME/bin/hadoop dfs -ls'
- alias dfsrm='$HADOOP_HOME/bin/hadoop dfs -rm'
- alias dfscat='$HADOOP_HOME/bin/hadoop dfs -cat'
- alias dfsrmr='$HADOOP_HOME/bin/hadoop dfs -rmr'
- alias dfsmkdir='$HADOOP_HOME/bin/hadoop dfs -mkdir'
- alias dfsput='$HADOOP_HOME/bin/hadoop dfs -put'
- alias dfsget='$HADOOP_HOME/bin/hadoop dfs -get'
- alias hdfs='$HADOOP_HOME/bin/hadoop dfs'
+if [ $(is_command_exists hadoop) -eq 0 ];then
+ HADOOP_CMD="hadoop"
+elif [ ! -z $HADOOP_HOME ]; then
+ HADOOP_CMD="$HADOOP_HOME/bin/hadoop"
+fi
+
+if [ ! -z $HADOOP_CMD ]; then
+ alias dfsls="$HADOOP_CMD/bin/hadoop dfs -ls"
+ alias dfsrm="$HADOOP_CMD/bin/hadoop dfs -rm"
+ alias dfscat="$HADOOP_CMD/bin/hadoop dfs -cat"
+ alias dfsrmr="$HADOOP_CMD/bin/hadoop dfs -rmr"
+ alias dfsmkdir="$HADOOP_CMD/bin/hadoop dfs -mkdir"
+ alias dfsput="$HADOOP_CMD/bin/hadoop dfs -put"
+ alias dfsget="$HADOOP_CMD/bin/hadoop dfs -get"
+ alias hdfs="$HADOOP_CMD/bin/hadoop dfs"
 fi
