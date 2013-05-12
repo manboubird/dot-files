@@ -40,8 +40,10 @@ Bundle 'guns/vim-clojure-static'
 Bundle 'paredit.vim'
 Bundle 'liquidz/lein-vim'
 
-" tmux sender
-Bundle 'benmills/vimux'
+" tmux
+if (executable("tmux"))
+  Bundle 'benmills/vimux'
+endif
 
 " database
 Bundle 'SQLComplete.vim'
