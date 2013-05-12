@@ -5,12 +5,12 @@ elif [ ! -z $HADOOP_HOME ]; then
 fi
 
 if [ ! -z $HADOOP_CMD ]; then
- alias dfsls="$HADOOP_CMD/bin/hadoop dfs -ls"
- alias dfsrm="$HADOOP_CMD/bin/hadoop dfs -rm"
- alias dfscat="$HADOOP_CMD/bin/hadoop dfs -cat"
- alias dfsrmr="$HADOOP_CMD/bin/hadoop dfs -rmr"
- alias dfsmkdir="$HADOOP_CMD/bin/hadoop dfs -mkdir"
- alias dfsput="$HADOOP_CMD/bin/hadoop dfs -put"
- alias dfsget="$HADOOP_CMD/bin/hadoop dfs -get"
- alias hdfs="$HADOOP_CMD/bin/hadoop dfs"
+ alias dfsls="$HADOOP_CMD dfs -ls"
+ alias dfsrm="$HADOOP_CMD dfs -rm"
+ alias dfscat="$HADOOP_CMD dfs -cat"
+ alias dfsrmr="$HADOOP_CMD dfs -rmr"
+ alias dfsmkdir="$HADOOP_CMD dfs -mkdir"
+ alias dfsput="$HADOOP_CMD dfs -put"
+ alias dfsget="$HADOOP_CMD dfs -get"
+ alias hdfs="$HADOOP_CMD dfs"
 fi
