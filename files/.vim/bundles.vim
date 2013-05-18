@@ -73,12 +73,21 @@ endif
 " http://nanasi.jp/articles/vim/filtering_vim.html
 Bundle 'vim-scripts/Quich-Filter'
 Bundle 'ervandew/supertab'
-" latest snipmate and its dependencies
+
+"""
+" vim snipmate and its dependencies
+" instll dependencies first
 " https://github.com/garbas/vim-snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
+Bundle "honza/vim-snippets"
+" install vim-snimate itself at last
 Bundle "garbas/vim-snipmate"
+"""
+
+
+
+" syntax highlight
 Bundle "http://bitbucket.org/larsyencken/vim-drake-syntax.git"
 
 if version >= 701
