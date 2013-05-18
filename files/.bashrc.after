@@ -5,7 +5,7 @@
 #    DOT_FILES_ALIAS_FILES=(ls ~/.dot-files/files/.aliases/)
 #
 if [ -z "${DOT_FILES_ALIAS_FILES}" ]; then 
-  DOT_FILES_ALIAS_FILES="find hadoop pdsh mysql nodeattr screen tmux"
+  DOT_FILES_ALIAS_FILES="ack find hadoop pdsh mysql nodeattr screen tmux"
 fi
 
 source ~/.aliases/common

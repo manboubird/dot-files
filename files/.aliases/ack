@@ -1,0 +1,3 @@
+if [ $(is_command_exists ack) -eq 0 ];then
+  alias ackcat='ack "^$" -v'
+fi
