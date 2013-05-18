@@ -1,0 +1,16 @@
+{
+	"installed_packages":
+	[
+		"AAAPackageDev",
+		"Apache Pig",
+		"ClojureDocSearch",
+		"Format SQL",
+		"Git",
+		"Package Control",
+		"ParentalControl",
+		"Solarized Color Scheme",
+		"sublime-github",
+		"SublimeCodeIntel",
+		"SublimeREPL"
+	]
+}

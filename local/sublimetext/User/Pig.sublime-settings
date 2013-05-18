@@ -1,0 +1,16 @@
+{
+	// Set java_home if Pig complains that it cannot find JAVA_HOME 
+	"java_home":"/usr/local/java",
+
+	// Set pig_home if the Pig binary is not in your system path
+	"pig_home": "/usr/local/pig",
+
+	// Either "local" or "mapreduce".  See Pig docs: http://pig.apache.org/docs/r0.9.1/start.html#run
+	"execution_mode": "local",
+
+	// May be required if "execution_mode" is set to "mapreduce".
+	"pig_classpath": "",
+
+	// Set this for a custom log4j.properties file for nicer console output.
+	"log4j_properties": ""
+}
