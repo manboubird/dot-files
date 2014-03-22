@@ -31,7 +31,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/rainbow_parentheses.vim'
 
 " comment out due to collision of gist-vim  
-"Bundle 'suan/vim-instant-markdown'
+Bundle 'suan/vim-instant-markdown'
 
 " clojure
 Bundle 'tpope/vim-fireplace'
@@ -63,6 +63,10 @@ if (executable("ack"))
   Bundle 'mileszs/ack.vim'
 endif
 
+" ag
+if (executable("ag"))
+  Bundle 'rking/ag.vim'
+endif
 
 " exp
 "Bundle 'scrooloose/nerdcommenter'
