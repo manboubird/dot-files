@@ -45,6 +45,11 @@ if (executable("tmux"))
   Bundle 'benmills/vimux'
 endif
 
+" graphviz
+if (executable("dot"))
+  Bundle 'wannesm/wmgraphviz.vim'
+endif
+
 " database
 Bundle 'SQLComplete.vim'
 Bundle 'dbext.vim'
