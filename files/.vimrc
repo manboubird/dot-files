@@ -15,9 +15,6 @@ let mapleader=","
 " show line number
 set nu
 
-" prevent auto newline
-set tw=0
-
 set nocompatible
 
 set backspace=indent,eol,start
@@ -144,6 +141,13 @@ nmap <silent> "    mzbi"<ESC>ea"<ESC>`z
 
 nmap <silent> <Leader>c <C-W>l:bw<CR>
 nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
+
+" tab movement
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+
+" prevent auto newline
+set tw=0
 
 " Quick Fix
 autocmd FileType perl,cgi :compiler perl
