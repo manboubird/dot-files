@@ -1,9 +1,9 @@
 {
-  "build_env":
-  {
-    "PATH": "/usr/local/bin:$PATH"  
-  },
-  "ignored_packages":
+	"build_env":
+	{
+		"PATH": "/usr/local/bin:$PATH"
+	},
+	"ignored_packages":
 	[
-	] 
+	]
 }
