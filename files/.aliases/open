@@ -1,0 +1,14 @@
+if [[ "${OSTYPE}" == "darwin"* && $(is_command_exists open) -eq 0 ]];then
+  alias op=open
+  # pdf
+  alias opAdobeReader='open -a "Adobe Reader"'
+  alias opPreview='open -a preview'
+  # editor
+  alias opSublimeText2='open -a "Sublime Text 2"'
+  alias opTextEdit='open -a TextEdit'
+  alias opMacVim='open -a MacVim'
+  # web browser
+  alias opFirefox='open -a Firefox'
+  alias opGoogleChrome='open -a "Google Chrome"'
+  alias opSafari='open -a Safari'
+fi
