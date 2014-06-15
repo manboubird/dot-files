@@ -1,0 +1,4 @@
+if [[ $(is_command_exists ag) -eq 0 ]];then
+  alias agpager='ag --pager="less -R -m -N"'
+  alias agcxt='ag --pager="less -R -m -N" -C 10'
+fi
