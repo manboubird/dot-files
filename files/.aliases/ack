@@ -1,3 +1,13 @@
 if [ $(is_command_exists ack) -eq 0 ];then
   alias ackcat='ack "^$" -v'
+  alias ackf='ack -f'
+  # languages
+  alias ackjvm='ack --clojure --java --scala'
+  alias ackjav='ack --java'
+  alias ackscl='ack --scala'
+  alias ackclj='ack --clojure'
+  alias ackrb='ack --ruby'
+  alias ackpl='ack --perl'
+  alias acksh='ack --shell'
+  alias ackql='ack --sql'
 fi
