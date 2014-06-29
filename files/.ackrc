@@ -3,3 +3,23 @@
 
 # Pipe the output through a pager by default
 --pager=less -R -m -N
+
+# Ignore files and directories. Ref. https://github.com/github/gitignore
+--ignore-file=ext:bak
+--ignore-file=ext:swp
+--ignore-file=ext:tmp
+--ignore-file=ext:pdf
+--ignore-file=match:.gitignore
+# vi/vim swap files
+--ignore-file=match:/[._].*\.swp$/
+
+# java
+--ignore-dir=target
+--ignore-dir=.idea
+--ignore-dir=.idea_modules
+--ignore-dir=.settings
+--ignore-file=match:.metadata
+--ignore-file=match:.history
+--ignore-file=match:.cache
+--ignore-file=match:.target
+
