@@ -1,0 +1,3 @@
+
+# redirect stdout to multiple commands
+cat file.txt | tee >(pbcopy) >(do_stuff) >(do_more_stuff) | grep errors

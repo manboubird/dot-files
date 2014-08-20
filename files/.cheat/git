@@ -1,0 +1,34 @@
+# clean branch and rebase based on upstream master
+git fetch upstream --prune
+git fetch --prune
+git rebase upstream/master
+
+# use a specific gitconfig file
+export GIT_CONFIG=$PATH_TO_GIT_CONFIG
+git config -l
+
+# To edit previous commit message
+git commit --amend
+
+# To removed staged and working directory changes
+git reset --hard
+
+# To remove untracked files
+git clean -f -d
+
+# To remove untracked and ignored files
+git clean -f -d -x
+
+# To push to a specified repository:
+git push git@github.com:username/project.git
+
+# To see who commited which line in a file
+git blame filename
+
+# To sync a fork with the master repo:
+git remote add upstream git@github.com:name/repo.git    # Set a new repo
+git fetch upstream                                      # Get branches
+git branch -va                                          # List local - remote branches
+git show 83fb499                                        # Show what a commit did.
+git show 83fb499:path/fo/file.ext                       # Shows the file as it appeared at 83fb499.
+git diff branch_1 branch_2                              # Check difference between branches
