@@ -3,6 +3,12 @@ git fetch upstream --prune
 git fetch --prune
 git rebase upstream/master
 
+# Edit an incorrect commit message
+git commit --amend
+ or 
+git commit --amend -m "New commit message"
+
+
 # use a specific gitconfig file
 export GIT_CONFIG=$PATH_TO_GIT_CONFIG
 git config -l

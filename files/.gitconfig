@@ -17,6 +17,7 @@
   ci = commit
   br = branch
   co = checkout
+  cfg = config
   df = diff
   dc = diff --cached
   lg = log -p
