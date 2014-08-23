@@ -8,6 +8,11 @@ git commit --amend
  or 
 git commit --amend -m "New commit message"
 
+# replace foo with bar
+# Linux
+git ls-files -z | xargs -0 sed -i -e 's/foo/bar/g'
+# Mac
+git ls-files -z | xargs -0 sed -i '' -e 's/foo/bar/g'
 
 # use a specific gitconfig file
 export GIT_CONFIG=$PATH_TO_GIT_CONFIG
