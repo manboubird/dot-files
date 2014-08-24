@@ -14,6 +14,9 @@ git ls-files -z | xargs -0 sed -i -e 's/foo/bar/g'
 # Mac
 git ls-files -z | xargs -0 sed -i '' -e 's/foo/bar/g'
 
+# display id, author, date and message.
+git log --pretty=format:"%h%x09%an%x09%ad%x09%s"
+
 # use a specific gitconfig file
 export GIT_CONFIG=$PATH_TO_GIT_CONFIG
 git config -l
@@ -43,3 +46,7 @@ git branch -va                                          # List local - remote br
 git show 83fb499                                        # Show what a commit did.
 git show 83fb499:path/fo/file.ext                       # Shows the file as it appeared at 83fb499.
 git diff branch_1 branch_2                              # Check difference between branches
+
+# update author info
+git filter-branch -f --env-filter "GIT_AUTHOR_NAME='Newname'; GIT_AUTHOR_EMAIL='newemail'; GIT_COMMITTER_NAME='Newname'; GIT_COMMITTER_EMAIL='newemail';" HEAD~10..HEAD
+
