@@ -1,1 +1,3 @@
 *.swp
+files/.vim/bundle/vundle/
+files/.vim/sessions/

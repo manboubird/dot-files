@@ -16,7 +16,6 @@ git ls-files -z | xargs -0 sed -i '' -e 's/foo/bar/g'
 
 # display id, author, date and message.
 git log --pretty=format:"%h%x09%an%x09%ad%x09%s"
-
 # use a specific gitconfig file
 export GIT_CONFIG=$PATH_TO_GIT_CONFIG
 git config -l

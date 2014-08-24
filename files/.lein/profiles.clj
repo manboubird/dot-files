@@ -5,4 +5,5 @@
                   [lein-localrepo "0.4.1"]
                   [lein-create-template "0.1.1"]
                   [lein-cascalog "0.1.0"]
+                  [lein-diagnostics "0.0.1"]
                   ]}}

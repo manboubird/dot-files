@@ -1,3 +1,3 @@
 if [ -f ~/local/bin/z.sh ]; then
-  source ~/local/bin/z.sh
+  . ~/local/bin/z.sh
 fi
