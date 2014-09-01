@@ -8,6 +8,13 @@ git commit --amend
  or 
 git commit --amend -m "New commit message"
 
+# Commit message. Ref: http://chris.beams.io/posts/git-commit/ 
+# Display log
+# --oneline: displays the subject line
+git log --oneline -5 --author NAME --before "Fri Mar 26 2009"
+# Groups commits by user with the subject line
+git shortlog
+
 # replace foo with bar
 # Linux
 git ls-files -z | xargs -0 sed -i -e 's/foo/bar/g'
