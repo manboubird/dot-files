@@ -1,0 +1,10 @@
+
+# monitor file change
+sbt ~test-only
+
+# test failed tests only
+sbt ~test-quick
+
+# go into scala repl
+console
+

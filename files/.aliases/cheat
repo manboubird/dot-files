@@ -1,0 +1,5 @@
+if [ $(is_command_exists cheat) -eq 0 ];then
+  alias cht='cheat'
+  alias chte='cheat -e'
+  alias chts='cheat -s'
+fi
