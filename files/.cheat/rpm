@@ -1,0 +1,4 @@
+
+# extract rpm content under current directory
+rpm2cpio FILE.rpm | cpio -idmv
+
