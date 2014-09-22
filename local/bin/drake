@@ -1,4 +1,11 @@
+#!/bin/bash
 JAVA_EXEC=${JAVA_EXEC:-java}
 DRAKE_HOME=${DRAKE_HOME:-$HOME/local/Cellar/drake}
-echo ${JAVA_EXEC} -cp ${DRAKE_HOME}/drake.jar drake.core $@
-${JAVA_EXEC} -cp ${DRAKE_HOME}/drake.jar drake.core $@
+DRAKE_JAR=${DRAKE_HOME}/drake.jar
+
+if [[ `which drip` ]]; then
+  drip -jar ${DRAKE_JAR} "$@"
+else
+  echo ${JAVA_EXEC} -jar ${DRAKE_JAR} "$@"
+  ${JAVA_EXEC} -jar ${DRAKE_JAR} "$@"
+fi
