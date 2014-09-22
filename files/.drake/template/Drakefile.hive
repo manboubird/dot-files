@@ -1,0 +1,17 @@
+
+hive()
+  /usr/local/hive/bin/hive -f $INPUT > $OUTPUT
+
+hql() [eval]
+  echo "$CODE" | tee $OUTPUT | nl
+
+%include ./hql.drake
+
+; Contents of hql.drake:
+;
+;select_tbl.hql <- [method:hql method-mode:append]
+;  SELECT * FROM tbl
+;
+
+select_tbl.hql.o <- select_tbl.hql [method:hive method-mode:append]
+
