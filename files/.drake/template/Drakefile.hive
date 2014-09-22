@@ -1,0 +1,32 @@
+
+hive()
+  /usr/local/hive/bin/hive -f $INPUT > $OUTPUT
+
+hql() [eval]
+  echo "$CODE" | tee $OUTPUT | nl
+
+phive()
+  ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load 100% --noswap "cat -n {}; /usr/local/hive/bin/hive -f {} > {}.o"
+
+xhive()
+  ls $INPUTS | tee $OUTPUT | xargs -I {} -P4 bash -c 'cat -n {} | /usr/local/hive/bin/hive -f {} > {}.o'
+
+%include ./hql.drake
+
+; Contents of hql.drake:
+;
+;select_tbl.hql <- [method:hql method-mode:append]
+;  SELECT * FROM tbl
+;
+;select_tbl.2.hql <- [method:hql method-mode:append]
+;  SELECT * FROM tbl
+;
+
+select_tbl.hql.o <- select_tbl.hql [method:hive method-mode:append]
+
+select_tbl.2.hql.o <- select_tbl.2.hql [method:hive method-mode:append]
+
+ph <- select_tbl.hql, select_tbl.2.hql [method:phive method-mode:append]
+
+xh <- select_tbl.hql, select_tbl.2.hql [method:xhive method-mode:append]
+
