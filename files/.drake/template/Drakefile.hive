@@ -9,17 +9,17 @@ phive()
   ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load 100% --noswap "cat -n {}; /usr/local/hive/bin/hive -f {} > {}.o"
 
 xhive()
-  ls $INPUTS | tee $OUTPUT | xargs -I {} -P4 bash -c 'cat -n {} | /usr/local/hive/bin/hive -f {} > {}.o'
+  ls $INPUTS | tee $OUTPUT | xargs -I {} -P4 bash -c 'echo {}; cat -n {}; /usr/local/hive/bin/hive -f {} > {}.o'
 
 %include ./hql.drake
 
 ; Contents of hql.drake:
 ;
 ;select_tbl.hql <- [method:hql method-mode:append]
-;  SELECT * FROM tbl
+;  SELECT * FROM tbl1
 ;
 ;select_tbl.2.hql <- [method:hql method-mode:append]
-;  SELECT * FROM tbl
+;  SELECT * FROM tbl2
 ;
 
 select_tbl.hql.o <- select_tbl.hql [method:hive method-mode:append]
