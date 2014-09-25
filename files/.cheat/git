@@ -8,6 +8,9 @@ git commit --amend
  or 
 git commit --amend -m "New commit message"
 
+# push local tags to remote repository
+git push origin --tags
+
 # Commit message. Ref: http://chris.beams.io/posts/git-commit/ 
 # Display log
 # --oneline: displays the subject line
