@@ -1,15 +1,23 @@
+HIVE_EXEC:=/usr/bin/hive
 
 hive()
-  /usr/local/hive/bin/hive -f $INPUT > $OUTPUT
+  $[HIVE_EXEC] -f $INPUT > $OUTPUT
+
+shive()
+ sudo -u hdfs $[HIVE_EXEC] -f $INPUT > $OUTPUT
 
 hql() [eval]
   echo "$CODE" | tee $OUTPUT | nl
 
 phive()
-  ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load 100% --noswap "cat -n {}; /usr/local/hive/bin/hive -f {} > {}.o"
+  ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load
+ 100% --noswap "cat -n {}; $[HIVE_EXEC] -f {} > {}.o"
 
 xhive()
-  ls $INPUTS | tee $OUTPUT | xargs -I {} -P4 bash -c 'echo {}; cat -n {}; /usr/local/hive/bin/hive -f {} > {}.o'
+  ls $INPUTS | tee $OUTPUT | xargs -I {} -P4 bash -c 'echo {}; cat -n {}; $[HIVE_EXEC] -f {} > {}.o'
+
+diff()
+  diff $INPUTS | tee $OUTPUT
 
 %include ./hql.drake
 
