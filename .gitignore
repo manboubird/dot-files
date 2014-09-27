@@ -1,1 +1,4 @@
 *.swp
+files/.vim/sessions/
+files/.sbt/0.13/plugins/project/
+files/.sbt/0.13/plugins/target/
