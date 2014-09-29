@@ -1,6 +1,6 @@
 [repositories]
   local
-  maven-central: http://repo1.maven.org/maven2/
-  typesafe-ivy-repository: http://repo.typesafe.com/typesafe/ivy-releases/
-#  typesafe-maven-repository: http://repo.typesafe.com/typesafe/releases/
-#  typesafe-simple-maven-repository: http://repo.typesafe.com/typesafe/simple/maven-releases/
+  maven-central: http://central.maven.org/maven2/
+  typesafe: http://repo.typesafe.com/typesafe/releases/
+  typesafe-ivy-repository: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+  cloudera: https://repository.cloudera.com/artifactory/cloudera-repos/

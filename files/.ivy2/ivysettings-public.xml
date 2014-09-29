@@ -1,5 +1,5 @@
 <ivysettings>
   <resolvers>
-    <ibiblio name="public" m2compatible="false"/>
+    <ibiblio name="public" m2compatible="false" checkconsistency="false" />
   </resolvers>
 </ivysettings>
