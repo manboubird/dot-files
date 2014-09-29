@@ -20,6 +20,7 @@ Bundle 'sudo.vim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'derekwyatt/vim-scala'
 Bundle 'surround.vim'
+Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-session'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
@@ -39,6 +40,11 @@ Bundle 'tpope/vim-classpath'
 Bundle 'guns/vim-clojure-static'
 Bundle 'paredit.vim'
 Bundle 'liquidz/lein-vim'
+
+" screen
+if (executable("screen"))
+  Bundle 'jpalardy/vim-slime'
+endif
 
 " tmux
 if (executable("tmux"))
