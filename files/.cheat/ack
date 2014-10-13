@@ -1,6 +1,6 @@
 
 # list imported classes
-ack -h --java '^import' | sort -u
+ack -h --java '^import' | sort | uniq -c
 
 # replace text with ack
 ack -l 'pattern' | xargs perl -pi -E 's/pattern/replacement/g'
