@@ -1,4 +1,8 @@
 if [ $(is_command_exists drake) -eq 0 ];then
-  alias dr='drake'
-  alias drp='drake --preview'
+  alias drk='drake'
+  alias drkprv='drake --preview'
+  alias drkp='drake --print'
+  alias drka='drake --auto'
+  alias drkw='drake --workflow'
+  alias drkaw='drake --auto --workflow'
 fi
