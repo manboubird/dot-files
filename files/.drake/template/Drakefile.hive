@@ -6,9 +6,6 @@ ql() [eval]
 hive()
   $[HIVE_EXEC] -f $INPUT > $OUTPUT
 
-shive()
- sudo -u hdfs $[HIVE_EXEC] -f $INPUT > $OUTPUT
-
 phive()
   ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load
  100% --noswap "cat -n {}; $[HIVE_EXEC] -f {} > {}.o"
