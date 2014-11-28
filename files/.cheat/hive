@@ -1,0 +1,10 @@
+
+# Set debug mode
+hive --hiveconf hive.root.logger=INFO,console
+
+# Set conf
+hive --hiveconf x1=y1 --hiveconf x2=y2
+
+# Set config directory
+hive --config $PATH_TO_CONF_DIR/hive/conf
+

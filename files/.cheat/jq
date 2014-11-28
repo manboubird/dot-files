@@ -1,0 +1,7 @@
+
+# prity print
+jq '.'
+
+# select with condition
+jq 'select(.type == "TYPE")'
+
