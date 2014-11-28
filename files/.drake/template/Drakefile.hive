@@ -1,13 +1,10 @@
 HIVE_EXEC:=/usr/bin/hive
 
+ql() [eval]
+  echo "$CODE" | tee $OUTPUT | nl
+
 hive()
   $[HIVE_EXEC] -f $INPUT > $OUTPUT
-
-shive()
- sudo -u hdfs $[HIVE_EXEC] -f $INPUT > $OUTPUT
-
-hql() [eval]
-  echo "$CODE" | tee $OUTPUT | nl
 
 phive()
   ls $INPUTS | tee $OUTPUT | parallel --gnu --line-buffer --tagstring "[ {} ]" --results parallel.stdout.logs --eta --progress --joblog parallel.job.log -j 4 --halt 1 --load
@@ -23,10 +20,10 @@ diff()
 
 ; Contents of hql.drake:
 ;
-;select_tbl.hql <- [method:hql method-mode:append]
+;select_tbl.hql <- [method:ql method-mode:append]
 ;  SELECT * FROM tbl1
 ;
-;select_tbl.2.hql <- [method:hql method-mode:append]
+;select_tbl.2.hql <- [method:ql method-mode:append]
 ;  SELECT * FROM tbl2
 ;
 
