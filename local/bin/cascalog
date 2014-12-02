@@ -1,0 +1,5 @@
+#!/bin/bash
+JAVA_EXEC=${JAVA_EXEC:-java}
+CASCALOG_JAR=${HOME}/local/bin/cascalog-standalone.jar
+echo ${JAVA_EXEC} -jar ${CASCALOG_JAR} "$@"
+${JAVA_EXEC} -jar ${CASCALOG_JAR} "$@"
