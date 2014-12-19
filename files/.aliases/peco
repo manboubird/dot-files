@@ -1,0 +1,27 @@
+if [ $(is_command_exists peco) -eq 0 ];then
+  if [ $(is_command_exists git) -eq 0 ];then
+    alias peco_git_co_br='git checkout $(git branch | peco)'
+    alias peco_ghq_cd='cd $(ghq list -p | peco)'
+  fi
+
+  if [ $(is_command_exists history) -eq 0 ];then
+    alias peco_history='history | peco'
+  fi
+
+  if [ $(is_command_exists ack) -eq 0 ];then
+    # ack-cat a file
+    function peco_ack_cat {
+      ack "^$" -v "$@" | peco
+    }
+
+    # open a ack-cat-ed file at the specific line number
+    function peco_ack_cat_less {
+      line=$(ack "^$" -v "$@" | peco | head -n1)
+      if [ "$line" != "" ]; then
+        file=$(echo $line | awk -F: '{ print $1 }')
+        line_num=$(echo $line | awk -F: '{ print $2 }')
+        less -N +$line_num "$file"
+      fi
+    }
+  fi
+fi

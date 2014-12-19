@@ -1,0 +1,7 @@
+
+# history
+history | peco
+
+# ghq
+cd $(ghq list -p | peco)
+
