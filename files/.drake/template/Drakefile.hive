@@ -1,6 +1,6 @@
 HIVE_EXEC:=/usr/bin/hive
 
-ql() [eval]
+file() [eval]
   echo "$CODE" | tee $OUTPUT | nl
 
 hive()
@@ -20,10 +20,10 @@ diff()
 
 ; Contents of hql.drake:
 ;
-;select_tbl.hql <- [method:ql method-mode:append]
+;select_tbl.hql <- [method:file method-mode:append]
 ;  SELECT * FROM tbl1
 ;
-;select_tbl.2.hql <- [method:ql method-mode:append]
+;select_tbl.2.hql <- [method:file method-mode:append]
 ;  SELECT * FROM tbl2
 ;
 
