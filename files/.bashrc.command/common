@@ -1,4 +1,4 @@
-source ~/.dot-files/files/.aliases/functions
+source ~/.dot-files/files/.bashrc.command/functions
 
 # common aliases
 alias df='df -h'

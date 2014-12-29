@@ -1,19 +1,19 @@
 ##
-# Load alias files. Some need export env vars.
-# To apply all aliases, add below into .bashrc.local  
+# Load command files. Some need export env vars.
+# To apply all commands, add below into .bashrc.local  
 #
-#    DOT_FILES_ALIAS_FILES=(ls ~/.dot-files/files/.aliases/)
+#    DOT_FILES_COMMAND_FILES=(ls ~/.dot-files/files/.bashrc.command/)
 #
-if [ -z "${DOT_FILES_ALIAS_FILES}" ]; then 
-  DOT_FILES_ALIAS_FILES="ack find hadoop pdsh mysql nodeattr screen tmux peco ghq"
+if [ -z "${DOT_FILES_COMMAND_FILES}" ]; then 
+  DOT_FILES_COMMAND_FILES="ack find hadoop pdsh mysql nodeattr screen tmux peco ghq"
 fi
 
-source ~/.aliases/common
-for file in ${DOT_FILES_ALIAS_FILES[@]}; do
-  if [ ! -f ~/.aliases/$file ]; then
-    echo "The file ~/.aliases/$file is not exists. Skip to load." >&2
+source ~/.bashrc.command/common
+for file in ${DOT_FILES_COMMAND_FILES[@]}; do
+  if [ ! -f ~/.bashrc.command/$file ]; then
+    echo "The file ~/.bashrc.command/$file is not exists. Skip to load." >&2
     continue
   fi
-  source ~/.aliases/$file
+  source ~/.bashrc.command/$file
 done
 

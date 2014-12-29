@@ -1,3 +1,0 @@
-if [ -f ~/local/bin/z.sh ]; then
-  . ~/local/bin/z.sh
-fi
