@@ -1,3 +1,12 @@
 if [ $(is_command_exists w3m) -eq 0 ];then
-  function dic() { w3m "http://ejje.weblio.jp/content/$1" | grep "用例"; }
+  function _dic() {
+    URL=$1
+    QUERY=$2
+    FILTER=$3
+    CUT_TAIL_NUM=$4
+    w3m "${URL}${QUERY}" | grep -A 1000 "${FILTER}" | sed -e :a -e "$d;N;2,${CUT_TAIL_NUM}ba" -e 'P;D' 
+    printf "Cited Link:\n${URL}${QUERY}\n"
+  }
+  function weblio() { _dic "http://ejje.weblio.jp/content/" "$1" "用例" "140"; }
+  function alc() { _dic "http://eow.alc.co.jp/search?q=" "$1" "$1" "12"; }
 fi
