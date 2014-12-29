@@ -1,4 +1,4 @@
 # remove empty directories within two depth directories.
 function cleanup_dirs () {
-  find . -type d -maxdepth 2 -empty -exec rmdir -v {} \; 2>/dev/null
+  find . -type d -maxdepth 2 -empty -exec rmdir {} \; 2>/dev/null
 }
