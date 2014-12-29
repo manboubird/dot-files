@@ -1,0 +1,4 @@
+if [ $(is_command_exists ghq) -eq 0 ];then
+  # ghq get and look
+  function ghqgl() { ghq get "$@" && ghq look "$@"; }
+fi

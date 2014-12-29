@@ -18,6 +18,12 @@ git log --oneline -5 --author NAME --before "Fri Mar 26 2009"
 # Groups commits by user with the subject line
 git shortlog
 
+# Case: commit on a master branch without creating a branch
+# 1. checkout the branch
+git checkout -b new-branch
+# 2. reset wrong commit on master branch
+git checkout master && git reset --hard HEAD~
+
 # replace foo with bar
 # Linux
 git ls-files -z | xargs -0 sed -i -e 's/foo/bar/g'
