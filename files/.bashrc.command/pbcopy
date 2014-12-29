@@ -1,0 +1,8 @@
+if [ $(is_command_exists pbcopy) -eq 0 ];then
+  case "${OSTYPE}" in
+    darwin*)
+    # Mac(Unix)
+    alias clip="nkf -w | pbcopy"
+    ;;
+  esac
+fi

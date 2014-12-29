@@ -1,14 +1,7 @@
-source ~/.dot-files/files/.bashrc.command/functions
-
-# common aliases
-alias df='df -h'
-alias du='du -h'
-alias here='open .'
-
+alias up="cd ..; ls -l"
 case "${OSTYPE}" in
   darwin*)
   # Mac(Unix)
-  alias clip="nkf -w | pbcopy"
   alias ll='ls -G -alth'
   ;;
   linux*)

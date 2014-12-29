@@ -1,4 +1,6 @@
 if [[ "${OSTYPE}" == "darwin"* && $(is_command_exists open) -eq 0 ]];then
+  alias f='open .'
+  alias here='open .'
   alias op=open
   # pdf
   alias opAdobeReader='open -a "Adobe Reader"'

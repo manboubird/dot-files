@@ -1,0 +1,2 @@
+# open markdown file 
+alias 'md'='vim ./*.md'

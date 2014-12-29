@@ -1,19 +1,13 @@
 ##
-# Load command files. Some need export env vars.
-# To apply all commands, add below into .bashrc.local  
-#
-#    DOT_FILES_COMMAND_FILES=(ls ~/.dot-files/files/.bashrc.command/)
-#
+# Load command files
+##
+DOT_FILES_COMMAND_FILES_COMMON="ls cd df du pbcopy rmdir openssl z open vim w3m ack find hadoop pdsh mysql nodeattr screen tmux peco ghq"
+
+source ~/.bashrc.command/functions
+DIR=$(get_current_dir)
+source_files "$DIR" "$DOT_FILES_COMMAND_FILES_COMMON"
+
+# when local setting variable is set, load it.
 if [ -z "${DOT_FILES_COMMAND_FILES}" ]; then 
-  DOT_FILES_COMMAND_FILES="ack find hadoop pdsh mysql nodeattr screen tmux peco ghq"
+  source_files "$DIR" "$DOT_FILES_COMMAND_FILES"
 fi
-
-source ~/.bashrc.command/common
-for file in ${DOT_FILES_COMMAND_FILES[@]}; do
-  if [ ! -f ~/.bashrc.command/$file ]; then
-    echo "The file ~/.bashrc.command/$file is not exists. Skip to load." >&2
-    continue
-  fi
-  source ~/.bashrc.command/$file
-done
-

@@ -1,3 +1,6 @@
 if [[ $(is_command_exists brew) -eq 0 && -f `brew --prefix`/etc/profile.d/z.sh ]];then
   . `brew --prefix`/etc/profile.d/z.sh
 fi
+if [[ $(is_command_exists z) -eq 0 ]];then
+  alias j='z'
+fi

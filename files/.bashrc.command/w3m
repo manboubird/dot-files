@@ -1,0 +1,3 @@
+if [ $(is_command_exists w3m) -eq 0 ];then
+  function dic() { w3m "http://ejje.weblio.jp/content/$1" | grep "用例"; }
+fi

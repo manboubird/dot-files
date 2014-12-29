@@ -7,3 +7,18 @@ function is_command_exists() {
     echo 1
   fi
 }
+
+function get_current_dir() { echo $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd); }
+
+function source_files() {
+  BASE=$1
+  FILES=$2
+  for file in ${FILES[@]}; do
+    path=$BASE/$file
+    if [ ! -f "$path" ]; then
+      echo "The file $path is not exists. Skip to source." >&2
+      continue
+    fi
+    source $path
+  done
+}
