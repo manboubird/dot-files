@@ -1,2 +1,2 @@
 # open markdown file 
-alias 'md'='vim ./*.md'
+alias 'md'='vim ./*.md -c "tab all"'
