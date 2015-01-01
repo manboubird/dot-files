@@ -24,6 +24,10 @@ git checkout -b new-branch
 # 2. reset wrong commit on master branch
 git checkout master && git reset --hard HEAD~
 
+# instant web UI
+git instaweb --httpd=webrick
+git instaweb --httpd=webrick --stop
+
 # replace foo with bar
 # Linux
 git ls-files -z | xargs -0 sed -i -e 's/foo/bar/g'
