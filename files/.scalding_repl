@@ -1,0 +1,5 @@
+ScaldingShell.prompt = { () =>
+  Console.GREEN +
+  System.getProperty("user.dir").replace(System.getProperty("user.home"),"~") +
+  Console.BLUE + " scalding> " + Console.RESET
+}
