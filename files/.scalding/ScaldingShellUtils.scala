@@ -27,7 +27,7 @@ object Scaldrc {
 
   val rcFile:File = findAllUpPath(".scaldrc").reverse.head
 
-  private val swource = scala.io.Source.fromFile(rcFile.toString)
+  private val source = scala.io.Source.fromFile(rcFile.toString)
   private val json = parse(source.mkString)
   source.close()
 
