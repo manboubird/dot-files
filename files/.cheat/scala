@@ -1,0 +1,7 @@
+
+# load a script
+scala -i Script.scala
+
+# load a script
+scala> :load Script.scala
+
