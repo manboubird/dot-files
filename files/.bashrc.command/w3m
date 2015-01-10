@@ -4,9 +4,23 @@ if [ $(is_command_exists w3m) -eq 0 ];then
     QUERY=$2
     FILTER=$3
     CUT_TAIL_NUM=$4
-    w3m "${URL}${QUERY}" | grep -A 1000 "${FILTER}" | sed -e :a -e "$d;N;2,${CUT_TAIL_NUM}ba" -e 'P;D' 
+    CSS_SEL=$5
+    if [ -n "$CSS_SEL" -a $(is_command_exists python) -eq 0 -a $(is_command_exists scrape) -eq 0 -a $(is_command_exists curl) -eq 0 ];then
+      # transformation with css selector
+      #   https://github.com/jeroenjanssens/data-science-at-the-command-line/blob/master/tools/scrape 
+      curl "${URL}${QUERY}" -s | scrape -be "${CSS_SEL}" | w3m -dump -T text/html
+    else
+      # transformation with grep & cut
+      w3m "${URL}${QUERY}" | grep -A 1000 "${FILTER}" | sed -e :a -e "$d;N;2,${CUT_TAIL_NUM}ba" -e 'P;D' 
+    fi
     printf "Cited Link:\n${URL}${QUERY}\n"
   }
-  function weblio() { _dic "http://ejje.weblio.jp/content/" "$1" "用例" "140"; }
-  function alc() { _dic "http://eow.alc.co.jp/search?q=" "$1" "$1" "12"; }
+  function weblio() { 
+    CSS_SEL='div#main'
+    _dic "http://ejje.weblio.jp/content/" "$1" "用例" "140" "$CSS_SEL" | less
+  }
+  function alc() { 
+    CSS_SEL='div.itemPostion, li > span.midashi, li > div'
+    _dic "http://eow.alc.co.jp/search?q=" "$1" "$1" "12" "$CSS_SEL" | less
+  }
 fi

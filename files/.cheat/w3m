@@ -1,0 +1,4 @@
+
+# stdout of text of a web page
+w3m -dump -T text/html http://eow.alc.co.jp/search?q=test
+
