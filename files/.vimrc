@@ -156,9 +156,7 @@ autocmd FileType ruby     :compiler ruby
 nmap <silent> <Leader>m :!clear<CR>:make -c %<CR>
 
 if (executable("ctags"))
-" sbt-ctags
-"   https://github.com/kalmanb/sbt-ctags
-" set tags=./tags,tags,../tags
+ set tags=./.tags,.tags,./tags,tags
 endif
 
 " jq

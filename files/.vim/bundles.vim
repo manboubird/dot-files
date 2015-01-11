@@ -89,6 +89,11 @@ if (executable("w3m"))
   Bundle 'yuratomo/w3m.vim'
 endif
 
+" ctags
+if (executable("ctags"))
+  Bundle 'majutsushi/tagbar'
+endif
+
 " exp
 "Bundle 'scrooloose/nerdcommenter'
 "Bundle 'LogViewer'
@@ -109,8 +114,6 @@ Bundle "honza/vim-snippets"
 " install vim-snimate itself at last
 Bundle "garbas/vim-snipmate"
 """
-
-
 
 " syntax highlight
 Bundle "http://bitbucket.org/larsyencken/vim-drake-syntax.git"
@@ -133,6 +136,7 @@ if version >= 702
 
   " http://www.vim.org/scripts/script.php?script_id=1234
   " Bundle 'YankRing.vim'
+  Bundle 'regedarek/ZoomWin'
 endif
 
 " vim 7.3+

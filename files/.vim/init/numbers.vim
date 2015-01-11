@@ -1,1 +1,1 @@
-let g:numbers_exclude = [ 'gundo', 'nerdtree', 'vimshell', 'w3m']
+let g:numbers_exclude = [ 'gundo', 'nerdtree', 'vimshell', 'w3m', 'tagbar' ]
