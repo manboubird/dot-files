@@ -27,8 +27,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
-
-Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'bling/vim-airline'
 
 " comment out due to collision of gist-vim  
 Bundle 'suan/vim-instant-markdown'
@@ -83,6 +82,11 @@ endif
 " ag
 if (executable("ag"))
   Bundle 'rking/ag.vim'
+endif
+
+" w3m
+if (executable("w3m"))
+  Bundle 'yuratomo/w3m.vim'
 endif
 
 " exp
