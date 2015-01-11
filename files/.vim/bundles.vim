@@ -143,8 +143,11 @@ if version >= 703
   " Bundle 'Shougo/neocomplcache'
   " Bundle 'Shougo/neocomplcache-snippets-complete'
 
-  " https://github.com/sjl/gundo.vim
-  " Bundle 'sjl/gundo.vim'
+  if (executable("python"))
+    " Bundle 'sjl/gundo.vim'
+  endif
+
+  Bundle "myusuf3/numbers.vim"
 endif
 
 if hasVundle == 0
