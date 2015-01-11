@@ -149,10 +149,30 @@ nnoremap <C-p> gT
 " prevent auto newline
 set tw=0
 
+
 " Quick Fix
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType ruby     :compiler ruby
 nmap <silent> <Leader>m :!clear<CR>:make -c %<CR>
+
+if (executable("ctags"))
+" sbt-ctags
+"   https://github.com/kalmanb/sbt-ctags
+" set tags=./tags,tags,../tags
+endif
+
+" jq
+if (executable("jq"))
+  command! -nargs=? Jq call s:Jq(<f-args>)
+  function! s:Jq(...)
+    if 0 == a:0
+      let l:arg = "."
+    else
+      let l:arg = a:1
+    endif
+    execute "%! jq " . l:arg . ""
+  endfunction
+endif
 
 " local vim settings
 silent! source ~/.vimrc.local

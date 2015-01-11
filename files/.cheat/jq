@@ -5,3 +5,9 @@ jq '.'
 # select with condition
 jq 'select(.type == "TYPE")'
 
+# force to output in Ascii format
+jq -a '.' 
+
+# compact output which is one line
+jq -c '.' 
+

@@ -18,7 +18,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'sudo.vim'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'derekwyatt/vim-scala'
 Bundle 'surround.vim'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-session'
@@ -40,6 +39,13 @@ Bundle 'tpope/vim-classpath'
 Bundle 'guns/vim-clojure-static'
 Bundle 'paredit.vim'
 Bundle 'liquidz/lein-vim'
+Bundle 'kien/rainbow_parentheses.vim'
+
+" scala
+Bundle 'derekwyatt/vim-scala'
+" sbt-vim requires python
+" Bundle 'ktvoelker/sbt-vim'
+
 
 " screen
 if (executable("screen"))
