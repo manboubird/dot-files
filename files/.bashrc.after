@@ -1,13 +1,13 @@
 ##
 # Load command files
 ##
-DOT_FILES_COMMAND_FILES_COMMON="ls cd df du pbcopy rmdir openssl z open vim w3m ack find hadoop pdsh mysql nodeattr screen tmux peco ghq"
+DOT_FILES_COMMAND_FILES_COMMON="ls cd df du pbcopy rmdir openssl z open vim w3m ack find hadoop pdsh mysql nodeattr screen tmux curl"
 
 source ~/.bashrc.command/functions
 DIR=$(get_current_dir)
 source_files "$DIR" "$DOT_FILES_COMMAND_FILES_COMMON"
 
 # when local setting variable is set, load it.
-if [ -z "${DOT_FILES_COMMAND_FILES}" ]; then 
+if [ -n "${DOT_FILES_COMMAND_FILES}" ]; then 
   source_files "$DIR" "$DOT_FILES_COMMAND_FILES"
 fi
