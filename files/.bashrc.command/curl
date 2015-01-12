@@ -1,5 +1,6 @@
 if [ $(is_command_exists curl) -eq 0 ];then
   if [ $(is_command_exists jq) -eq 0 ];then
-    function curljq(){ curl -s "$@" | jq -C '.' | less -R; }
+    function curljq { curl -s "$@" | jq '.'; }
+    function curljq_look { curl -s "$@" | jq -C '.' | less -R; }
   fi
 fi
