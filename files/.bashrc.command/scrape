@@ -1,0 +1,16 @@
+if [ $(is_command_exists scrape) -eq 0 -a $(is_command_exists curl) -eq 0 ]; then
+  function scrape2file { 
+    url=$1; CSS_SEL=$2;
+    html=$(mktemp $TMPDIR/$(uuidgen).html)
+    curl -s "$url" | scrape -be "$CSS_SEL" > $html
+    echo $html
+  }
+  function scrape2file_op {
+    url=$1; CSS_SEL=$2;
+    html=$(scrape2file "$url" "$CSS_SEL")
+    echo $html
+    open $html
+  }
+  function scrape_img { url=$1; CSS_SEL=".img"; scrape2file "$url" "$CSS_SEL"; }
+  function scrape_img_op { url=$1; CSS_SEL=".img"; html=$(scrape2file_op "$url" "$CSS_SEL"); }
+fi
