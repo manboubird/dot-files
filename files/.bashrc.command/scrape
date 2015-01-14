@@ -11,6 +11,6 @@ if [ $(is_command_exists scrape) -eq 0 -a $(is_command_exists curl) -eq 0 ]; the
     echo $html
     open $html
   }
-  function scrape_img { url=$1; CSS_SEL=".img"; scrape2file "$url" "$CSS_SEL"; }
-  function scrape_img_op { url=$1; CSS_SEL=".img"; html=$(scrape2file_op "$url" "$CSS_SEL"); }
+  function scrape_img { url=$1; CSS_SEL="img"; scrape2file "$url" "$CSS_SEL"; }
+  function scrape_img_op { url=$1; CSS_SEL="img"; scrape2file_op "$url" "$CSS_SEL"; }
 fi
