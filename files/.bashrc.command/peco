@@ -2,6 +2,14 @@ if [ $(is_command_exists peco) -eq 0 ];then
   if [ $(is_command_exists git) -eq 0 ];then
     alias git_co_br_peco='git checkout $(git branch | peco)'
     alias ghq_cd_peco='cd $(ghq list -p | peco)'
+    function git_add_peco {
+      paths=$(git status --porcelain | peco --prompt 'PATH>' | awk -F ' ' '{ print $NF }')
+      if [ -n "$paths" ]; then
+        git add $paths
+        echo "Added files:"
+        echo $paths | tr ' ' '\n' | sort | sed 's/^/  /'
+      fi
+    }
   fi
 
   if [ $(is_command_exists history) -eq 0 ];then
@@ -9,10 +17,19 @@ if [ $(is_command_exists peco) -eq 0 ];then
   fi
 
   if [ $(is_command_exists ack) -eq 0 ];then
-    # ack-cat a file
-    function ackcat_peco {
-      ack "^$" -v "$@" | peco
+    function ackf_peco_look { 
+      paths=$(ack -f | peco --prompt 'PATH>')
+      if [ -n "$paths" ]; then
+        less -N $paths; 
+      fi
     }
+    function ackf_peco_edit { 
+      paths=$(ack -f | peco --prompt 'PATH>' )
+      if [ -n "$paths" ]; then
+        vim -c "tab all" $paths
+      fi
+    }
+    function ackcat_peco { ack "^$" -v "$@" | peco; }
 
     # open a ack-cat-ed file at the specific line number
     function ackcat_peco_look {

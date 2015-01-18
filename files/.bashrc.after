@@ -24,6 +24,7 @@ DOT_FILES_COMMAND_FILES_COMMON=(
   w3m
   z
 )
+DOT_FILES_COMMAND_FILES_COMMON="${DOT_FILES_COMMAND_FILES_COMMON[@]}"
 
 source ~/.bashrc.command/functions
 DIR=$(get_current_dir)
