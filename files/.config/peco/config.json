@@ -1,9 +1,18 @@
 {
+    "Action": {
+        "selectAllAndFinish": [
+            "peco.SelectAll",
+            "peco.Finish"
+        ]
+    },
     "Keymap": {
         "C-k": "peco.SelectUp",
         "C-j": "peco.SelectDown",
         "C-b": "peco.ScrollPageUp",
         "C-f": "peco.ScrollPageDown",
-        "C-q": "peco.Cancel"
+        "C-q": "peco.Cancel",
+        "C-v": "peco.SelectAll",
+        "C-g": "peco.SelectNone",
+        "C-c,C-c": "selectAllAndFinish"
     }
 }
