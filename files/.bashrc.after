@@ -1,13 +1,49 @@
 ##
 # Load command files
 ##
-DOT_FILES_COMMAND_FILES_COMMON="ls cd df du pbcopy rmdir openssl z open vim w3m ack find hadoop pdsh mysql nodeattr screen tmux curl scrape"
+DOT_FILES_COMMAND_FILES_COMMON=(
+  ack
+  cd
+  curl
+  df
+  du
+  find
+  hadoop
+  ls
+  mysql
+  nodeattr
+  open
+  openssl
+  pbcopy
+  pdsh
+  rmdir
+  scrape
+  screen
+  tmux
+  vim
+  w3m
+  z
+)
 
 source ~/.bashrc.command/functions
 DIR=$(get_current_dir)
 source_files "$DIR" "$DOT_FILES_COMMAND_FILES_COMMON"
 
 # when local setting variable is set, load it.
+# 
+# put below on .bashrc.local for optional loading:
+#
+#  DOT_FILES_COMMAND_FILES=(
+#    ag
+#    cheat
+#    drake
+#    ghq
+#    less
+#    nodejs
+#    peco
+#  )
+#  export DOT_FILES_COMMAND_FILES="${DOT_FILES_COMMAND_FILES[@]}"
+#
 if [ -n "${DOT_FILES_COMMAND_FILES}" ]; then 
   source_files "$DIR" "$DOT_FILES_COMMAND_FILES"
 fi

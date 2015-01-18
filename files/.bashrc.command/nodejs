@@ -1,1 +1,8 @@
-[ -f ~/.nvm/nvm.sh ] && source ~/.nvm/nvm.sh
+if [[ "${OSTYPE}" == "darwin"* && $(is_command_exists brew) -eq 0 ]];then
+  if [ "${USE_NVM}" == "true" -a -n "${NVM_VERSION}" ]; then
+    export NVM_DIR=~/.nvm
+    source $(brew --prefix nvm)/nvm.sh
+    nvm use ${NVM_VERSION} 1> /dev/null
+    [ $? -ne 0 ] && echo "NVM_VERSION is wrong? NVM_VERSION=${NVM_VERSION}"
+  fi
+fi
