@@ -23,4 +23,8 @@ if [ $(is_command_exists w3m) -eq 0 ];then
     CSS_SEL='div.itemPostion, li > span.midashi, li > div'
     _dic "http://eow.alc.co.jp/search?q=" "$1" "$1" "12" "$CSS_SEL" | less
   }
+  if [ $(is_command_exists peco) -eq 0 ];then
+    function alc-repl { while read -p "alc > " INPUT; do alc "$INPUT" | peco --prompt "$INPUT >" ; done }
+    function weblio-repl { while read -p "weblio > " INPUT; do weblio "$INPUT" | peco --prompt "$INPUT >" ; done }
+  fi
 fi
