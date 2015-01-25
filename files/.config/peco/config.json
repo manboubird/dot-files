@@ -1,4 +1,7 @@
 {
+   "CustomMatcher": {
+        "Migemo": [ "migemogrep", "$QUERY" ]
+    },
     "Action": {
         "selectAllAndFinish": [
             "peco.SelectAll",
