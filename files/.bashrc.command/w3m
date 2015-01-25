@@ -24,7 +24,29 @@ if [ $(is_command_exists w3m) -eq 0 ];then
     _dic "http://eow.alc.co.jp/search?q=" "$1" "$1" "12" "$CSS_SEL" | less
   }
   if [ $(is_command_exists peco) -eq 0 ];then
-    function alc-repl { while read -p "alc > " INPUT; do alc "$INPUT" | peco --prompt "$INPUT >" ; done }
-    function weblio-repl { while read -p "weblio > " INPUT; do weblio "$INPUT" | peco --prompt "$INPUT >" ; done }
+    function dic {
+      DIC=alc
+      while read -p "$DIC > " INPUT; do
+        case "$INPUT" in
+          -ls )
+            echo "Dictionaries:"
+            for s in alc weblio; do echo "$s"; done
+            continue
+            ;;
+          -dic* )
+            v=$(echo $INPUT | tr -s ' ' | cut -d' ' -f2)
+            case "$v" in
+              "alc" | "weblio" )
+                DIC=$v
+                echo "Set dictionary to $DIC"
+                ;;
+              * ) echo "Unknown dictionary $v"
+            esac
+            continue
+            ;;
+        esac
+        $DIC "$INPUT" | peco --prompt "$INPUT >"
+      done
+    }
   fi
 fi
