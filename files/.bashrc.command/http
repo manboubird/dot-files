@@ -1,0 +1,3 @@
+if [ $(is_command_exists http) -eq 0 ];then
+  function httpless { http --pretty=all --print=hb "$@" | less -R; }
+fi

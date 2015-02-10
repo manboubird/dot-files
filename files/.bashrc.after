@@ -9,6 +9,7 @@ DOT_FILES_COMMAND_FILES_COMMON=(
   du
   find
   hadoop
+  http
   ls
   mysql
   nodeattr
