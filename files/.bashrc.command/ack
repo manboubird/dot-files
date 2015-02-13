@@ -1,8 +1,8 @@
 if [ $(is_command_exists ack) -eq 0 ];then
   alias ackcat='ack "^$" -v'
   alias ackf='ack -f'
-  function ackf_fn_fltr(){ ack -f | ack "$@" ; }
-  function ackcat_fn_fltr(){ ack -f | ack "$@" | ackcat "^$" -v --files-from=- ; }
+  function ackf_path_filter { ack -f | ack "$@" ; }
+  function ackcat_path_filter { ack -f | ack "$@" | ack "^$" -v --files-from=- ; }
   # languages
   alias ackjvm='ack --clojure --java --scala'
   alias ackjav='ack --java'
