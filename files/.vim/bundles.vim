@@ -94,6 +94,11 @@ if (executable("ctags"))
   Bundle 'majutsushi/tagbar'
 endif
 
+" plantuml
+if (executable("plantuml"))
+  Bundle 'aklt/plantuml-syntax'
+endif
+
 " exp
 "Bundle 'scrooloose/nerdcommenter'
 "Bundle 'LogViewer'
