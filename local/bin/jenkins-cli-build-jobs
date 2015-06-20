@@ -7,7 +7,7 @@ JENKINS_CLI_RC_LOCAL=${JENKINS_CLI_RC_LOCAL:-~/.jenkins-clirc.local}
 job_list=$(JENKINS_CLI_SILENT_CONSOLE=true jenkins-cli list-jobs | peco)
 for job in ${job_list[@]};do
   echo "Execute command:"
-  echo "  jenkins-cli build ${job} $@"
+  echo "  jenkins-cli build ${job} ${JENKINS_CLI_BUILD_JOBS_DEFAULT_PARAMS} $@"
   echo ""
   while true; do
     read -p "Do you execute the command? " yn
@@ -18,7 +18,7 @@ for job in ${job_list[@]};do
         echo "---"
         echo "--- START JOB [ ${job} ] ${job_url} ---"
         echo "---"
-        jenkins-cli build ${job} "$@"
+        jenkins-cli build ${job} ${JENKINS_CLI_BUILD_JOBS_DEFAULT_PARAMS} "$@"
         exit_code=$?
         echo "---"
         echo "--- COMPLETE JOB [ ${job} ] ${job_url} ---"

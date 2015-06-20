@@ -12,7 +12,7 @@ function usage {
 }
 
 function log {
-  [ "${JENKINS_CLI_SILENT_CONSOLE}" == "false" ] && echo "$1"
+  [ "${JENKINS_CLI_SILENT_CONSOLE}" == "false" ] && echo "$@"
 }
 
 function set_and_download_jar {
@@ -41,5 +41,5 @@ fi
 
 [ ! -z "${JENKINS_CLI_SSH_KEY}" ] && JENKINS_CLI_OPTS_SSH_KEY="-i ${JENKINS_CLI_SSH_KEY}"
 
-log "${JAVA_EXEC} -jar ${JENKINS_CLI_JAR} ${JENKINS_CLI_OPTS_SSH_KEY} $@"
+log "${JAVA_EXEC} -jar ${JENKINS_CLI_JAR} ${JENKINS_CLI_OPTS_SSH_KEY}" "$@"
 ${JAVA_EXEC} -jar ${JENKINS_CLI_JAR} ${JENKINS_CLI_OPTS_SSH_KEY} "$@"

@@ -3,3 +3,4 @@
 #export JENKINS_CLI_JAR=~/local/Cellar/jenkins/jenkins-cli.jar
 #export JENKINS_CLI_RC_LOCAL=~/.jenkins-clirc.local
 #export JENKINS_CLI_SILENT_CONSOLE=false
+#export JENKINS_CLI_BUILD_JOBS_DEFAULT_PARAMS=""
