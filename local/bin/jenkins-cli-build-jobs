@@ -1,0 +1,37 @@
+#!/bin/bash
+JENKINS_CLI_RC_LOCAL=${JENKINS_CLI_RC_LOCAL:-~/.jenkins-clirc.local}
+
+[ -f ~/.jenkins-clirc ] && source ~/.jenkins-clirc
+[ -f ${JENKINS_CLI_RC_LOCAL} ] && source ${JENKINS_CLI_RC_LOCAL}
+
+job_list=$(JENKINS_CLI_SILENT_CONSOLE=true jenkins-cli list-jobs | peco)
+for job in ${job_list[@]};do
+  echo "Execute command:"
+  echo "  jenkins-cli build ${job} $@"
+  echo ""
+  while true; do
+    read -p "Do you execute the command? " yn
+    case $yn in
+      [Yy]* )
+        job_url=${JENKINS_URL}/job/${job}/lastBuild/
+        echo
+        echo "---"
+        echo "--- START JOB [ ${job} ] ${job_url} ---"
+        echo "---"
+        jenkins-cli build ${job} "$@"
+        exit_code=$?
+        echo "---"
+        echo "--- COMPLETE JOB [ ${job} ] ${job_url} ---"
+        echo "---"
+        echo
+        if [ "$exit_code" != "0" ];then
+          echo "The job ${job} is failed! Stop exections."
+          break 2
+        fi
+        break;;
+      [Nn]* )
+        break;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+done

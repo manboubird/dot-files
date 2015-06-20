@@ -1,0 +1,45 @@
+#!/bin/bash
+JAVA_EXEC=${JAVA_EXEC:-java}
+JENKINS_CLI_RC_LOCAL=${JENKINS_CLI_RC_LOCAL:-~/.jenkins-clirc.local}
+JENKINS_CLI_SILENT_CONSOLE=${JENKINS_CLI_SILENT_CONSOLE:-false}
+
+[ -f ~/.jenkins-clirc ] && source ~/.jenkins-clirc
+[ -f ${JENKINS_CLI_RC_LOCAL} ] && source ${JENKINS_CLI_RC_LOCAL}
+
+function usage {
+  echo "USAGE: $0 [-b] jenkins-cli-params ..." 1>&2
+  exit 1
+}
+
+function log {
+  [ "${JENKINS_CLI_SILENT_CONSOLE}" == "false" ] && echo "$1"
+}
+
+function set_and_download_jar {
+  [ -z "${JENKINS_URL}" ] && echo "JENKINS_URL is must be set" && exit 1
+  if [ ! -f "${JENKINS_CLI_JAR}" ];then
+    JENKINS_CLI_JAR_TMP=/tmp/jenkins-cli.jar
+    echo "Download ${JENKINS_URL}/jnlpJars/jenkins-cli.jar into ${JENKINS_CLI_JAR_TMP}"
+    wget -O ${JENKINS_CLI_JAR_TMP} ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
+
+    JENKINS_VERSION=$(${JAVA_EXEC} -jar ${JENKINS_CLI_JAR_TMP} version)
+    echo "Jenkins version is ${JENKINS_VERSION}"
+
+    JENKINS_CLI_JAR=~/local/Cellar/jenkins/${JENKINS_VERSION}/jenkins-cli.jar
+    mkdir -vp $(dirname "${JENKINS_CLI_JAR}")
+    mv -v ${JENKINS_CLI_JAR_TMP} ${JENKINS_CLI_JAR}
+    echo "Stored jar path: ${JENKINS_CLI_JAR}"
+  fi
+}
+
+if [ -z "${JENKINS_CLI_JAR}" ];then
+  set_and_download_jar
+elif [ ! -f "${JENKINS_CLI_JAR}" ];then
+  echo "JENKINS_CLI_JAR is not found. JENKINS_CLI_JAR=${JENKINS_CLI_JAR}"
+  set_and_download_jar
+fi
+
+[ ! -z "${JENKINS_CLI_SSH_KEY}" ] && JENKINS_CLI_OPTS_SSH_KEY="-i ${JENKINS_CLI_SSH_KEY}"
+
+log "${JAVA_EXEC} -jar ${JENKINS_CLI_JAR} ${JENKINS_CLI_OPTS_SSH_KEY} $@"
+${JAVA_EXEC} -jar ${JENKINS_CLI_JAR} ${JENKINS_CLI_OPTS_SSH_KEY} "$@"

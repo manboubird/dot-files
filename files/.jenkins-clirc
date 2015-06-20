@@ -1,0 +1,5 @@
+#export JENKINS_URL=http://localhost:80800
+#export JENKINS_CLI_SSH_KEY=~/.ssh/id_rsa
+#export JENKINS_CLI_JAR=~/local/Cellar/jenkins/jenkins-cli.jar
+#export JENKINS_CLI_RC_LOCAL=~/.jenkins-clirc.local
+#export JENKINS_CLI_SILENT_CONSOLE=false
