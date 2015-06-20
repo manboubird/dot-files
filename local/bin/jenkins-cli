@@ -6,10 +6,6 @@ JENKINS_CLI_SILENT_CONSOLE=${JENKINS_CLI_SILENT_CONSOLE:-false}
 [ -f ~/.jenkins-clirc ] && source ~/.jenkins-clirc
 [ -f ${JENKINS_CLI_RC_LOCAL} ] && source ${JENKINS_CLI_RC_LOCAL}
 
-function usage {
-  echo "USAGE: $0 [-b] jenkins-cli-params ..." 1>&2
-  exit 1
-}
 
 function log {
   [ "${JENKINS_CLI_SILENT_CONSOLE}" == "false" ] && echo "$@"
