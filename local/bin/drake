@@ -1,13 +1,16 @@
 #!/bin/bash
+
 JAVA_EXEC=${JAVA_EXEC:-java}
-DRAKE_HOME=${DRAKE_HOME:-$HOME/local/Cellar/drake}
-DRAKE_JAR=${DRAKE_HOME}/drake.jar
+DRAKE_HOME=${DRAKE_HOME:-${HOME}/local/Cellar/drake/latest}
+DRAKE_JAR=${DRAKE_JAR:-${DRAKE_HOME}/libexec/drake.jar}
+
+echo "Using DRAKE_HOME: $DRAKE_HOME"
 
 if [[ `which drip` ]]; then
-  echo drip -jar $DRAKE_JAR "$@"
-  drip -jar ${DRAKE_JAR} "$@"
+  echo "Using drip to start up JVM..."
+  echo drip -cp $DRAKE_JAR drake.core "$@"
+  drip -cp $DRAKE_JAR drake.core "$@"
 else
-  echo ${JAVA_EXEC} -jar ${DRAKE_JAR} "$@"
-  ${JAVA_EXEC} -jar ${DRAKE_JAR} "$@"
+  echo ${JAVA_EXEC} -cp $DRAKE_JAR drake.core "$@"
+  ${JAVA_EXEC} -cp $DRAKE_JAR drake.core "$@"
 fi
-
