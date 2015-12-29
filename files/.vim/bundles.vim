@@ -65,7 +65,7 @@ endif
 Bundle 'SQLComplete.vim'
 Bundle 'dbext.vim'
 Bundle "vim-scripts/SQLUtilities"
-Bundle "Align"
+Bundle "junegunn/vim-easy-align"
 
 " git
 if (executable("git"))
@@ -102,6 +102,9 @@ endif
 " js
 Bundle 'pangloss/vim-javascript'
 Bundle 'mxw/vim-jsx'
+
+" python
+Bundle 'nvie/vim-flake8'
 
 " exp
 "Bundle 'scrooloose/nerdcommenter'

@@ -8,7 +8,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'active',
-                           \ 'active_filetypes': ['ruby','puppet','json','sh','yaml','perl','javascript'],
-                           \ 'passive_filetypes': [] }
+                           \ 'active_filetypes': ['ruby','puppet','json','sh','yaml','perl','javascript','python'],
+                           \ 'passive_filetypes': ['html'] }
+let g:syntastic_python_checkers = ["flake8"]
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
+
