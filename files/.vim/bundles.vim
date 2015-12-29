@@ -99,6 +99,10 @@ if (executable("plantuml"))
   Bundle 'aklt/plantuml-syntax'
 endif
 
+" js
+Bundle 'pangloss/vim-javascript'
+Bundle 'mxw/vim-jsx'
+
 " exp
 "Bundle 'scrooloose/nerdcommenter'
 "Bundle 'LogViewer'
