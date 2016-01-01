@@ -153,6 +153,8 @@ endif
 
 " vim 7.3+
 if version >= 703
+  Bundle 'Yggdroot/indentLine'
+  Bundle 'elzr/vim-json'
   " Bundle 'Shougo/vimshell'
   " turn off for snipmate
   " Bundle 'Shougo/vimproc'
