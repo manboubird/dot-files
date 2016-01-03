@@ -7,3 +7,4 @@ files/.sbt/boot/
 files/.sbt/launchers
 files/.vim/bundle/vundle/
 files/.vim/sessions/
+target/
