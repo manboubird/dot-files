@@ -32,6 +32,8 @@ Bundle 'bling/vim-airline'
 " comment out due to collision of gist-vim  
 Bundle 'suan/vim-instant-markdown'
 
+Bundle 'Rykka/riv.vim'
+
 " clojure
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-classpath'
@@ -139,9 +141,9 @@ endif
 
 " vim 7.2+
 if version >= 702
-  Bundle 'nathanaelkane/vim-indent-guides'
-  Bundle 'ddclones/vim-l9'
-  Bundle 'vim-scripts/FuzzyFinder'
+  " Bundle 'nathanaelkane/vim-indent-guides'
+  " Bundle 'ddclones/vim-l9'
+  " Bundle 'vim-scripts/FuzzyFinder'
 
   " https://github.com/Lokaltog/vim-easymotion
   Bundle 'Lokaltog/vim-easymotion'
