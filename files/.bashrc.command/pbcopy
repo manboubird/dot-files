@@ -3,6 +3,7 @@ if [ $(is_command_exists pbcopy) -eq 0 ];then
     darwin*)
     # Mac(Unix)
     alias clip="nkf -w | pbcopy"
+    alias cpwd="pwd | tr -d '\n' | pbcopy"
     ;;
   esac
 fi
