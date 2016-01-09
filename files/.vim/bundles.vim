@@ -28,6 +28,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bling/vim-airline'
+Bundle 'simeji/winresizer'
 
 " comment out due to collision of gist-vim  
 Bundle 'suan/vim-instant-markdown'
