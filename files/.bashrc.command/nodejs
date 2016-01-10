@@ -4,5 +4,6 @@ if [[ "${OSTYPE}" == "darwin"* && $(is_command_exists brew) -eq 0 ]];then
     source $(brew --prefix nvm)/nvm.sh
     nvm use ${NVM_VERSION} 1> /dev/null
     [ $? -ne 0 ] && echo "NVM_VERSION is wrong? NVM_VERSION=${NVM_VERSION}"
+    export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
   fi
 fi
