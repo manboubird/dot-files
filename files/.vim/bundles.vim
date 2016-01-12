@@ -75,6 +75,7 @@ if (executable("git"))
   Bundle 'tpope/vim-fugitive'
   Bundle 'mattn/webapi-vim'
   Bundle 'mattn/gist-vim'
+  Bundle 'airblade/vim-gitgutter'
 endif
 
 " ack
@@ -107,7 +108,12 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'mxw/vim-jsx'
 
 " python
-Bundle 'nvie/vim-flake8'
+if (executable("python"))
+  Bundle 'nvie/vim-flake8'
+  if (executable("virtualenv"))
+    Bundle 'jmcantrell/vim-virtualenv'
+  endif
+endif
 
 " exp
 "Bundle 'scrooloose/nerdcommenter'
