@@ -1,3 +1,7 @@
+# Copy & paste
+1. start selection: Ctrl-b [
+2. copy: space
+3. paste: Ctrl-b ]
 
 # load config file 
 tmux source-file ~/.tmux.conf
