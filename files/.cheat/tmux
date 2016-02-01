@@ -1,3 +1,12 @@
+# Moving panes around:
+C-a {          move the current pane to the previous position
+C-a }          move the current pane to the next position
+C-a C-o        rotate window ‘up’ (i.e. move all panes)
+C-a M-o        rotate window ‘down’
+C-a !          move the current pane into a new separate
+               window (‘break pane’)
+C-a :move-pane -t :3.2
+               split window 3's pane 2 and move the current pane there
 
 # load config file 
 tmux source-file ~/.tmux.conf
