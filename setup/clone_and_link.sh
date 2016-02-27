@@ -1,7 +1,7 @@
 #!/bin/bash
-GIT_REPO=git://github.com/manboubird/dot-files.git 
+GIT_REPO=${DOT_FILES_GIT_REPO:-"git://github.com/manboubird/dot-files.git"}
 
-files=.dot-files/files
+files=".dot-files/files"
 cd &&
 [ -d '.dot-files' ] || git clone "$GIT_REPO" .dot-files &&
 ls -1d $files/* $files/.* | while read f; do
@@ -12,8 +12,8 @@ ls -1d $files/* $files/.* | while read f; do
   ln -vsf "$f" .
 done
 
-mkdir -p $HOME/local/bin 
-bin="$HOME/.dot-files/local/bin"
+mkdir -p "${HOME}/local/bin" 
+bin="${HOME}/.dot-files/local/bin"
 cd && 
 [ -d '.dot-files' ] &&
 ls -1d $bin/* | while read f; do
@@ -21,6 +21,6 @@ ls -1d $bin/* | while read f; do
   [ "$f" == "$bin/.." ] ||
   [ "$f" == "$bin/.git" ] ||
   [[ "$f" == *".swp" ]] ||
-  ln -vsf "$f" $HOME/local/bin/
+  ln -vsf "$f" "${HOME}/local/bin/"
 done
 
