@@ -8,6 +8,11 @@ C-a !          move the current pane into a new separate
 C-a :move-pane -t :3.2
                split window 3's pane 2 and move the current pane there
 
+# Copy & paste
+1. start selection: Ctrl-b [
+2. copy: space
+3. paste: Ctrl-b ]
+
 # load config file 
 tmux source-file ~/.tmux.conf
 
