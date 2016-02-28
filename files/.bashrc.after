@@ -41,8 +41,10 @@ source_files "$DIR" "$DOT_FILES_COMMAND_FILES_COMMON"
 #    drake
 #    ghq
 #    less
+#    macvim
 #    nodejs
 #    peco
+#    python
 #  )
 #  export DOT_FILES_COMMAND_FILES="${DOT_FILES_COMMAND_FILES[@]}"
 #
