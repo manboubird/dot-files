@@ -56,7 +56,7 @@ endif
 
 " tmux
 if (executable("tmux"))
-  Bundle 'benmills/vimux'
+  Bundle 'epeli/slimux'
 endif
 
 " graphviz
