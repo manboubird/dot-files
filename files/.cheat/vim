@@ -1,3 +1,8 @@
+# Common 
+
+## open multiple files in tabs
+vim -p $(ack -f | grep KEYWORD | perl -pe 's/\n/ /')
+
 # plugin
 
 ## vim-scripts/ZoomWin
