@@ -28,12 +28,13 @@ Bundle 'tpope/vim-markdown'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bling/vim-airline'
-Bundle 'simeji/winresizer'
+" Bundle 'simeji/winresizer'
 
 " comment out due to collision of gist-vim  
 Bundle 'suan/vim-instant-markdown'
 
 Bundle 'Rykka/riv.vim'
+Bundle 'Rykka/InstantRst'
 
 " clojure
 Bundle 'tpope/vim-fireplace'
@@ -68,7 +69,10 @@ endif
 Bundle 'SQLComplete.vim'
 Bundle 'dbext.vim'
 Bundle "vim-scripts/SQLUtilities"
+Bundle 'vim-scripts/Align'
 Bundle "junegunn/vim-easy-align"
+" specific db feature
+Bundle "exu/pgsql.vim"
 
 " git
 if (executable("git"))
@@ -148,7 +152,7 @@ endif
 
 " vim 7.2+
 if version >= 702
-  " Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'nathanaelkane/vim-indent-guides'
   " Bundle 'ddclones/vim-l9'
   " Bundle 'vim-scripts/FuzzyFinder'
 
@@ -162,8 +166,8 @@ endif
 
 " vim 7.3+
 if version >= 703
-  Bundle 'Yggdroot/indentLine'
-  Bundle 'elzr/vim-json'
+  " Bundle 'Yggdroot/indentLine'
+  " Bundle 'elzr/vim-json'
   " Bundle 'Shougo/vimshell'
   " turn off for snipmate
   " Bundle 'Shougo/vimproc'

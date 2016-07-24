@@ -1,1 +1,1 @@
-autocmd BufRead *.sql set filetype=mysql
+autocmd BufNewFile,BufRead *.sql set filetype=pgsql

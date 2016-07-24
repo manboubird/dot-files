@@ -1,12 +1,15 @@
 "================================================= 
-" Vundle plugin for plugin management 
-" First vim invocation command with:
-"   vim -u ~/.vim/bundles.vim +BundleInstall +q
+" plugin management 
 "=================================================
-:source <sfile>:h/.vim/bundles.vim
 
-" Source initialization files
+" Dein
+" :source <sfile>:h/.vim/init-dein-plugins.vim
+" runtime! init/**.vim
+
+" Bundle for stale plugin management
+:source <sfile>:h/.vim/bundles.vim
 runtime! init/**.vim
+
 "=================================================
 
 " Change the mapleader from \ to ,
@@ -50,8 +53,7 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  autocmd FileType text setlocal textwidth=0
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -107,7 +109,7 @@ set nrformats-=octal
 au FileType ruby setlocal path+=/usr/lib/ruby/1.8 suffixesadd+=.rb
 
 augroup ShebangAutowrite
-  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: iso-8859-15 -*-\<nl>\"|$
+  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl>\"|$
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/ruby\"|$
   autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl\"|$
   autocmd BufNewFile *.sh 0put =\"#!/bin/bash\"|$
@@ -140,14 +142,13 @@ nmap <silent> <Leader>d   :%s![“”]!"!g<CR>
 nmap <silent> "    mzbi"<ESC>ea"<ESC>`z
 
 nmap <silent> <Leader>c <C-W>l:bw<CR>
-nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
+
+" turn off ',s' for slimux 
+" nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
 
 " tab movement
 nnoremap <C-n> gt
 nnoremap <C-p> gT
-
-" prevent auto newline
-set tw=0
 
 
 " Quick Fix

@@ -73,9 +73,18 @@ dd              delete a line
 d{motion}       delete text that {motion} moves over
 
 
+# Moving around - Vim Tips Wiki - Wikia http://vim.wikia.com/wiki/Moving_around
+
 # Preceding a motion or edition with a number repeats it n times
 # Examples:
 50k         moves 50 lines up
 2dw         deletes 2 words
 5yy         copies 5 lines
 42G         go to line 42
+:42         go to line 42
+
+# f/F forward jumping 
+# t/T(backward) to go to the character before the given character, and ; to repeat the previous t/T/f/F
+fy          jump to next word 'y' appears.
+Fy          jump to previous word 'y' appears.
+
