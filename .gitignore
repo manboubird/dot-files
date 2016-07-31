@@ -1,6 +1,8 @@
 *.swp
+*.swo
 *.un~
 files/.config/configstore
+files/.config/gcloud
 files/.ivy2/
 files/.sbt/0.13/plugins/project/
 files/.sbt/0.13/plugins/target/
@@ -8,5 +10,6 @@ files/.sbt/boot/
 files/.sbt/launchers
 files/.tmux/plugins
 files/.vim/bundle/vundle
+files/.vim/dein/
 files/.vim/sessions
 target/

@@ -1,12 +1,15 @@
 "================================================= 
-" Vundle plugin for plugin management 
-" First vim invocation command with:
-"   vim -u ~/.vim/bundles.vim +BundleInstall +q
+" plugin management 
 "=================================================
-:source <sfile>:h/.vim/bundles.vim
 
-" Source initialization files
+" Dein
+" :source <sfile>:h/.vim/init-dein-plugins.vim
+" runtime! init/**.vim
+
+" Bundle for stale plugin management
+:source <sfile>:h/.vim/bundles.vim
 runtime! init/**.vim
+
 "=================================================
 
 " Change the mapleader from \ to ,

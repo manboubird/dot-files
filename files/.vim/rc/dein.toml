@@ -1,0 +1,165 @@
+[[plugins]]
+name = 'dein.vim'
+repo = 'manboubird/dein.vim'
+
+[[plugins]]
+repo = 'sudo.vim'
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+
+[[plugins]]
+repo = 'surround.vim'
+
+[[plugins]]
+repo = 'xolox/vim-misc'
+
+[[plugins]]
+repo = 'xolox/vim-session'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'godlygeek/tabular'
+
+[[plugins]]
+repo = 'tpope/vim-markdown'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'bling/vim-airline'
+
+[[plugins]]
+# comment out due to collision of gist-vim  
+repo = 'suan/vim-instant-markdown'
+
+[[plugins]]
+repo = 'Rykka/riv.vim'
+
+[[plugins]]
+repo = 'Rykka/InstantRst'
+
+[[plugins]]
+repo = 'vim-scripts/Quich-Filter'
+
+[[plugins]]
+repo = 'ervandew/supertab'
+
+[[plugins]]
+repo = 'jpalardy/vim-slime'
+if   = ''' executable("screen")'''
+
+[[plugins]]
+repo = 'epeli/slimux'
+if   = ''' executable("tmux")'''
+#hook_source = 'source ~/.vim/init/slimux.vim'
+
+
+[[plugins]]
+repo = 'wannesm/wmgraphviz.vim'
+if   = ''' executable('dot')'''
+
+[[plugins]]
+# http://blog.blueblack.net/item_164/
+repo = 'AutoComplPop'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+
+[[plugins]]
+repo = 'Lokaltog/vim-easymotion'
+
+[[plugins]]
+repo = 'regedarek/ZoomWin'
+
+[[plugins]]
+repo = 'myusuf3/numbers.vim'
+
+[[plugins]]
+repo = 'mileszs/ack.vim'
+if   = ''' executable('ack')'''
+
+[[plugins]]
+repo = 'rking/ag.vim'
+if   = ''' executable('ag')'''
+
+[[plugins]]
+repo = 'yuratomo/w3m.vim'
+if   = ''' executable('w3m')'''
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+if   = ''' executable('ctags')'''
+
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+if   = ''' executable('plantuml')'''
+
+
+###
+# git
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+#if   = ''' executable('git')'''
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+#if   = ''' executable('git')'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+#if   = ''' executable('git')'''
+
+#[[plugins]]
+#repo = 'mattn/gist-vim'
+#if   = ''' executable('git')'''
+
+
+###
+# database
+[[plugins]]
+repo = 'SQLComplete.vim'
+
+[[plugins]]
+repo = 'dbext.vim'
+
+[[plugins]]
+repo = 'vim-scripts/SQLUtilities'
+
+[[plugins]]
+repo = 'vim-scripts/Align'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+
+[[plugins]]
+repo = 'exu/pgsql.vim'
+
+
+###
+# vim snipmate and its dependencies
+[[plugins]]
+repo = 'MarcWeber/vim-addon-mw-utils'
+[[plugins]]
+repo = 'tomtom/tlib_vim'
+[[plugins]]
+repo = 'honza/vim-snippets'
+[[plugins]]
+repo    = 'garbas/vim-snipmate'
+depends = ['MarcWeber/vim-addon-mw-utils', 'tomtom/tlib_vim', 'honza/vim-snippets']
+
+
+# non github plugin is loaded in init-dein-plugins.vim separately
+#[[plugins]]
+#name = 'vim-drake-syntax'
+#repo = 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
+
