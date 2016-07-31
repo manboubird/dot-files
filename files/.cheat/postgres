@@ -5,3 +5,8 @@ pg_ctl -l /usr/local/var/postgres/server.log start
 # stop a server
 pg_ctl -D /usr/local/var/postgres stop -s -m fast
 
+# restart a server
+pg_ctl -D /usr/local/var/postgres restart -s -m fast
+
+# conf
+/usr/local/var/postgres/postgresql.conf
