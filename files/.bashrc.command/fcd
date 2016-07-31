@@ -1,0 +1,7 @@
+case "${OSTYPE}" in
+  darwin*)
+  # Mac(Unix)
+  #   http://www.script-factory.net/software/terminal/fcd/
+  alias fcd='source ~/local/bin/fcd.sh'
+  ;;
+esac
