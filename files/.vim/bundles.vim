@@ -152,7 +152,7 @@ endif
 
 " vim 7.2+
 if version >= 702
-  " Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'nathanaelkane/vim-indent-guides'
   " Bundle 'ddclones/vim-l9'
   " Bundle 'vim-scripts/FuzzyFinder'
 
