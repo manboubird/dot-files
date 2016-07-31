@@ -69,6 +69,8 @@ Bundle 'SQLComplete.vim'
 Bundle 'dbext.vim'
 Bundle "vim-scripts/SQLUtilities"
 Bundle "junegunn/vim-easy-align"
+" specific db feature
+Bundle "exu/pgsql.vim"
 
 " git
 if (executable("git"))

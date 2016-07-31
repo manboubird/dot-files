@@ -1,0 +1,2 @@
+export PGDATA=/usr/local/var/postgres
+export PSQL_EDITOR="${EDITOR:-vim}"

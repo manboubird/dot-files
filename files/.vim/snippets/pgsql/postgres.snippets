@@ -1,0 +1,8 @@
+# original postgres snippet. 
+
+snippet with
+	WITH ${1:tmp} AS (
+		SELECT * FROM ${0:table}
+	)
+	SELECT * FROM ${2:tmp}
+	;
