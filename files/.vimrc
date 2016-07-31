@@ -139,14 +139,13 @@ nmap <silent> <Leader>d   :%s![“”]!"!g<CR>
 nmap <silent> "    mzbi"<ESC>ea"<ESC>`z
 
 nmap <silent> <Leader>c <C-W>l:bw<CR>
-nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
+
+" turn off ',s' for slimux 
+" nmap <silent> <Leader>s :source $HOME/.vimrc<CR>
 
 " tab movement
 nnoremap <C-n> gt
 nnoremap <C-p> gT
-
-" prevent auto newline
-set tw=0
 
 
 " Quick Fix
