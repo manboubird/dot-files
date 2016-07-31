@@ -106,7 +106,7 @@ set nrformats-=octal
 au FileType ruby setlocal path+=/usr/lib/ruby/1.8 suffixesadd+=.rb
 
 augroup ShebangAutowrite
-  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: iso-8859-15 -*-\<nl>\"|$
+  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl>\"|$
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/ruby\"|$
   autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl\"|$
   autocmd BufNewFile *.sh 0put =\"#!/bin/bash\"|$
