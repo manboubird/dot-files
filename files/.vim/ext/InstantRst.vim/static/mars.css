@@ -1,0 +1,7 @@
+/*! Copied from https://github.com/Rykka/instant-rst.py/blob/master/instant_rst/static/mars.css */
+@import url('mars-org.css');
+
+/*! Update stylesheet */
+.document {
+  width: 1040px;
+}
