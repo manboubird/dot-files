@@ -1,0 +1,9 @@
+{
+  "core": {
+    "themes": [
+      "atom-light-ui",
+      "one-dark-syntax"
+    ]
+  },
+  "plantuml-viewer": {}
+}
