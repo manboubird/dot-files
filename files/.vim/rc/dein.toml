@@ -43,9 +43,6 @@ repo = 'bling/vim-airline'
 repo = 'suan/vim-instant-markdown'
 
 [[plugins]]
-repo = 'Rykka/riv.vim'
-
-[[plugins]]
 repo = 'Rykka/InstantRst'
 
 [[plugins]]
