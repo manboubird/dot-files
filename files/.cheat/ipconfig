@@ -1,0 +1,4 @@
+# macos
+
+# get ip
+ipconfig getifaddr en0
