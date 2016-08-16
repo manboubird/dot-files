@@ -150,6 +150,18 @@ nmap <silent> <Leader>c <C-W>l:bw<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 
+" moving around during insert more
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+" moving up/down in a line
+nnoremap <Down> gj
+nnoremap <Up>   gk
+
+" showbreaks
+set showbreak=↪
 
 " Quick Fix
 autocmd FileType perl,cgi :compiler perl
