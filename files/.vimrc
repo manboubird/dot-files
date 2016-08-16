@@ -160,8 +160,12 @@ inoremap <C-l> <Right>
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
-" showbreaks
-set showbreak=↪
+set showbreak=↪             " showbreaks
+set formatoptions+=mM       " does not insert space into japanese characters
+set ambiwidth=double        " display "□"や"○" asian characters corectly
+set display+=lastline       " display last lines instead of @
+set matchpairs+=「:」,（:） " jump to paird character
+
 
 " Quick Fix
 autocmd FileType perl,cgi :compiler perl
