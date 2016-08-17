@@ -1,15 +1,11 @@
 ###
 # python
-call dein#add('davidhalter/jedi-vim', {
-      \   'build' : 'git submodule update --init',
-      \   'on_ft' : [
-      \     'python',
-      \   ],
-      \   'on_source' : [
-      \     'vim-pyenv',
-      \     'vim-virtualenv',
-      \   ],
-      \ })
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+build = 'git submodule update --init'
+on_ft = ['python']
+on_source = [ 'vim-pyenv', 'vim-virtualenv' ]
 
 [[plugins]]
 repo = 'nvie/vim-flake8'
