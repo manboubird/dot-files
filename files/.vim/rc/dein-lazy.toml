@@ -1,5 +1,16 @@
 ###
 # python
+call dein#add('davidhalter/jedi-vim', {
+      \   'build' : 'git submodule update --init',
+      \   'on_ft' : [
+      \     'python',
+      \   ],
+      \   'on_source' : [
+      \     'vim-pyenv',
+      \     'vim-virtualenv',
+      \   ],
+      \ })
+
 [[plugins]]
 repo = 'nvie/vim-flake8'
 on_ft = ['python']
@@ -8,6 +19,9 @@ on_ft = ['python']
 repo = 'jmcantrell/vim-virtualenv'
 on_ft = ['python']
 
+[[plugins]]
+repo = 'lambdalisue/vim-pyenv'
+on_ft = ['python']
 
 ###
 # clojure
