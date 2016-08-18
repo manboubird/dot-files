@@ -66,10 +66,6 @@ repo = 'wannesm/wmgraphviz.vim'
 if   = ''' executable('dot')'''
 
 [[plugins]]
-# http://blog.blueblack.net/item_164/
-repo = 'AutoComplPop'
-
-[[plugins]]
 repo = 'scrooloose/syntastic'
 
 [[plugins]]

@@ -113,9 +113,13 @@ Bundle 'mxw/vim-jsx'
 
 " python
 if (executable("python"))
+  Bundle 'davidhalter/jedi-vim'
   Bundle 'nvie/vim-flake8'
-  if (executable("virtualenv"))
-    Bundle 'jmcantrell/vim-virtualenv'
+  " if (executable("virtualenv"))
+  "   Bundle 'jmcantrell/vim-virtualenv'
+  " endif
+  if (executable("pyenv"))
+    Bundle 'lambdalisue/vim-pyenv'
   endif
 endif
 
@@ -144,9 +148,6 @@ Bundle "garbas/vim-snipmate"
 Bundle "http://bitbucket.org/larsyencken/vim-drake-syntax.git"
 
 if version >= 701
-  " http://blog.blueblack.net/item_164/
-  Bundle "AutoComplPop"
-
   Bundle 'scrooloose/syntastic'
 endif
 
