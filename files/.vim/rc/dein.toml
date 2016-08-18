@@ -6,6 +6,9 @@ repo = 'manboubird/dein.vim'
 repo = 'sudo.vim'
 
 [[plugins]]
+repo = 'lepture/vim-jinja'
+
+[[plugins]]
 repo = 'vim-ruby/vim-ruby'
 
 [[plugins]]
