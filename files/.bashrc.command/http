@@ -1,4 +1,5 @@
 if [ $(is_command_exists http) -eq 0 ];then
-  function httpless { http --pretty=all --print=hb "$@" | less -R; }
   alias https='http --default-scheme=https'
+  function httpless { http --pretty=all --print=hb "$@" | less -R; }
+  function httpsless { https --pretty=all --print=hb "$@" | less -R; }
 fi
