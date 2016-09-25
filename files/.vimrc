@@ -160,7 +160,7 @@ inoremap <C-l> <Right>
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
-set showbreak=↪             " showbreaks
+set showbreak="\u21aa "     " showbreaks
 set formatoptions+=mM       " does not insert space into japanese characters
 set ambiwidth=double        " display "□"や"○" asian characters corectly
 set display+=lastline       " display last lines instead of @
