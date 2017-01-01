@@ -119,6 +119,8 @@ repo = 'airblade/vim-gitgutter'
 #repo = 'mattn/gist-vim'
 #if   = ''' executable('git')'''
 
+[[plugins]]
+repo = 'lambdalisue/vim-gista'
 
 ###
 # database
