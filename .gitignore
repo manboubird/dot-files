@@ -3,6 +3,8 @@
 *.un~
 files/.config/configstore
 files/.config/gcloud
+files/.config/pgcli
+files/.config/direnv
 files/.ivy2/
 files/.sbt/0.13/plugins/project/
 files/.sbt/0.13/plugins/target/
