@@ -1,0 +1,144 @@
+# tap 'caskroom/cask'
+#tap 'homebrew/brewdler'
+#tap 'motemen/ghq'
+# for migemogrep
+#tap 'peco/peco'
+# for packer
+#tap 'homebrew/binary'
+# for scalaXX
+#tap 'homebrew/version'
+tap 'caskroom/versions'
+
+#
+brew 'mas'
+
+# apple store
+mas 'Xcode', id: 497799835
+
+# cli commands
+brew 'ack'
+#brew 'ansible'
+brew 'base64'
+brew 'bash-completion'
+brew 'blackbox'
+brew 'docker'
+brew 'cheat'
+brew 'cmake'
+brew 'colordiff'
+brew 'ctags'
+
+brew 'gawk'
+# brew 'genders'
+brew 'gist'
+brew 'git'
+brew 'graphviz'
+brew 'htop-osx'
+brew 'httpie'
+brew 'ipcalc'
+brew 'jq'
+#brew 'jenkins'
+brew 'lynx'
+#brew 'migemogrep'
+#brew 'mysql'
+brew 'netcat'
+brew 'ngrep'
+brew 'nkf'
+#brew 'packer'
+brew 'parallel'
+brew 'pbzip2'
+brew 'pdsh', args: ['with-genders', 'without-dshgroups']
+brew 'pigz'
+brew 'pstree'
+brew 'pv'
+
+brew 'readline'
+brew 'reattach-to-user-namespace'
+brew 'ssh-copy-id'
+brew 'tmux'
+
+brew 'neovim'
+brew 'rlwrap'
+brew 'rpm2cpio'
+brew 'source-highlight'
+#brew 'sshfs'
+brew 'subversion'
+brew 'the_silver_searcher'
+brew 'tig'
+brew 'toilet'
+brew 'tree'
+brew 'vnstat'
+brew 'w3m'
+brew 'watch'
+brew 'wget'
+brew 'xz'
+brew 'z'
+
+# nodejs
+brew 'nvm'
+# python
+brew 'pyenv'
+brew 'pyenv-virtualenv'
+
+#
+# cask for java
+#
+cask 'java'
+cask 'java8'
+# java dependent brew fomura
+brew 'plantuml'
+
+# java
+brew 'ant'
+brew 'maven'
+brew 'ivy'
+brew 'gradle'
+
+## scala
+#brew 'sbt'
+#brew 'scala'
+#brew 'scala210'
+#brew 'scala29'
+#brew 'giter8'
+#brew 'typesafe-activator'
+
+## clojure
+#brew 'leiningen'
+
+## go based stuff
+brew 'go'
+brew 'ghq'
+#brew 'peco'
+
+#
+# cask
+#
+cask 'adobe-acrobat-reader'
+#cask 'calibre'
+#cask 'dropbox'
+#cask 'evernote'
+#cask 'google-chrome'
+cask 'google-drive-file-stream'
+cask 'slack'
+cask 'iterm2'
+cask 'kindle'
+cask 'karabiner-elements'
+# tex
+# cask 'mactex'
+
+# the recipe may be broken
+# cask 'macvim-kaoriya'
+cask 'scala-ide'
+#cask 'skype'
+cask 'the-unarchiver'
+#cask 'vagrant'
+cask 'virtualbox'
+# docker
+# cask 'boot2docker'
+#cask 'dockertoolbox'
+# utils
+cask 'jdiskreport'
+
+# Office
+#cask 'skype-for-business'
+#cask 'box-sync'
+
