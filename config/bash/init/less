@@ -1,3 +1,4 @@
+export JLESSCHARSET="utf-8"
 if [ $(is_command_exists source-highlight) -eq 0 ];then
   export LESS='-R'
   export LESSOPEN='| $HOME/local/bin/src-hilite-lesspipe.sh %s'

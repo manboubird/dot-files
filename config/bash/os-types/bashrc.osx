@@ -1,0 +1,2 @@
+# store screenshot in a file
+function scrn-cap() { screencapture -w -i $1; }
