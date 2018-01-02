@@ -13,7 +13,7 @@ set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIMRUNTIME
 "=================================================
 
 " Dein
-:source <sfile>:h/$XDG_CONFIG_HOME/vim/init-dein-plugins.vim
+:source <sfile>:h/init-dein-plugins.vim
 runtime! init/**.vim
 
 " Bundle for stale plugin management
@@ -199,5 +199,5 @@ if (executable("jq"))
 endif
 
 " local vim settings
-silent! source $XDG_CONFIG_HOME/vim/.vimrc.local
+silent! source <sfile>:h/.vimrc.local
 
