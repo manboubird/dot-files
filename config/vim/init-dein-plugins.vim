@@ -1,5 +1,5 @@
 " dein plugin dir
-let s:dein_dir = expand(<sfile>:h/dein)
+let s:dein_dir = expand('<sfile>:h/dein')
 " dein.vim itself
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/manboubird/dein.vim'
 
@@ -17,7 +17,7 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " TOML file for plugin list
-  let g:rc_dir    = expand(<sfile>:h/rc)
+  let g:rc_dir    = expand('<sfile>:h/rc')
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein-lazy.toml'
 
@@ -26,7 +26,7 @@ if dein#load_state(s:dein_dir)
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   " load non github plugins from local
-  call dein#local(<sfile>:h/bundle, {},
+  call dein#local('<sfile>:h/bundle', {},
 		\ ['vim-drake-syntax'])
 
   call dein#end()
