@@ -12,7 +12,10 @@ files/.sbt/boot/
 files/.sbt/launchers
 files/.tmux/plugins
 files/.vim/bundle/vundle
-files/.vim/dein/
 files/.vim/sessions
 target/
+
 config/vim/dein
+config/vim/cache_vim
+config/vim/repos
+config/vim/state_vim.vim
