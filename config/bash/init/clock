@@ -1,4 +1,8 @@
 if [ $(is_command_exists figlet) -eq 0 ]; then
-  function clock-figlet { watch -n1 -t 'date "+%Y - %m - %d%n %H : %M : %S" | figlet'; }
+  clock-figlet { watch -n1 -t 'date "+%Y - %m - %d%n %H : %M : %S" | figlet'; }
 fi
-function clock { watch -n1 -t 'date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"'; }
+clock { watch -n1 -t 'date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"'; }
+digital-clock() {
+  clear; while true; do echo -e \\b\\b\\b\\b\\b\\b\\b\\b`date +%T`\\c ; sleep 1; done
+}
+
