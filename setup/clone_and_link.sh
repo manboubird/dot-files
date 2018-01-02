@@ -32,11 +32,15 @@ symbolic_link_to_dir(){
 
 symbolic_link_to_dot_files(){
   local files=$1
-  local dst_root=${2:-"."}
   echo "Create symbolic links to dot files ..."
   for file in ${files[@]}; do
-    local filename=$(basename $file)
-    ln -vsf "${file}" "${dst_root}/.$filename"
+    local dst_name=".$(basename $file)"
+    if [ -d ${file} ] && [ -d ${dst_name} ]; then
+      # remove symbolic link of directory to ensure idempotent
+      echo "The Destination path is already exists as directory. Remove this first. dst_name = ${dst_name}"
+      rm ${dst_name}
+    fi
+    ln -vsf "${file}" "${dst_name}"
   done
 }
 
