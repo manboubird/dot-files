@@ -1,5 +1,5 @@
 {
-   "CustomMatcher": {
+   "CustomFilter": {
         "Migemo": {
             "Cmd": "migemogrep",
             "Args": [ "$QUERY" ],
