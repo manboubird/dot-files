@@ -1,3 +1,6 @@
+# Set vimrc sourcing on vim startup
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
+
 # open markdown file 
 function md() {
   n=`ls ./*.md | wc -l`

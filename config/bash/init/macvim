@@ -1,3 +1,6 @@
+# Set vimrc sourcing on vim startup
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
+
 if [ ! -z "${MAC_VIM_HOME}" -a -d "${MAC_VIM_HOME}" ];then
   export EDITOR="${MAC_VIM_HOME}/Vim"
   export DIFF="${MAC_VIM_HOME}/vimdiff"
