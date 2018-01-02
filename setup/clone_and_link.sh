@@ -32,10 +32,11 @@ symbolic_link_to_dir(){
 
 symbolic_link_to_dot_files(){
   local files=$1
+  local dst_root=${2:-"."}
   echo "Create symbolic links to dot files ..."
   for file in ${files[@]}; do
     local filename=$(basename $file)
-    ln -vsf "${file}" ".$filename"
+    ln -vsf "${file}" "${dst_root}/.$filename"
   done
 }
 
