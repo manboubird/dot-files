@@ -21,7 +21,6 @@ main(){
   symbolic_link_to_dir "$(ls -1d $dot_files/local/bin/*)" "${USER_LOCAL_HOME}/bin"
 }
 
-symbolic_link_to_dot_local_bin(){
 symbolic_link_to_dir(){
   local files=$1
   local dst_root=${2:-"."}
