@@ -16,7 +16,7 @@ main(){
     echo "Try to clone repository $GIT_REPO ..."
     git clone "$GIT_REPO" "${dot_files}" || exit "$?"
   fi
-  symbolic_link_to_dot_files "$(ls -1d $dot_files/config $dot_files/dot/*)"
+  symbolic_link_to_dot_files "$(ls -1d $dot_files/config/* $dot_files/dot/*)"
   symbolic_link_to_dot_local_bin "$(ls -1d $dot_files/local/bin/*)"
 }
 
