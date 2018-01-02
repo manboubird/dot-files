@@ -13,12 +13,12 @@ set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIMRUNTIME
 "=================================================
 
 " Dein
-" :source <sfile>:h/.vim/init-dein-plugins.vim
-" runtime! init/**.vim
+:source <sfile>:h/$XDG_CACHE_HOME/vim/init-dein-plugins.vim
+runtime! init/**.vim
 
 " Bundle for stale plugin management
-:source <sfile>:h/.vim/bundles.vim
-runtime! init/**.vim
+":source <sfile>:h/$XDG_CACHE_HOME/vim/bundles.vim
+"runtime! init/**.vim
 
 "=================================================
 
@@ -88,7 +88,6 @@ if has("autocmd")
   set dictionary+=$VIMRUNTIME/syntax/ruby.vim
   set nobackup
   set nowritebackup
-  set backupdir=/var/tmp/vimbackup
   filetype on
   filetype indent on 
   filetype plugin on
@@ -200,5 +199,5 @@ if (executable("jq"))
 endif
 
 " local vim settings
-silent! source ~/.vimrc.local
+silent! source $XDG_CACHE_HOME/vim/.vimrc.local
 
