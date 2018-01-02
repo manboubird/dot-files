@@ -37,7 +37,7 @@ symbolic_link_to_dot_files(){
     local dst_name=".$(basename $file)"
     if [ -d ${file} ] && [ -d ${dst_name} ]; then
       # remove symbolic link of directory to ensure idempotent
-      echo "The Destination path is already exists as directory. Remove this first. dst_name = ${dst_name}"
+      echo "The destination path is already exists as directory. Remove this first. dst_name = ${dst_name}"
       rm ${dst_name}
     fi
     ln -vsf "${file}" "${dst_name}"
