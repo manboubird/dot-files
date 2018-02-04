@@ -1,5 +1,8 @@
 #!/bin/bash
-GIT_REPO=git://github.com/manboubird/dot-files.git 
+GITHUB_USER="${GITHUB_USER:-manboubird}"
+GIT_REPO="https://github.com/${GITHUB_USER}/dot-files.git"
+
+echo "GIT_REPO=${GIT_REPO}"
 
 files=.dot-files/files
 cd &&
