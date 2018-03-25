@@ -15,6 +15,8 @@ files/.vim/bundle/vundle
 files/.vim/sessions
 target/
 
+config/pgcli/history
+config/pgcli/log
 config/vim/dein
 config/vim/cache_vim
 config/vim/repos

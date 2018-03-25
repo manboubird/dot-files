@@ -2,11 +2,11 @@
 export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
 
 if [ ! -z "${MAC_VIM_HOME}" -a -d "${MAC_VIM_HOME}" ];then
-  export EDITOR="${MAC_VIM_HOME}/Vim"
-  export DIFF="${MAC_VIM_HOME}/vimdiff"
-  export PATH="${MAC_VIM_HOME}:${PATH}"
-  alias vi='env LANG=ja_JP.UTF-8 ${MAC_VIM_HOME}/Vim "$@"'
-  alias vim='env LANG=ja_JP.UTF-8 ${MAC_VIM_HOME}/Vim "$@"'
+  export EDITOR="${MAC_VIM_HOME}/MacOS/Vim"
+  export DIFF="${MAC_VIM_HOME}/bin/vimdiff"
+  export PATH="${MAC_VIM_HOME}/bin:${PATH}"
+  alias vi='env LANG=ja_JP.UTF-8 ${MAC_VIM_HOME}/MacOS/Vim "$@"'
+  alias vim='env LANG=ja_JP.UTF-8 ${MAC_VIM_HOME}/MacOS/Vim "$@"'
 else 
   echo "[WARN]: MAC_VIM_HOME is not set or not directory even macvim setting is called. Make sure dot file."
 fi

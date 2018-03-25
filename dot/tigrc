@@ -4,3 +4,7 @@ bind generic <Ctrl-b> scroll-page-up
 bind generic g move-first-line
 bind generic G move-last-line
 bind main    G move-last-line
+
+# open browser with hub
+bind main G !@hub browse -- commit/%(commit)
+bind diff G !@hub browse -- commit/%(commit)

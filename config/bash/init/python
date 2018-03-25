@@ -1,2 +1,6 @@
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+if [ $(is_command_exists pyenv) -eq 0 ];then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+export PYENV_HOME=${PYENV_HOME:-${HOME}/.pyenv}

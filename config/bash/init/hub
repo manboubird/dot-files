@@ -1,0 +1,4 @@
+if [ $(is_command_exists hub) -eq 0 ];then
+  alias hubop='hub browse'
+  huboppr() { hub browse -- pulls/$(git config user.user); }
+fi
