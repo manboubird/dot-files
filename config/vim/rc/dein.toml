@@ -157,7 +157,7 @@ depends = ['MarcWeber/vim-addon-mw-utils', 'tomtom/tlib_vim', 'honza/vim-snippet
 
 
 # non github plugin is loaded in init-dein-plugins.vim separately
-#[[plugins]]
-#name = 'vim-drake-syntax'
-#repo = 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
+[[plugins]]
+name = 'vim-drake-syntax'
+repo = 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
 

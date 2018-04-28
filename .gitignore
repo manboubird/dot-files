@@ -15,6 +15,11 @@ files/.vim/bundle/vundle
 files/.vim/sessions
 target/
 
+dot/ivy2/*.lock
+dot/ivy2/cache
+dot/sbt/boot
+dot/sbt/preloaded
+
 config/pgcli/history
 config/pgcli/log
 config/vim/dein

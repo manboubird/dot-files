@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JAVA_EXEC=${JAVA_EXEC:-java}
-DRAKE_HOME=${DRAKE_HOME:-${HOME}/local/Cellar/drake/latest}
+DRAKE_HOME=${DRAKE_HOME:-${HOME}/.local/Cellar/drake/latest}
 DRAKE_JAR=${DRAKE_JAR:-${DRAKE_HOME}/libexec/drake.jar}
 
 echo "Using DRAKE_HOME: $DRAKE_HOME"
