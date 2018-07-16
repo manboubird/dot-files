@@ -4,7 +4,13 @@
 # Pipe the output through a pager by default
 --pager=less -R -m -N
 
+# add new file extentions
+--type-add=terraform:ext:.tf,.tfvars
+--type-add=sql:ext:.hql
+
+#
 # Ignore files and directories. Ref. https://github.com/github/gitignore
+#
 --ignore-file=ext:bak
 --ignore-file=ext:swp
 --ignore-file=ext:tmp

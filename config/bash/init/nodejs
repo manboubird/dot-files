@@ -1,7 +1,9 @@
 if [[ "${OSTYPE}" == "darwin"* && $(is_command_exists brew) -eq 0 ]];then
   if [ "${USE_NVM}" == "true" -a -n "${NVM_VERSION}" ]; then
-    export NVM_DIR=~/.nvm
-    source $(brew --prefix nvm)/nvm.sh
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
     nvm use ${NVM_VERSION} 1> /dev/null
     [ $? -ne 0 ] && echo "NVM_VERSION is wrong? NVM_VERSION=${NVM_VERSION}"
     export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}

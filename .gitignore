@@ -17,8 +17,10 @@ target/
 
 dot/ivy2/*.lock
 dot/ivy2/cache
+dot/ivy2/exclude_classifiers
 dot/sbt/boot
 dot/sbt/preloaded
+dot/drake/template/test
 
 config/pgcli/history
 config/pgcli/log
