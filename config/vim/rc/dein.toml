@@ -12,6 +12,9 @@ repo = 'lepture/vim-jinja'
 repo = 'vim-ruby/vim-ruby'
 
 [[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
 repo = 'surround.vim'
 
 [[plugins]]
@@ -39,7 +42,10 @@ repo = 'thinca/vim-quickrun'
 repo = 'altercation/vim-colors-solarized'
 
 [[plugins]]
-repo = 'bling/vim-airline'
+repo = 'vim-airline/vim-airline'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
 
 [[plugins]]
 # comment out due to collision of gist-vim  
