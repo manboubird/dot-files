@@ -7,6 +7,8 @@
 # add new file extentions
 --type-add=terraform:ext:.tf,.tfvars
 --type-add=sql:ext:.hql
+--type-add=terraform:ext:.tf,.tfvars
+--type-set=markdown=.md,.mkd,.markdown
 
 #
 # Ignore files and directories. Ref. https://github.com/github/gitignore
