@@ -1,3 +1,10 @@
+#
+# Install commands: 
+# clear cache and re-start vim
+# :call dein#recache_runtimepath()
+# or run install command
+# :call call dein#install()
+#
 [[plugins]]
 name = 'dein.vim'
 repo = 'manboubird/dein.vim'
@@ -59,6 +66,9 @@ repo = 'vim-scripts/Quich-Filter'
 
 [[plugins]]
 repo = 'ervandew/supertab'
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
 repo = 'jpalardy/vim-slime'
