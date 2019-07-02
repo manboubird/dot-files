@@ -1,6 +1,8 @@
 let g:ctrlp_map = '<c-s>'
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
+let g:ctrlp_extensions = ['bookmarkdir']
+
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*.pdf     " common
