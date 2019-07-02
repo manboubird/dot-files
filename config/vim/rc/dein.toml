@@ -71,6 +71,9 @@ repo = 'ervandew/supertab'
 repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
+repo = 'MattesGroeger/vim-bookmarks'
+
+[[plugins]]
 repo = 'jpalardy/vim-slime'
 if   = ''' executable("screen")'''
 
