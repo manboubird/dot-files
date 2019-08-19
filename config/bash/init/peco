@@ -1,7 +1,7 @@
 if [ $(is_command_exists peco) -eq 0 ];then
   if [ $(is_command_exists git) -eq 0 ];then
     alias git-co-br-peco='git checkout $(git branch | peco)'
-    alias ghq-cd-peco='cd $(ghq list -p | peco)'
+    alias ghq-cd-peco='cd "$(ghq list -p | peco)"'
     function git_add_peco {
       paths=$(git status --porcelain | peco --prompt 'PATH>' | awk -F ' ' '{ print $NF }')
       if [ -n "$paths" ]; then
