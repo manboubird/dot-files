@@ -1,0 +1,4 @@
+
+if [ $(is_command_exists nvim) -eq 0 ];then
+  export NVIM_PYTHON_LOG_FILE="$HOME/.local/var/log/nvim/nvim-python.log"
+fi

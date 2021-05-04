@@ -3,4 +3,10 @@ if [ $(is_command_exists pyenv) -eq 0 ];then
   eval "$(pyenv virtualenv-init -)"
 fi
 
+#if [ $(is_command_exists pipx) -eq 0 ];then
+#  if [ $(is_command_exists register-python-argcomplete) -eq 0 ];then
+#    eval "$(register-python-argcomplete pipx)"
+#  fi
+#fi
+
 export PYENV_HOME=${PYENV_HOME:-${HOME}/.pyenv}

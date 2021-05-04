@@ -1,9 +1,14 @@
 #
 # Install commands: 
 # clear cache and re-start vim
-# :call dein#recache_runtimepath()
+#   :call dein#recache_runtimepath()
 # or run install command
-# :call call dein#install()
+#   :call dein#install()
+# 
+# Python 
+#   :echo has("python3")
+#   :echo exepath('python3') 
+#   :python3 import sys; print(sys.version)
 #
 [[plugins]]
 name = 'dein.vim'
@@ -22,6 +27,13 @@ repo = 'vim-ruby/vim-ruby'
 repo = 'cespare/vim-toml'
 
 [[plugins]]
+repo = 'hashivim/vim-terraform'
+
+[[plugins]]
+repo = 'juliosueiras/vim-terraform-completion'
+depends = ['hashivim/vim-terraform', 'scrooloose/syntastic']
+
+[[plugins]]
 repo = 'surround.vim'
 
 [[plugins]]
@@ -31,7 +43,7 @@ repo = 'xolox/vim-misc'
 repo = 'xolox/vim-session'
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo = 'preservim/nerdtree'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
@@ -46,7 +58,10 @@ repo = 'tpope/vim-markdown'
 repo = 'thinca/vim-quickrun'
 
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
+repo = 'tpope/vim-sensible'
+
+[[plugins]]
+repo = 'lifepillar/vim-solarized8'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'
@@ -119,6 +134,12 @@ if   = ''' executable('ctags')'''
 repo = 'aklt/plantuml-syntax'
 if   = ''' executable('plantuml')'''
 
+###
+# python
+[[plugins]]
+repo = 'psf/black'
+rev =  'stable'
+if   = ''' executable('black')'''
 
 ###
 # git
@@ -176,7 +197,8 @@ depends = ['MarcWeber/vim-addon-mw-utils', 'tomtom/tlib_vim', 'honza/vim-snippet
 
 
 # non github plugin is loaded in init-dein-plugins.vim separately
-[[plugins]]
-name = 'vim-drake-syntax'
-repo = 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
+# Disabled due to repeated install during vim startup
+#[[plugins]]
+#name = 'vim-drake-syntax'
+#repo = 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
 

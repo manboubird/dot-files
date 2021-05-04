@@ -3,7 +3,10 @@ git fetch upstream --prune
 git fetch --prune
 git rebase upstream/master
 
-# Edit an incorrect commit message
+git rebase -i HEAD~4
+
+
+# Edit an incorrect last commit message
 git commit --amend
  or 
 git commit --amend -m "New commit message"

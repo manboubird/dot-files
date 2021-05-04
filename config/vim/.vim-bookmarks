@@ -1,0 +1,3 @@
+let l:bm_file_version = 1
+let l:bm_sessions = {'default': {'$HOME/.dot-files/config/vim/vimrc': [{'sign_idx': 9506, 'line_nr': 5, 'content': 'set undodir=$XDG_CACHE_HOME/vim/undo'},],}}
+let l:bm_current_session = 'default'

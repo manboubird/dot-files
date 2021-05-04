@@ -1,1 +1,3 @@
-eval "$(direnv hook bash)"
+if [ $(is_command_exists direnv) -eq 0 ];then
+  eval "$(direnv hook bash)"
+fi

@@ -1,0 +1,3 @@
+if [ $(is_command_exists tmux) -eq 0 -a $(is_command_exists tmuxinator) -eq 0 ];then
+  alias tmr='tmuxinator'
+fi

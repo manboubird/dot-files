@@ -1,0 +1,5 @@
+if [ $(is_command_exists minikube) -eq 0 ];then
+  # disable becaue it creates .minikube under /minikube
+  #export MINIKUBE_HOME="${XDG_CONFIG_HOME}/minikube"
+  export MINIKUBE_HOME="${HOME}"
+fi

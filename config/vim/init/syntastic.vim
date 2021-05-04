@@ -12,9 +12,10 @@ let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'passive_filetypes': ['html'] }
 
 " python
-if (executable("flake8"))
-  let g:syntastic_python_checkers = ["flake8"]
-endif
+let g:syntastic_python_checkers = ["mypy","flake8"]
+" if (executable("flake8"))
+"   let g:syntastic_python_checkers = ["flake8"]
+" endif
 if (executable("rstcheck"))
   let g:syntastic_rst_checkers = ['rstcheck']
 endif

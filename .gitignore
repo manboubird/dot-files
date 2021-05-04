@@ -28,3 +28,4 @@ config/vim/dein
 config/vim/cache_vim
 config/vim/repos
 config/vim/state_vim.vim
+config/nvim/dein

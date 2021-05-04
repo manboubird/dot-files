@@ -1,9 +1,15 @@
 [include]
   path = ~/.config/git/config.local
-[pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+[core]
+  pager = delta
+#[pager]
+#   log = diff-highlight | less
+#   show = diff-highlight | less
+#  diff = diff-highlight | less
+[diff]
+  tool = delta
+[delta]
+  side-by-side = true
 [color]
   diff = auto
   sh = auto
@@ -26,5 +32,12 @@
   ls = ls-files
 [push]
 	default = current
+[rebase]
+  autoStash = true
+  abbreviateCommands = true
+[diff "blackbox"]
+  textconv = gpg --use-agent -q --batch --decrypt
+[diff "sops"]
+  textconv = sops -d
 [ghq]
   root = ~/dev/repo
