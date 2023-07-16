@@ -1,0 +1,67 @@
+###
+# python
+#
+
+[[plugins]]
+repo = 'nvie/vim-flake8'
+on_ft = ['python']
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+build = 'git submodule update --init'
+on_ft = ['python']
+on_source = [ 'vim-pyenv', 'vim-virtualenv' ]
+
+[[plugins]]
+repo = 'jmcantrell/vim-virtualenv'
+on_ft = ['python']
+
+[[plugins]]
+repo = 'lambdalisue/vim-pyenv'
+on_ft = ['python']
+
+
+###
+# clojure
+#
+[[plugins]]
+repo = 'tpope/vim-fireplace'
+on_ft = ['clojure']
+
+[[plugins]]
+repo = 'tpope/vim-classpath'
+on_ft = ['clojure']
+
+[[plugins]]
+repo = 'guns/vim-clojure-static'
+on_ft = ['clojure']
+
+[[plugins]]
+repo = 'paredit.vim'
+on_ft = ['clojure']
+
+[[plugins]]
+repo = 'liquidz/lein-vim'
+on_ft = ['clojure']
+
+[[plugins]]
+repo = 'kien/rainbow_parentheses.vim'
+on_ft = ['clojure']
+
+
+###
+# scala
+#
+[[plugins]]
+repo = 'derekwyatt/vim-scala'
+on_ft = ['scala']
+
+
+###
+# js
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = ['javascript']
