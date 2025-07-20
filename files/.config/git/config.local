@@ -1,0 +1,7 @@
+[user]
+  user = YOURS
+  name = "YOURS"
+  email = YOURS
+
+[merge]
+  tool = vimdiff 

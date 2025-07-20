@@ -1,8 +1,30 @@
+#
+# GCP
+#
+[tasks.gcp-auth-login]
+alias = "g-account-login"
+description = "gcloud auth login"
+run = "gcloud auth login"
 
-[tasks.hello]
-description = "hello"
-run = "echo Hello mise"
+[tasks.gcp-auth-login-no-browser]
+alias = "g-account-login-nobrowser"
+description = "gcloud auth login --no-browser"
+run = "gcloud auth login --no-browser"
 
-[tasks.hello2]
-description = "hello 2"
-run = "echo Hello mise 2"
+[tasks.gcp-auth-application-default-login]
+alias = "g-app-login"
+description = "gcloud auth application-default login"
+run = "gcloud auth application-default login"
+
+#
+# uv
+#
+[tasks.uv-kedro-jupyter-lab]
+alias = "uv-kjl"
+description = "uv run kedro jupyter lab"
+run = "uv run kedro jupyter lab"
+
+[tasks.uv-kedro-viz]
+alias = "uv-kv"
+description = "uv run kedro viz"
+run = "uv run kedro viz"

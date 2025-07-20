@@ -1,0 +1,10 @@
+name: def
+root: ~/
+
+windows:
+  - main:
+      layout: a058,217x85,0,0[217x49,0,0{124x49,0,0,3,92x49,125,0,20},217x35,0,50,4]
+      panes:
+        - cd ~/ && pwd
+        - cd ~/ && pwd
+        - cd ~/dev/ && pwd

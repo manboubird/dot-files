@@ -1,5 +1,5 @@
 [include]
-  path = ~/.gitconfig.local
+  path = ~/.config/git/config.local
 [pager]
   # log = diff-highlight | less
   # show = diff-highlight | less
@@ -25,10 +25,22 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
 [push]
-	default = current
-[ghq]
-  root = ~/dev/repo
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+  default = current
+[rebase]
+  autoStash = true
+  abbreviateCommands = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [init]
   defaultBranch = main
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[diff "blackbox"]
+  textconv = "gpg --use-agent -q --batch --decrypt"
+[diff "sops"]
+  textconv = "sops -d"
+[ghq]
+  root = ~/dev/repo

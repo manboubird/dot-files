@@ -4,3 +4,12 @@ bind generic <Ctrl-b> scroll-page-up
 bind generic g move-first-line
 bind generic G move-last-line
 bind main    G move-last-line
+
+#
+# should be use "gh browse" command
+#
+# open browser with hub
+# bind main G !@hub browse -- commit/%(commit)
+# bind diff G !@hub browse -- commit/%(commit)
+# bind tree G !@hub browse -- tree/%(commit)/%(directory)
+# bind blob G !@hub browse -- tree/%(commit)/%(file)
