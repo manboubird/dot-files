@@ -33,7 +33,7 @@ Bundle 'bling/vim-airline'
 " comment out due to collision of gist-vim  
 Bundle 'suan/vim-instant-markdown'
 
-Bundle 'Rykka/riv.vim'
+" Bundle 'Rykka/riv.vim'
 Bundle 'Rykka/InstantRst'
 
 " clojure

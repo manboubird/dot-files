@@ -11,6 +11,14 @@ git commit --amend -m "New commit message"
 # push local tags to remote repository
 git push origin --tags
 
+# worktree
+
+# add 
+#   git worktree add <path> <branch>
+git worktree add wt.feature-new-branch exsisting-main-branch 
+
+git worktree list
+
 # Commit message. Ref: http://chris.beams.io/posts/git-commit/ 
 # Display log
 # --oneline: displays the subject line
@@ -23,6 +31,7 @@ git shortlog
 git checkout -b new-branch
 # 2. reset wrong commit on master branch
 git checkout master && git reset --hard HEAD~
+
 
 # instant web UI
 git instaweb --httpd=webrick

@@ -3,12 +3,12 @@
 "=================================================
 
 " Dein
-" :source <sfile>:h/.vim/init-dein-plugins.vim
-" runtime! init/**.vim
+:source <sfile>:h/.vim/init-dein-plugins.vim
+runtime! init/**.vim
 
 " Bundle for stale plugin management
-:source <sfile>:h/.vim/bundles.vim
-runtime! init/**.vim
+" :source <sfile>:h/.vim/bundles.vim
+" runtime! init/**.vim
 
 "=================================================
 

@@ -1,4 +1,5 @@
-export GOOGLE_CLOUD_SDK_HOME=${GOOGLE_CLOUD_SDK_HOME:-/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk}
-source "${GOOGLE_CLOUD_SDK_HOME}/path.bash.inc"
-source "${GOOGLE_CLOUD_SDK_HOME}/completion.bash.inc"
-
+# export GOOGLE_CLOUD_SDK_HOME=${GOOGLE_CLOUD_SDK_HOME:-$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk}
+if [[ ! -z "${GOOGLE_CLOUD_SDK_HOME}" ]]; then
+  source "${GOOGLE_CLOUD_SDK_HOME}/path.bash.inc"
+  source "${GOOGLE_CLOUD_SDK_HOME}/completion.bash.inc"
+fi
