@@ -1,0 +1,23 @@
+cask "adobe-acrobat-reader"
+cask "alacritty"
+cask "google-chrome"
+cask "gcloud-cli"
+cask "google-drive"
+cask "google-japanese-ime"
+cask "iterm2"
+cask "notion"
+brew "blackbox"
+brew "ghq"
+brew "git"
+brew "neovim"
+brew "peco"
+brew "tmux"
+brew "tig"
+brew "tmux"
+brew "tmuxinator"
+
+#
+# disabled
+# 
+# tap "peco/peco"
+# brew "migemogrep"
