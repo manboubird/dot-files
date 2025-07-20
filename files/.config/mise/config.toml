@@ -1,0 +1,8 @@
+
+[tasks.hello]
+description = "hello"
+run = "echo Hello mise"
+
+[tasks.hello2]
+description = "hello 2"
+run = "echo Hello mise 2"

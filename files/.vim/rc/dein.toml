@@ -21,7 +21,8 @@ repo = 'xolox/vim-misc'
 repo = 'xolox/vim-session'
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo = 'preservim/nerdtree'
+#repo = 'scrooloose/nerdtree'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
