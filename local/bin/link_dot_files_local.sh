@@ -1,30 +1,61 @@
 #!/bin/bash
-if [ -z "$DOT_FILE_LOCAL_DIR" ]; then
-  DOT_FILE_LOCAL_DIR=.dot-files.local
+set -euo pipefail
+
+# Define the local dotfiles directory
+DOT_FILE_LOCAL_DIR="${DOT_FILE_LOCAL_DIR:-.dot-files.local}"
+FILES_COMMON="$DOT_FILE_LOCAL_DIR/files/common"
+FILES_HOST="$DOT_FILE_LOCAL_DIR/files/$(hostname -s)"
+LOCAL_BIN_SRC="$HOME/$DOT_FILE_LOCAL_DIR/local/bin"
+LOCAL_BIN_DEST="$HOME/local/bin"
+
+log() {
+    echo "==> $1"
+}
+
+link_files() {
+    local src_dir="$1"
+    local dest_dir="$2"
+
+    if [ ! -d "$src_dir" ]; then
+        return
+    fi
+
+    log "Linking files from $src_dir to $dest_dir"
+    
+    # Enable dotglob to match hidden files
+    shopt -s dotglob nullglob
+
+    for f in "$src_dir"/*; do
+        local filename
+        filename=$(basename "$f")
+
+        # Skip specific directories/files
+        if [[ "$filename" == ".git" ]] || [[ "$filename" == "." ]] || [[ "$filename" == ".." ]]; then
+            continue
+        fi
+
+        # Create symlink
+        ln -vsf "$f" "$dest_dir/$filename"
+    done
+
+    # Disable dotglob
+    shopt -u dotglob nullglob
+}
+
+# Main execution
+cd "$HOME" || exit 1
+
+# Link common and host-specific files
+link_files "$FILES_COMMON" "$HOME"
+link_files "$FILES_HOST" "$HOME"
+
+# Link local binaries
+if [ -d "$LOCAL_BIN_SRC" ]; then
+    mkdir -p "$LOCAL_BIN_DEST"
+    link_files "$LOCAL_BIN_SRC" "$LOCAL_BIN_DEST"
 fi
-files_common="$DOT_FILE_LOCAL_DIR/files/common"
-files_host="$DOT_FILE_LOCAL_DIR/files/`hostname -s`"
-cd &&
-ls -1d $files_common/* $files_common/.* $files_host/* $files_host/.* | 
-while read f; do
-  [ "$f" == "$files_common/." ] ||
-  [ "$f" == "$files_common/.." ] ||
-  [ "$f" == "$files_common/.git" ] ||
-  [ "$f" == "$files_host/." ] ||
-  [ "$f" == "$files_host/.." ] ||
-  [ "$f" == "$files_host/.git" ] ||
-  ln -vsf "$f" .
-done
-                       
-mkdir -p $HOME/local/bin 
-bin="$HOME/$DOT_FILE_LOCAL_DIR/local/bin"
-cd && 
-[ -d "$DOT_FILE_LOCAL_DIR" ] &&
-  ls -1d $bin/* | while read f; do
-  [ "$f" == "$bin/." ] ||
-  [ "$f" == "$bin/.." ] ||
-  [ "$f" == "$bin/.git" ] ||
-  ln -vsf "$f" $HOME/local/bin/
-done
+
+log "Done."
+
 
 
