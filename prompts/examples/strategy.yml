@@ -1,0 +1,30 @@
+category_key: "business/strategy"
+prompts:
+  - name: "swot_analysis"
+    description: "Perform a SWOT analysis for a given company."
+    template: |
+      Perform a SWOT analysis for {{ company_name | default('Acme Corp') }}.
+      
+      Focus on:
+      - Strengths: Internal positive attributes.
+      - Weaknesses: Internal negative attributes.
+      - Opportunities: External positive factors.
+      - Threats: External negative factors.
+      
+      Context: {{ context_info | default('General Business Context') }}
+  - name: "pest_analysis"
+    description: "Perform a PEST analysis."
+    template: |
+      Analyze the macro-environmental factors for {{ company_name | default('Acme Corp') }} using PEST analysis:
+      - Political
+      - Economic
+      - Social
+      - Technological
+---
+category_key: "data/analysis"
+prompts:
+  - name: "explain_metric"
+    description: "Explain a specific data metric."
+    template: |
+      Explain the metric '{{ metric_name | default('Churn Rate') }}' in the context of {{ industry | default('SaaS') }}.
+      How is it calculated and why is it important?

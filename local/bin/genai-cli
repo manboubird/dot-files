@@ -1,0 +1,542 @@
+#!/usr/bin/env python3
+import os
+import sys
+import shlex
+from pathlib import Path
+from typing import List, Optional, Dict, Set, Union, Any
+import click
+# import yaml # Replaced by ruamel.yaml
+from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
+from jinja2 import Environment, FileSystemLoader, select_autoescape, meta, StrictUndefined, nodes
+from pydantic import BaseModel, ValidationError, Field
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import WordCompleter, NestedCompleter
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.styles import Style
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich.text import Text
+from rich.syntax import Syntax
+
+# Configuration
+PROMPTS_DIR = Path(__file__).parent.parent.parent / "prompts"
+HISTORY_FILE = Path.home() / ".genai_cli_history"
+console = Console()
+yaml = YAML()
+yaml.preserve_quotes = True
+
+# --- Pydantic Schemas ---
+
+class PromptDefinition(BaseModel):
+    name: str
+    template: str
+    description: Optional[str] = None
+    parameters: List[str] = Field(default_factory=list)
+    defaults: Dict[str, str] = Field(default_factory=dict)
+
+class PromptFile(BaseModel):
+    category_key: str
+    prompts: List[PromptDefinition]
+
+# --- Prompt Loading Logic ---
+
+class PromptManager:
+    def __init__(self, prompts_dir: Path):
+        self.prompts_dir = prompts_dir
+        self.env = Environment(
+            loader=FileSystemLoader(prompts_dir),
+            autoescape=select_autoescape(),
+            undefined=StrictUndefined
+        )
+        self.prompts: Dict[str, PromptDefinition] = {}
+        self.file_to_keys: Dict[Path, List[str]] = {}
+        self.prompt_index: List[str] = [] # For numbered access
+        self.load_all()
+
+    def load_all(self):
+        self.prompts = {}
+        self.file_to_keys = {}
+        self.prompt_index = []
+        if not self.prompts_dir.exists():
+            return
+
+        # 1. Load Jinja2 files
+        for path in self.prompts_dir.glob("**/*.j2"):
+            self._load_file(path)
+
+        # 2. Load YAML files
+        for path in self.prompts_dir.glob("**/*.yml"):
+            self._load_file(path)
+        
+        self.prompt_index = sorted(self.prompts.keys())
+
+    def load_file(self, rel_path_str: str):
+        # Try to resolve the path
+        path = self.prompts_dir / rel_path_str
+        if not path.exists():
+            # Try checking if it was absolute or relative to cwd, though prompts_dir is preferred
+            path = Path(rel_path_str)
+            if not path.exists():
+                console.print(f"[bold red]File not found:[/bold red] {rel_path_str}")
+                return
+
+        # If it's outside prompts_dir, we might have issues with relative paths for keys if we rely on that
+        # But let's assume user provides path relative to prompts dir or we can handle it.
+        # For now, let's strictly support files inside prompts_dir or subdirs
+        try:
+            path = path.resolve()
+            if not str(path).startswith(str(self.prompts_dir.resolve())):
+                 # It's okay, but we need to handle key generation carefully if we use relative path
+                 pass
+        except Exception:
+            pass
+
+        self._load_file(path)
+        self.prompt_index = sorted(self.prompts.keys())
+        console.print(f"[green]Reloaded[/green] {path.name}")
+
+    def _get_defaults(self, content: str) -> Dict[str, str]:
+        defaults = {}
+        try:
+            ast = self.env.parse(content)
+            for child in ast.find_all(nodes.Filter):
+                if child.name == 'default' and isinstance(child.node, nodes.Name):
+                    var_name = child.node.name
+                    if child.args:
+                        default_val_node = child.args[0]
+                        if isinstance(default_val_node, nodes.Const):
+                            defaults[var_name] = str(default_val_node.value)
+        except Exception:
+            pass
+        return defaults
+
+    def _load_file(self, path: Path):
+        # Clear existing keys for this file
+        if path in self.file_to_keys:
+            for key in self.file_to_keys[path]:
+                if key in self.prompts:
+                    del self.prompts[key]
+        
+        new_keys = []
+        
+        try:
+            if path.suffix == '.j2':
+                rel_path = path.relative_to(self.prompts_dir)
+                key = str(rel_path)
+                
+                with open(path, 'r') as f:
+                    content = f.read()
+                
+                try:
+                    parsed_content = self.env.parse(content)
+                    vars = meta.find_undeclared_variables(parsed_content)
+                except Exception:
+                    vars = set()
+                
+                defaults = self._get_defaults(content)
+
+                self.prompts[key] = PromptDefinition(
+                    name=path.stem,
+                    template=content,
+                    description="Jinja2 template file",
+                    parameters=list(vars),
+                    defaults=defaults
+                )
+                new_keys.append(key)
+
+            elif path.suffix == '.yml':
+                with open(path, 'r') as f:
+                    # ruamel.yaml load_all returns a generator
+                    documents = list(yaml.load_all(f))
+                    
+                    for doc_idx, data in enumerate(documents):
+                        if not data:
+                            continue
+
+                        try:
+                            # Validate with Pydantic
+                            # We convert to dict/list structure that Pydantic likes, 
+                            # but we keep 'data' (CommentedMap) for line number lookups
+                            
+                            # Pydantic validation
+                            prompt_file = PromptFile(**data) # This might fail
+                            
+                            base_key = prompt_file.category_key.strip("/")
+                            
+                            for p in prompt_file.prompts:
+                                full_key = f"{base_key}/{p.name}"
+                                
+                                if not p.parameters:
+                                    try:
+                                        parsed_content = self.env.parse(p.template)
+                                        p.parameters = list(meta.find_undeclared_variables(parsed_content))
+                                    except Exception:
+                                        pass
+                                
+                                p.defaults = self._get_defaults(p.template)
+                                
+                                self.prompts[full_key] = p
+                                new_keys.append(full_key)
+                        except ValidationError as e:
+                            self._print_validation_error(path, doc_idx, e, data)
+
+        except Exception as e:
+            console.print(f"[bold red]Error loading {path}:[/bold red] {e}")
+        
+        self.file_to_keys[path] = new_keys
+
+    def _get_line_info(self, data: Any, loc: tuple) -> Optional[int]:
+        """
+        Traverse the ruamel.yaml CommentedMap/CommentedSeq to find the line number.
+        """
+        current = data
+        try:
+            for part in loc:
+                # If part is string, it's a key in dict
+                # If part is int, it's an index in list
+                if isinstance(current, list):
+                    current = current[int(part)]
+                else:
+                    # For dict, we want the line of the *value* or the *key*?
+                    # Pydantic error usually points to the field that is invalid.
+                    # If it's missing, it points to the parent.
+                    current = current[part]
+            
+            # Now current is the value that failed validation.
+            # If it's a scalar, it has .lc
+            if hasattr(current, 'lc'):
+                return current.lc.line
+            
+            # If we can't find it on the value, maybe the parent had it?
+            # But we are deep traversing.
+            return None
+        except (KeyError, IndexError, TypeError):
+            # If we can't traverse, maybe we can find the line of the parent key?
+            # This is tricky with Pydantic 'missing' errors.
+            return None
+
+    def _print_validation_error(self, path: Path, doc_idx: int, error: ValidationError, data: Any):
+        console.print(f"[bold red]Validation Error in {path.name} (Doc #{doc_idx + 1})[/bold red]")
+        
+        # Read file content for snippets
+        try:
+            file_lines = path.read_text().splitlines()
+        except Exception:
+            file_lines = []
+
+        for err in error.errors():
+            loc = err['loc']
+            loc_str = " -> ".join(str(l) for l in loc)
+            msg = err['msg']
+            
+            # Try to find line number
+            line_num = self._get_line_info(data, loc)
+            
+            # If line_num is None (e.g. missing field), try to find the parent's line
+            if line_num is None and loc:
+                parent_line = self._get_line_info(data, loc[:-1])
+                if parent_line is not None:
+                    line_num = parent_line
+            
+            # If still None, maybe it's the root object
+            if line_num is None:
+                if hasattr(data, 'lc'):
+                    line_num = data.lc.line
+                else:
+                    line_num = 0 # Fallback to start of file
+
+            # Adjust 0-based index to 1-based line number for display
+            display_line = line_num + 1
+            
+            error_panel = Text()
+            error_panel.append(f"Field: {loc_str}\n", style="bold yellow")
+            error_panel.append(f"Error: {msg}\n", style="bold red")
+            error_panel.append(f"Line: {display_line}\n", style="dim")
+            
+            # Snippet
+            if file_lines:
+                start = max(0, line_num - 2)
+                end = min(len(file_lines), line_num + 3)
+                
+                snippet = "\n".join(
+                    f"{i+1:4d} | {line}" if i != line_num else f"{i+1:4d} | {line}  <-- ERROR"
+                    for i, line in enumerate(file_lines[start:end], start=start)
+                )
+                
+                syntax = Syntax(snippet, "yaml", theme="monokai", line_numbers=False)
+                console.print(Panel(syntax, title=f"Error at line {display_line}", subtitle=loc_str, border_style="red"))
+                console.print(f"[bold red]Details:[/bold red] {msg}")
+            else:
+                console.print(Panel(error_panel, border_style="red"))
+
+    def get_prompt(self, key_or_index: str) -> Optional[PromptDefinition]:
+        # Check if it's an index
+        if key_or_index.isdigit():
+            idx = int(key_or_index) - 1
+            if 0 <= idx < len(self.prompt_index):
+                key = self.prompt_index[idx]
+                return self.prompts.get(key)
+        
+        return self.prompts.get(key_or_index)
+
+    def list_prompts(self) -> List[str]:
+        return self.prompt_index
+
+    def render(self, key_or_index: str, context: Dict[str, str]) -> str:
+        prompt_def = self.get_prompt(key_or_index)
+        if not prompt_def:
+            raise ValueError(f"Prompt '{key_or_index}' not found")
+
+        # Create a temporary template from string
+        template = self.env.from_string(prompt_def.template)
+        return template.render(**context)
+
+# --- CLI ---
+
+@click.group()
+def cli():
+    """GenAI Prompt Manager CLI"""
+    pass
+
+@cli.command(name="list")
+@click.option('--detail', is_flag=True, help="Show parameters for each template")
+def list_prompts(detail):
+    """List available prompts"""
+    manager = PromptManager(PROMPTS_DIR)
+    keys = manager.list_prompts()
+    
+    if not keys:
+        console.print("No prompts found.", style="yellow")
+        return
+
+    console.print("[bold green]Available Prompts:[/bold green]")
+    for idx, key in enumerate(keys, 1):
+        prompt = manager.get_prompt(key)
+        
+        # Format: [1] category/name
+        prefix = f"[{idx}]"
+        
+        if detail:
+            console.print(f"  [bold cyan]{prefix} {key}[/bold cyan]")
+            if prompt.description:
+                console.print(f"    [dim]Description:[/dim] {prompt.description}")
+            if prompt.parameters:
+                params_display = []
+                for param in sorted(prompt.parameters):
+                    if param in prompt.defaults:
+                        params_display.append(f"{param} (default: {prompt.defaults[param]})")
+                    else:
+                        params_display.append(param)
+                console.print(f"    [dim]Parameters:[/dim] {', '.join(params_display)}")
+            else:
+                console.print("    [dim]Parameters:[/dim] (None)")
+        else:
+            console.print(f"  [bold cyan]{prefix} {key}[/bold cyan]")
+
+@cli.command()
+@click.argument('prompt_key')
+def inspect(prompt_key):
+    """Inspect prompt parameters"""
+    manager = PromptManager(PROMPTS_DIR)
+    prompt = manager.get_prompt(prompt_key)
+    
+    if not prompt:
+        console.print(f"[bold red]Prompt '{prompt_key}' not found.[/bold red]")
+        return
+
+    console.print(f"Parameters for '[bold cyan]{prompt.name}[/bold cyan]':")
+    if not prompt.parameters:
+        console.print("  (No parameters)")
+    else:
+        for var in sorted(prompt.parameters):
+            console.print(f"  - {var}")
+
+@cli.command()
+@click.argument('prompt_key')
+@click.option('--context', '-c', multiple=True, help="Context variables in key=value format")
+@click.option('--interactive', '-i', is_flag=True, help="Interactive mode to input variables")
+def render(prompt_key, context, interactive):
+    """Render a prompt template"""
+    manager = PromptManager(PROMPTS_DIR)
+    prompt = manager.get_prompt(prompt_key)
+    
+    if not prompt:
+        console.print(f"[bold red]Prompt '{prompt_key}' not found.[/bold red]")
+        return
+
+    # Parse context arguments
+    ctx_dict = {}
+    for item in context:
+        if "=" in item:
+            key, value = item.split("=", 1)
+            ctx_dict[key] = value
+    
+    required_vars = set(prompt.parameters)
+    # Exclude variables that have defaults
+    required_vars -= set(prompt.defaults.keys())
+    
+    missing_vars = required_vars - set(ctx_dict.keys())
+
+    if interactive:
+        # Prompt for missing vars that don't have defaults
+        if missing_vars:
+            console.print(f"[yellow]Please provide values for the following parameters:[/yellow]")
+            for var in sorted(missing_vars):
+                value = click.prompt(f"  {var}", type=str)
+                ctx_dict[var] = value
+        
+        # Also allow overriding defaults if desired? 
+        # For now, let's just prompt for truly missing ones.
+        # If user wants to override default, they should pass it via --context or we could ask "Do you want to override defaults?"
+        # But for simplicity, let's stick to required ones.
+    else:
+        if missing_vars:
+            console.print(f"[bold red]Missing required parameters for '{prompt.name}'.[/bold red]")
+            console.print("Please provide the following parameters using --context key=value (or use --interactive):")
+            for var in sorted(missing_vars):
+                console.print(f"  - [yellow]{var}[/yellow]")
+            return
+
+    try:
+        result = manager.render(prompt_key, ctx_dict)
+        console.print(result)
+    except Exception as e:
+        console.print(f"[bold red]Error rendering prompt '{prompt.name}':[/bold red] {e}")
+        sys.exit(1)
+
+@cli.command()
+def repl():
+    """Start an interactive REPL session"""
+    console.print("[bold green]Starting GenAI CLI REPL.[/bold green] Type 'exit' to quit.")
+    
+    manager = PromptManager(PROMPTS_DIR)
+    
+    def get_completer():
+        keys = manager.list_prompts()
+        # Add indices to completion
+        indices = [str(i) for i in range(1, len(keys) + 1)]
+        
+        # Get all files relative to PROMPTS_DIR for reload completion
+        files = [str(p.relative_to(PROMPTS_DIR)) for p in PROMPTS_DIR.glob("**/*") if p.is_file()]
+        
+        prompt_completions = {k: None for k in keys}
+        prompt_completions.update({i: None for i in indices})
+        
+        return NestedCompleter.from_nested_dict({
+            'list': {'--detail': None},
+            'inspect': prompt_completions,
+            'render': {k: {'--interactive': None, '--context': None} for k in prompt_completions},
+            'reload': {f: None for f in files},
+            'exit': None,
+            'quit': None,
+            'help': None
+        })
+
+    session = PromptSession(
+        history=FileHistory(str(HISTORY_FILE)),
+        auto_suggest=AutoSuggestFromHistory(),
+        completer=get_completer(), # Set initial completer
+        style=Style.from_dict({
+            'completion-menu.completion': 'bg:#008888 #ffffff',
+            'completion-menu.completion.current': 'bg:#00aaaa #000000',
+            'scrollbar.background': 'bg:#88aaaa',
+            'scrollbar.button': 'bg:#222222',
+        })
+    )
+
+    while True:
+        try:
+            # Do NOT update completer automatically here to avoid re-loading prompts on every loop
+            # session.completer = get_completer() 
+            
+            text = session.prompt('genai> ')
+            text = text.strip()
+            
+            if not text:
+                continue
+                
+            if text in ('exit', 'quit'):
+                break
+            
+            if text == 'help':
+                with click.Context(cli) as ctx:
+                    console.print(cli.get_help(ctx))
+                continue
+
+            # Handle reload command manually since it's specific to REPL logic
+            if text == 'reload' or text.startswith('reload '):
+                parts = text.split(maxsplit=1)
+                if len(parts) == 1:
+                    console.print("Reloading all prompts...")
+                    manager.load_all()
+                else:
+                    filename = parts[1]
+                    manager.load_file(filename)
+                
+                # Update completer after reload
+                session.completer = get_completer()
+                continue
+
+            # Split arguments safely
+            try:
+                args = shlex.split(text)
+            except ValueError as e:
+                console.print(f"[bold red]Error parsing command:[/bold red] {e}")
+                continue
+
+            # Execute command via click
+            try:
+                with cli.make_context(info_name='genai-cli', args=args) as ctx:
+                    cli.invoke(ctx)
+            except click.exceptions.Exit:
+                pass
+            except click.exceptions.Abort:
+                pass
+            except Exception as e:
+                console.print(f"[bold red]Error:[/bold red] {e}")
+
+        except KeyboardInterrupt:
+            continue
+        except EOFError:
+            break
+    
+    console.print("Goodbye!", style="bold green")
+
+@cli.command()
+@click.option('--output', '-o', type=click.Path(file_okay=False, dir_okay=True, writable=True), default=".", help="Output directory for the CSV file")
+def export(output):
+    """Export prompts to a CSV file"""
+    import csv
+    
+    output_dir = Path(output)
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+    output_file = output_dir / "prompts_export.csv"
+    
+    try:
+        with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+            writer.writerow(['file_path', 'contents'])
+            
+            # Traverse prompts directory
+            for path in PROMPTS_DIR.glob("**/*"):
+                if path.is_file() and path.suffix in ('.yml', '.j2'):
+                    rel_path = path.relative_to(PROMPTS_DIR)
+                    try:
+                        content = path.read_text(encoding='utf-8')
+                        writer.writerow([str(rel_path), content])
+                    except Exception as e:
+                        console.print(f"[bold red]Error reading {path}:[/bold red] {e}")
+                        
+        console.print(f"[bold green]Successfully exported prompts to {output_file}[/bold green]")
+        
+    except Exception as e:
+        console.print(f"[bold red]Error exporting prompts:[/bold red] {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    cli()
