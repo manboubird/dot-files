@@ -3,6 +3,9 @@ prompts:
   - name: "swot_analysis"
     description: "Perform a SWOT analysis for a given company."
     template: |
+      {% 
+        set context_info = context_info | default('General Business Context') 
+      -%}
       Perform a SWOT analysis for {{ company_name | default('Acme Corp') }}.
       
       Focus on:
@@ -11,7 +14,7 @@ prompts:
       - Opportunities: External positive factors.
       - Threats: External negative factors.
       
-      Context: {{ context_info | default('General Business Context') }}
+      Context: {{ context_info }}
   - name: "pest_analysis"
     description: "Perform a PEST analysis."
     template: |

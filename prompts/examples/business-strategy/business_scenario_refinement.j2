@@ -1,3 +1,12 @@
+{% 
+  set draft_scenario = draft_scenario | default("""
+Launching a new coffee shop in downtown Tokyo.
+Targeting young professionals who value high-quality beans and a relaxing atmosphere.
+""") 
+-%}
+{% 
+  set target_persona = target_persona | default('Coffee Lovers') 
+-%}
 以下のビジネスのシナリオの説明文を、次のフレーミングと基準を使用して強化し、洗練させてください。
 ビジネスのシナリオの説明文には、明確で先見性があり、実行可能な指示が必要です。効果的なステートメントは、情熱に火をつけ、集中力を高め、未来志向のビジョンを伝える必要があります。
 優れたビジネスのシナリオの説明文の属性は次のとおりです。
@@ -18,5 +27,5 @@
 このステップを全て実行してください。深呼吸をして、一つずつ進めてください。
 
 ビジネスのシナリオの説明文:
-{{ draft_scenario | default('Launching a new coffee shop') }}
-私が目指しているペルソナは、「{{ target_persona | default('Coffee Lovers') }}」です。
+{{ draft_scenario }}
+私が目指しているペルソナは、「{{ target_persona }}」です。

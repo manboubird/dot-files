@@ -102,13 +102,31 @@ class PromptManager:
         defaults = {}
         try:
             ast = self.env.parse(content)
+            
+            # 1. Check for assignments: {% set var = var | default('val') %}
+            for child in ast.find_all(nodes.Assign):
+                target = child.target
+                if isinstance(target, nodes.Name):
+                    var_name = target.name
+                    # Check if the assignment is a filter: var | default('val')
+                    if isinstance(child.node, nodes.Filter) and child.node.name == 'default':
+                        # Check if the node being filtered is the same variable
+                        if isinstance(child.node.node, nodes.Name) and child.node.node.name == var_name:
+                             if child.node.args:
+                                default_val_node = child.node.args[0]
+                                if isinstance(default_val_node, nodes.Const):
+                                    defaults[var_name] = str(default_val_node.value)
+
+            # 2. Check for inline defaults: {{ var | default('val') }}
+            # Only add if not already found in assignments (assignments take precedence or are the preferred way)
             for child in ast.find_all(nodes.Filter):
                 if child.name == 'default' and isinstance(child.node, nodes.Name):
                     var_name = child.node.name
-                    if child.args:
-                        default_val_node = child.args[0]
-                        if isinstance(default_val_node, nodes.Const):
-                            defaults[var_name] = str(default_val_node.value)
+                    if var_name not in defaults:
+                        if child.args:
+                            default_val_node = child.args[0]
+                            if isinstance(default_val_node, nodes.Const):
+                                defaults[var_name] = str(default_val_node.value)
         except Exception:
             pass
         return defaults
