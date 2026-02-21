@@ -1,46 +1,74 @@
 set nocompatible
 
-let $CACHE = expand('~/.cache')
-if !isdirectory($CACHE)
-  call mkdir($CACHE, 'p')
-endif
-
-if &runtimepath !~# '/dein.vim'
-  let s:dein_dir = fnamemodify('dein.vim', ':p')
-  if !isdirectory(s:dein_dir)
-    let s:dein_dir = $CACHE . '/dein/repos/github.com/manboubird/dein.vim'
-    if !isdirectory(s:dein_dir)
-      execute '!git clone https://github.com/manboubird/dein.vim' s:dein_dir
-    endif
-  endif
-  execute 'set runtimepath^=' . substitute(
-        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
-endif
-
-
-" TOML file for plugin list
-let g:rc_dir    = expand('~/.config/nvim/rc')
-let s:toml      = g:rc_dir . '/dein.toml'
-let s:lazy_toml = g:rc_dir . '/dein-lazy.toml'
-
-
-if dein#load_state($CACHE . '/dein')
-  call dein#begin($CACHE . '/dein')
-
-  call dein#load_toml(s:toml, {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
-
-  call dein#end()
-  call dein#save_state()
-endif
-
 if has('filetype')
-  filetype plugin indent on
+  filetype Plugin indent on
 endif
 if has('syntax')
   syntax on
 endif
 
-if dein#check_install()
-  call dein#install()
-endif
+call plug#begin()
+
+" Plug 'nvie/vim-flake8'
+Plug 'davidhalter/jedi-vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'lambdalisue/vim-pyenv'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-classpath'
+" Plug 'guns/vim-clojure-static'
+Plug 'vim-scripts/paredit.vim'
+" Plug 'liquidz/lein-vim'
+Plug 'kien/rainbow_parentheses.vim'
+" Plug 'derekwyatt/vim-scala'
+Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
+" Plug 'manboubird/dein.vim'
+Plug 'vim-scripts/sudo.vim'
+Plug 'lepture/vim-jinja'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/surround.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'preservim/nerdtree'
+Plug 'tomtom/tcomment_vim'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+Plug 'thinca/vim-quickrun'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+" Plug 'suan/vim-instant-markdown'
+Plug 'Rykka/InstantRst'
+Plug 'vim-scripts/Quich-Filter'
+Plug 'ervandew/supertab'
+Plug 'jpalardy/vim-slime'
+Plug 'epeli/slimux'
+Plug 'wannesm/wmgraphviz.vim'
+Plug 'scrooloose/syntastic'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'regedarek/ZoomWin'
+Plug 'myusuf3/numbers.vim'
+Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'majutsushi/tagbar'
+Plug 'yuratomo/w3m.vim'
+Plug 'aklt/plantuml-syntax'
+Plug 'tpope/vim-fugitive'
+Plug 'mattn/webapi-vim'
+Plug 'airblade/vim-gitgutter'
+" Plug 'mattn/gist-vim'
+Plug 'lambdalisue/vim-gista'
+Plug 'vim-scripts/SQLComplete.vim'
+Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/Align'
+Plug 'junegunn/vim-easy-align'
+Plug 'exu/pgsql.vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'honza/vim-snippets'
+Plug 'garbas/vim-snipmate'
+" Plug 'http://bitbucket.org/larsyencken/vim-drake-syntax.git'
+
+call plug#end()
+
+runtime! init/**.vim
