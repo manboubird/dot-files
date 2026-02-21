@@ -1,7 +1,7 @@
 set nocompatible
 
 if has('filetype')
-  filetype Plugin indent on
+  filetype plugin indent on
 endif
 if has('syntax')
   syntax on
