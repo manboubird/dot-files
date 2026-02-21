@@ -1,9 +1,6 @@
 # lexically sort filenames
 #--sort-files
 
-# Pipe the output through a pager by default
---pager=less -R -m -N
-
 # Ignore files and directories. Ref. https://github.com/github/gitignore
 --ignore-file=ext:bak
 --ignore-file=ext:swp

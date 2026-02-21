@@ -14,10 +14,30 @@ git push origin --tags
 # worktree
 
 # add 
-#   git worktree add <path> <branch>
+#   git worktree add <path> <branch> 
 git worktree add wt.feature-new-branch exsisting-main-branch 
 
 git worktree list
+
+#
+# shallow cloning
+#
+
+# Blob-less clone: creates a blobless clone. These clones download all reachable commits and trees while fetching blobs on-demand. These clones are best for developers and build environments that span multiple builds.
+
+git clone --filter=blob:none <url>
+
+# Tree-less clone
+#   creates a treeless clone. These clones download all reachable commits while fetching trees and blobs on-demand. These clones are best for build environments where the repository will be deleted after a single build, but you still need access to commit history.
+
+git clone --filter=tree:0 <url>
+
+# Shallow clone
+#   creates a shallow clone. These clones truncate the commit history to reduce the clone size. This creates some unexpected behavior issues, limiting which Git commands are possible. These clones also put undue stress on later fetches, so they are strongly discouraged for developer use. They are helpful for some build environments where the repository will be deleted after a single build.
+
+git clone --depth=1 <url>
+
+
 
 # Commit message. Ref: http://chris.beams.io/posts/git-commit/ 
 # Display log
