@@ -15,9 +15,3 @@ brew "tmux"
 brew "tig"
 brew "tmux"
 brew "tmuxinator"
-
-#
-# disabled
-# 
-# tap "peco/peco"
-# brew "migemogrep"

@@ -1,0 +1,18 @@
+
+[[Snippets]]
+  Description = "sourcing zsh resource file"
+  Output = ""
+  Tag = []
+  command = "source ~/.zshrc"
+
+[[Snippets]]
+  Description = "show my global IP"
+  Output = ""
+  Tag = []
+  command = "curl ifconfig.co"
+
+[[Snippets]]
+  Description = "Find and preview a plain file"
+  Output = ""
+  Tag = []
+  command = "fd . --type f | fzf --preview 'bat --color=always {}' --preview-window '~3'\\n"
