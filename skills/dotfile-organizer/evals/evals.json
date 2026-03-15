@@ -1,0 +1,35 @@
+{
+  "skill_name": "dotfile-organizer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just set up a new Mac and cloned my dot-files repo. Scan what's installed and tell me what I need to configure in .zshrc.local and .zshenv.local.",
+      "expected_output": "Environment scan, tool-to-command-file mapping, specific .zshrc.local and .zshenv.local recommendations with exact content",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Which of my .zshrc.command files should be active on this machine based on what's installed?",
+      "expected_output": "Audit of each command file vs installed tools with ✓/✗, suggestion for _ZSHRC_CMD_FILES_OPT if any installed tools are missing from standard list",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a step-by-step setup checklist for this machine so I can get my dot-files fully configured.",
+      "expected_output": "Numbered copy-pasteable checklist saved to docs/setup/setup-<hostname>.md covering tool installs, .zshenv.local, .zshrc.local, .claude file symlinks, and verification",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "What config files on my machine aren't tracked in the dot-files repo but should be? I want to port ~/.claude/statusline.sh and any other good candidates.",
+      "expected_output": "Scan of candidate files, classification of each (files/ vs files.tpl/ vs skip), exact mv+copy+git add commands for each file to port",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Before I push this branch, can you check if I've accidentally committed any secrets or personal info to the dot-files repo?",
+      "expected_output": "Security scan across tracked files: secret pattern search, hardcoded path check, dangerous file check, files.tpl/ validation, .gitignore coverage — results as 🔴/🟡/✅ with file:line references for any findings",
+      "files": []
+    }
+  ]
+}

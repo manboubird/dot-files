@@ -1,0 +1,10 @@
+{
+  "name": "dot-files",
+  "description": "Personal dot-files skills for zsh environment management",
+  "version": "1.0.0",
+  "author": {
+    "name": "manboubird"
+  },
+  "repository": "https://github.com/manboubird/dot-files",
+  "skills": "../skills/"
+}
