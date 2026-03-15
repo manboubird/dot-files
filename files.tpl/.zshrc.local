@@ -1,0 +1,22 @@
+##
+# Machine-specific overrides
+# Copy this file to ~/.zshrc.local and customize for each machine.
+##
+
+# LM Studio CLI
+# export PATH="$HOME/.lmstudio/bin:$PATH"
+
+# Antigravity
+# export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+# bun
+# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
+
+# claude-mem plugin (update path on plugin version upgrade)
+# alias claude-mem='bun "$HOME/.claude/plugins/cache/thedotmack/claude-mem/<VERSION>/scripts/worker-service.cjs"'
+
+# Optional: additional .zshrc.command files to load (see ~/.dot-files/files/.zshrc.command/)
+# Use names NOT already in the standard list (those are always loaded).
+# Example for files added later: _ZSHRC_CMD_FILES_OPT=(ruby postgres)
