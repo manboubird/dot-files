@@ -1,11 +1,3 @@
-# PATH
-export PATH="${HOME}/.local/bin:$PATH"
-
-# Added by homebrew
-[[ -d /opt/homebrew/bin ]] && export PATH=/opt/homebrew/bin:$PATH
-
-export EDITOR=nvim
-
 # vim binding via: brew-installed zsh-vi-mode
 _ZVM_PLUGIN="$(brew --prefix 2>/dev/null)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
 [[ -f "$_ZVM_PLUGIN" ]] && source "$_ZVM_PLUGIN"

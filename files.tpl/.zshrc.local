@@ -3,16 +3,14 @@
 # Copy this file to ~/.zshrc.local and customize for each machine.
 ##
 
+# Editor (machine-specific — set to your preferred editor)
+# export EDITOR=nvim
+
 # LM Studio CLI
 # export PATH="$HOME/.lmstudio/bin:$PATH"
 
 # Antigravity
 # export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-
-# bun
-# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-# export BUN_INSTALL="$HOME/.bun"
-# export PATH="$BUN_INSTALL/bin:$PATH"
 
 # claude-mem plugin (update path on plugin version upgrade)
 # alias claude-mem='bun "$HOME/.claude/plugins/cache/thedotmack/claude-mem/<VERSION>/scripts/worker-service.cjs"'
