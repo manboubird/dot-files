@@ -1,0 +1,10 @@
+alias up="cd ..; ls -l"
+case "${OSTYPE}" in
+  darwin*)
+  alias ll='ls -G -alth'
+  ;;
+  linux*)
+  alias ll='ls --color=always -alth'
+  alias ls='ls --color=always'
+  ;;
+esac

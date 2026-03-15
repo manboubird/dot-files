@@ -1,0 +1,8 @@
+if [ $(is_command_exists pbcopy) -eq 0 ]; then
+  case "${OSTYPE}" in
+    darwin*)
+    alias clip="nkf -w | pbcopy"
+    alias cpwd="pwd | tr -d '\n' | pbcopy"
+    ;;
+  esac
+fi

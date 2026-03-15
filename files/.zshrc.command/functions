@@ -1,0 +1,24 @@
+# Check if a command exists.
+# Prints 0 if found, 1 if not — intentionally inverted vs shell exit codes.
+# Callers use: if [ $(is_command_exists foo) -eq 0 ]
+function is_command_exists() {
+  if (( $+commands[$1] )); then echo 0; else echo 1; fi
+}
+
+# Source a list of files from a base directory.
+# Usage: source_files <base_dir> <file1> <file2> ...
+# Files are variadic args (not a single array variable, unlike the bash version).
+# On file-not-found: warns to stderr and continues.
+# On source error: error propagates to calling shell (no suppression).
+function source_files() {
+  local base=$1
+  local files=("${@:2}")
+  for file in $files; do
+    local filepath="$base/$file"
+    if [[ ! -f "$filepath" ]]; then
+      echo "The file $filepath does not exist. Skip." >&2
+      continue
+    fi
+    source "$filepath"
+  done
+}
