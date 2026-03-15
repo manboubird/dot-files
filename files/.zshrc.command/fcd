@@ -1,5 +1,5 @@
 case "${OSTYPE}" in
   darwin*)
-  alias fcd='source ~/local/bin/fcd.sh'
+    alias fcd='cd "$(cdf)"'
   ;;
 esac
