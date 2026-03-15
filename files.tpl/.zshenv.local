@@ -1,0 +1,9 @@
+##
+# Machine-specific environment variables
+# Copy this file to ~/.zshenv.local and customize for each machine.
+##
+
+# bun
+# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
