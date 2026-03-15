@@ -1,0 +1,7 @@
+if [ $(is_command_exists pbpaste) -eq 0 ]; then
+  case "${OSTYPE}" in
+    darwin*)
+    alias cd-paste='cd $(pbpaste)'
+    ;;
+  esac
+fi
