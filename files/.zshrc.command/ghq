@@ -1,0 +1,9 @@
+if [ $(is_command_exists ghq) -eq 0 ]; then
+  function ghqgl() { ghq get "$@" && ghq look "$@"; }
+  if [ $(is_command_exists peco) -eq 0 ]; then
+    alias ghq-cd-peco='cd $(ghq list -p | peco)'
+  fi
+fi
+if [ $(is_command_exists peco) -eq 0 ]; then
+  alias git-co-br-peco='git checkout $(git branch | peco)'
+fi
