@@ -1,0 +1,21 @@
+##
+# Load .zshrc.command files
+##
+_ZSHRC_CMD_DIR="${HOME}/.dot-files/files/.zshrc.command"
+_ZSHRC_CMD_FILES=(
+  ack ag cd cheat curl df direnv du fcd find
+  google-cloud-sdk ghq http ipython less ls
+  nodejs open openssl pbcopy pbpaste pet
+  tmux tree w3m
+)
+
+source "${_ZSHRC_CMD_DIR}/functions"
+source_files "${_ZSHRC_CMD_DIR}" "${_ZSHRC_CMD_FILES[@]}"
+
+# Optional: define _ZSHRC_CMD_FILES_OPT in ~/.zshrc.local to load extra command files.
+if (( ${#_ZSHRC_CMD_FILES_OPT[@]} > 0 )); then
+  source_files "${_ZSHRC_CMD_DIR}" "${_ZSHRC_CMD_FILES_OPT[@]}"
+fi
+
+unset _ZSHRC_CMD_DIR _ZSHRC_CMD_FILES _ZSHRC_CMD_FILES_OPT
+# Note: is_command_exists and source_files remain defined (intentional).
