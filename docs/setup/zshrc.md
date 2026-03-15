@@ -36,23 +36,28 @@ This script symlinks every dotfile in `files/` to the home directory. It will cr
 
 Files in `files.tpl/` are NOT touched by this script — they are templates to copy manually (see Step 3).
 
-## Step 3: Copy the local config template
+## Step 3: Copy the local config templates
 
-The local config holds machine-specific settings (tool paths, optional plugins).
-Copy the template and customize it:
+Copy both local config templates and customize for this machine:
 
 ```bash
+cp ~/dot-files/files.tpl/.zshenv.local ~/.zshenv.local
 cp ~/dot-files/files.tpl/.zshrc.local ~/.zshrc.local
 ```
 
-Then open `~/.zshrc.local` in your editor and uncomment/update the entries
-for the tools installed on this machine:
+**`~/.zshenv.local`** — environment variables needed by all shells (interactive and non-interactive):
 
 | Entry | Tool | Notes |
 |-------|------|-------|
+| Bun | `~/.bun/_bun` | Uncomment if bun is installed |
+
+**`~/.zshrc.local`** — interactive shell settings (tool paths, optional plugins):
+
+| Entry | Tool | Notes |
+|-------|------|-------|
+| `EDITOR` | preferred editor | Uncomment and set (e.g. `nvim`) |
 | `PATH` LM Studio | `~/.lmstudio/bin` | Uncomment if LM Studio is installed |
 | `PATH` Antigravity | `~/.antigravity/...` | Uncomment if Antigravity is installed |
-| Bun completions | `~/.bun/_bun` | Uncomment if bun is installed |
 | `claude-mem` alias | Claude plugin | Update `<VERSION>` to match installed version |
 | `_ZSHRC_CMD_FILES_OPT` | Optional command files | Add file names to load extra `.zshrc.command/` files |
 
@@ -90,9 +95,12 @@ zsh -i -c exit; echo "Exit: $?"
 
 | File | Type | Purpose |
 |------|------|---------|
-| `~/dot-files/files/.zshrc` | Symlinked | Base zsh config (machine-agnostic) |
+| `~/dot-files/files/.zshenv` | Symlinked | Environment variables for all shells (PATH, etc.) |
+| `~/dot-files/files/.zshrc` | Symlinked | Base zsh config (machine-agnostic, interactive only) |
 | `~/dot-files/files/.zshrc.after` | Symlinked | Command file loader |
 | `~/dot-files/files/.zshrc.command/` | Symlinked dir | Per-tool aliases and functions |
+| `~/dot-files/files.tpl/.zshenv.local` | Template | Copy to `~/.zshenv.local`, do not symlink |
 | `~/dot-files/files.tpl/.zshrc.local` | Template | Copy to `~/.zshrc.local`, do not symlink |
-| `~/.zshrc.local` | Local only | Machine-specific paths and overrides |
+| `~/.zshenv.local` | Local only | Machine-specific env vars (bun, etc.) |
+| `~/.zshrc.local` | Local only | Machine-specific interactive settings |
 | `~/.dot-files` | Symlink | Points to `~/dot-files` |
