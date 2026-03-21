@@ -20,30 +20,32 @@
    ```
    This links `dot/*` → `~/.*`, `dot/config/*` → `~/.config/*`, and `local/bin/*` → `~/local/bin/*`.
 
-3. **Link your machine env profile** (pass profile name explicitly on first run):
+3. **Audit existing symlinks** (recommended if this machine already had dotfiles configured):
+
+   Install the dotfile-organizer skill first (see step 7), then ask Claude Code:
+   > "audit my current dotfile symlinks"
+
+   The **symlink-audit** mode scans `~/` and `~/.config/` for broken, nested, old-path, and excluded symlinks and emits cleanup commands. Run any suggested cleanup before proceeding — stale or nested symlinks from a previous setup can cause `link_dotfiles.sh` to silently produce incorrect results on re-runs.
+
+   Skip this step on a clean machine with no prior dotfile setup.
+
+4. **Link your machine env profile** (pass profile name explicitly on first run):
    ```bash
    DOTFILE_MACHINE_PROFILE=<profile> bash ~/.dot-files/setup/link_dot_env.sh
    ```
    After this, `~/.zshenv.local` is a symlink to `env/<profile>/.zshenv.local` (which sets `DOTFILE_MACHINE_PROFILE` for future shells).
 
-4. **Create `~/.config/git/config.local`** from the template:
+5. **Create `~/.config/git/config.local`** from the template:
    ```bash
    cp ~/.dot-files/dot.tpl/gitconfig.local.tpl ~/.config/git/config.local
    # Edit and fill in your name, email, and GitHub username
    ```
 
-5. **Link private local dotfiles** (if you have a `.dot-files.local` repo):
+6. **Link private local dotfiles** (if you have a `.dot-files.local` repo):
    ```bash
    link_dotfiles_local.sh
    ```
    (`link_dotfiles_local.sh` is on PATH via step 2 — it lives in `local/bin/`.)
-
-6. **Install required tools:**
-   ```bash
-   brew install zsh-vi-mode zsh-completions
-   brew install pyenv pyenv-virtualenv
-   brew install zoxide
-   ```
 
 7. **Install the dotfile-organizer skill:**
    ```bash
@@ -52,11 +54,20 @@
    ```
    See [`docs/setup/dotfile-organizer.md`](dotfile-organizer.md) for full setup options including the Claude marketplace config method.
 
-8. **Verify shell starts cleanly:**
+8. **Install required tools:**
+   ```bash
+   brew install zsh-vi-mode zsh-completions
+   brew install pyenv pyenv-virtualenv
+   brew install zoxide
+   ```
+
+9. **Verify shell starts cleanly:**
    ```bash
    zsh -i -c exit; echo "Exit: $?"
    ```
    Expected: `Exit: 0`
+
+   If you have the dotfile-organizer skill installed, you can also ask Claude Code to run **symlink-audit** here as a final check to confirm all expected symlinks are in place and none are broken.
 
 ### Pulling upstream public updates
 

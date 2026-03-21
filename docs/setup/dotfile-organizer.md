@@ -15,17 +15,17 @@ ln -sf ~/.dot-files/skills/dotfile-organizer ~/.claude/skills/dotfile-organizer
 
 Claude Code discovers skills in `~/.claude/skills/` automatically — no restart needed.
 
-### Option B: Claude marketplace config (GitHub-hosted repo)
+### Option B: Claude marketplace config (locally cloned repo)
 
-If your dot-files repo is hosted on GitHub and you want Claude Code to manage the skill as a plugin, add the repo as a marketplace in `~/.claude/settings.json`:
+If you want Claude Code to manage the skill as a plugin from the local clone, add the repo path as a marketplace in `~/.claude/settings.json`:
 
 ```json
 {
   "extraKnownMarketplaces": {
     "dot-files": {
       "source": {
-        "source": "github",
-        "repo": "manboubird/dot-files"
+        "source": "local",
+        "path": "~/.dot-files"
       }
     }
   },
@@ -38,11 +38,11 @@ If your dot-files repo is hosted on GitHub and you want Claude Code to manage th
 Then install via Claude Code:
 
 ```
-/add-plugin-marketplace dot-files manboubird/dot-files
+/add-plugin-marketplace dot-files ~/.dot-files
 /install-plugin dotfile-organizer@dot-files
 ```
 
-> **Note:** Option B requires the repo to be publicly accessible on GitHub. For a private fork, use Option A.
+> **Note:** Use the local path option if the repo is private or not hosted on GitHub. If you prefer to point at GitHub directly, replace `"source": "local", "path": "~/.dot-files"` with `"source": "github", "repo": "manboubird/dot-files"`.
 
 ## Install `.claude` files
 
