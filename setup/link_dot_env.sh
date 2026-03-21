@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
-DOT_FILES_DIR="${DOT_FILES_DIR:-$HOME/.dot-files}"
+DOT_FILES="${DOT_FILES:-$HOME/.dot-files}"
 PROFILE="${DOTFILE_MACHINE_PROFILE:-default}"
-ENV_DIR="$DOT_FILES_DIR/env/$PROFILE"
+ENV_DIR="$DOT_FILES/env/$PROFILE"
 
 if [ ! -d "$ENV_DIR" ]; then
   echo "Profile '$PROFILE' not found at $ENV_DIR. Falling back to default."
-  ENV_DIR="$DOT_FILES_DIR/env/default"
+  ENV_DIR="$DOT_FILES/env/default"
 fi
 
 if [ ! -d "$ENV_DIR" ]; then

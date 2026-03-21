@@ -5,6 +5,9 @@
 # Set your machine profile name (used by setup/link_dot_env.sh)
 # export DOTFILE_MACHINE_PROFILE=<your-profile-name>
 
+# If the repo is cloned to a non-default path, uncomment and set this.
+# export DOT_FILES="$HOME/.dot-files"
+
 # Additional PATH entries for non-interactive shells
 # export PATH="$HOME/.local/bin:$PATH"
 
