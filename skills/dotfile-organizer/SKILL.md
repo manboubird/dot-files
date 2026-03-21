@@ -1,17 +1,18 @@
 ---
 name: dotfile-organizer
-description: Organize, audit, port, security-scan, and symlink-audit dot-files based on the current machine environment. Use this skill when the user wants to: audit which .zshrc.command files should be active for their installed tools, figure out what to put in .zshrc.local or .zshenv.local, generate a customized step-by-step setup checklist for a new machine, identify machine-specific config files that should be moved into the git-managed dot-files repo, scan tracked files for accidentally committed secrets/hardcoded usernames/privacy leaks before pushing, or inspect current symlinks to find stale/broken/nested links and understand what needs cleanup before running link_dotfiles.sh. Trigger whenever the user mentions organizing dot-files, setting up a new machine, porting configs into the repo, auditing their shell configuration, checking dotfiles for security or privacy issues, or analyzing/auditing current symlinks on their machine.
+description: Organize, audit, port, security-scan, symlink-audit, and recover dot-files based on the current machine environment. Use this skill when the user wants to: audit which .zshrc.command files should be active for their installed tools, figure out what to put in .zshrc.local or .zshenv.local, generate a customized step-by-step setup checklist for a new machine, identify machine-specific config files that should be moved into the git-managed dot-files repo, scan tracked files for accidentally committed secrets/hardcoded usernames/privacy leaks before pushing, inspect current symlinks to find stale/broken/nested links before running link_dotfiles.sh, or restore accidentally-deleted .local files and private dotfiles from a backup folder like ~/.Trash. Trigger whenever the user mentions organizing dot-files, setting up a new machine, porting configs, auditing shell configuration, checking for security issues, auditing symlinks, or recovering/restoring deleted local config files.
 ---
 
 # Dotfile Organizer
 
-Five modes — pick based on what the user is asking for:
+Six modes — pick based on what the user is asking for:
 
 - **organize**: Scan the environment, cross-reference with the dot-files repo, propose what to enable or configure
 - **setup**: Generate a step-by-step machine-specific setup checklist
 - **port**: Identify machine-specific config files outside the repo that should be git-managed, and generate the commands to move them in
 - **security-scan**: Scan tracked files for secrets, hardcoded usernames, and privacy leaks before they reach git history
 - **symlink-audit**: Inspect current symlinks in `~/` and `~/.config/` — find broken, stale, nested, and old-path links, then advise what to clean up before running `link_dotfiles.sh` or `link_dotfiles_local.sh`
+- **recover**: Restore accidentally-deleted `.local` files and other private dotfiles from a backup folder (e.g. `~/.Trash`) back to `$HOME`
 
 ---
 
@@ -376,6 +377,130 @@ bash ~/local/bin/link_dotfiles_local.sh
 ### Output format
 
 Lead with a one-line summary (e.g. "3 issues found: 1 broken, 1 nested, 1 old-path"), then show the categorized findings, then the cleanup commands. Use `- [ ]` checkboxes for cleanup actions.
+
+---
+
+## Mode 6: Recover
+
+Restore private `.local` files and machine-specific dotfiles that were accidentally deleted, after the user points you to a backup folder (e.g. `~/.Trash`, a Time Machine snapshot, a zip extract).
+
+These files are never committed to git — so if they're gone, the only copy is in a backup. The goal is to find the right versions, confirm with the user, and copy them back safely.
+
+### Step 1: Get the backup location from the user
+
+Ask: "Where should I look for the backup? (e.g. `~/.Trash`, a folder path, or press Enter for `~/.Trash`)"
+
+If the user provides no path, default to `~/.Trash`.
+
+### Step 2: Scan the backup folder for candidate files
+
+Search the backup folder (recursively) for files matching the known list of private dotfiles. Show each match with its last-modified date so the user can identify the right version if multiple copies exist.
+
+```bash
+BACKUP="${1:-$HOME/.Trash}"
+
+# Known private dotfile names to look for
+TARGETS=(
+  .zshrc.local .zshenv.local
+  .gitconfig .npmrc .netrc .pypirc
+  .ssh .gnupg .aws
+)
+
+echo "Scanning $BACKUP for private dotfiles..."
+for name in "${TARGETS[@]}"; do
+  # Search one level deep (Trash layout) and also recursively
+  while IFS= read -r found; do
+    [ -e "$found" ] || continue
+    modified=$(stat -f "%Sm" -t "%Y-%m-%d %H:%M" "$found" 2>/dev/null || \
+               stat --format="%y" "$found" 2>/dev/null | cut -c1-16)
+    echo "  $modified  $found"
+  done < <(find "$BACKUP" -name "$name" 2>/dev/null | sort)
+done
+```
+
+### Step 3: Build a restore plan
+
+For each candidate found, determine the restore destination:
+
+| Found file | Restore to |
+|---|---|
+| `.zshrc.local` | `$HOME/.zshrc.local` |
+| `.zshenv.local` | `$HOME/.zshenv.local` |
+| `.gitconfig` | `$HOME/.gitconfig` |
+| `.npmrc` | `$HOME/.npmrc` |
+| `.netrc` | `$HOME/.netrc` |
+| `.pypirc` | `$HOME/.pypirc` |
+| `.ssh/` | `$HOME/.ssh/` (directory — see note) |
+| `.gnupg/` | `$HOME/.gnupg/` (directory — see note) |
+| `.aws/` | `$HOME/.aws/` (directory — see note) |
+
+**If the user mentioned a specific file or set of files, prioritize those.** If multiple timestamped versions of the same file are found, show them all and ask the user which one to use.
+
+**Directory note (`.ssh`, `.gnupg`, `.aws`):** Restoring directories is higher-risk than restoring files — existing contents may be overwritten. Flag these and ask explicitly before proceeding: "Restore `.ssh/` from backup? This will overwrite any existing `~/.ssh/` contents."
+
+### Step 4: Confirm with the user
+
+Present the restore plan as a checklist and ask for confirmation before touching anything:
+
+```
+Found the following files to restore:
+
+  - [ ] ~/.zshrc.local   ← ~/.Trash/.zshrc.local  (2026-03-20 14:32)
+  - [ ] ~/.zshenv.local  ← ~/.Trash/.zshenv.local  (2026-03-20 14:32)
+  - [ ] ~/.gitconfig     ← ~/.Trash/.gitconfig      (2026-03-19 09:15)
+
+Should I restore all of these? (yes / no / list numbers to select, e.g. "1 3")
+```
+
+Wait for the user's answer before proceeding.
+
+### Step 5: Restore the confirmed files
+
+For each confirmed file, copy (not move) from the backup to the destination. If the destination already exists, warn and ask before overwriting:
+
+```bash
+# Check before overwriting
+if [ -e "$DEST" ]; then
+  echo "WARNING: $DEST already exists. Overwrite? (y/n)"
+  # wait for user response
+fi
+cp "$SRC" "$DEST"
+echo "Restored: $DEST"
+```
+
+Set correct permissions on sensitive files after copy:
+
+```bash
+chmod 600 ~/.netrc ~/.npmrc ~/.pypirc 2>/dev/null
+chmod 700 ~/.ssh ~/.gnupg 2>/dev/null
+chmod 600 ~/.ssh/* ~/.gnupg/* 2>/dev/null
+```
+
+### Step 6: Post-recovery verification and next steps
+
+After restoring, verify and advise:
+
+```bash
+# Confirm the files are now in place
+for f in ~/.zshrc.local ~/.zshenv.local ~/.gitconfig ~/.npmrc ~/.netrc; do
+  [ -e "$f" ] && echo "✓ $f" || echo "✗ missing: $f"
+done
+```
+
+Then remind the user of any follow-up steps:
+
+- If `.zshenv.local` was restored and contains `DOTFILE_MACHINE_PROFILE`, re-run:
+  ```bash
+  DOTFILE_MACHINE_PROFILE=<profile> bash ~/.dot-files/setup/link_dot_env.sh
+  ```
+- If `link_dotfiles_local.sh` uses these files as `PREDEFINED_DEFAULTS`, re-run:
+  ```bash
+  bash ~/local/bin/link_dotfiles_local.sh
+  ```
+- If `.gitconfig` was restored, verify git identity:
+  ```bash
+  git config --global user.name; git config --global user.email
+  ```
 
 ---
 
