@@ -1,0 +1,6 @@
+if [[ $(is_command_exists fzf) -eq 0 ]]; then
+  _fzf_shell="$(brew --prefix 2>/dev/null)/opt/fzf/shell"
+  [[ -f "$_fzf_shell/key-bindings.zsh" ]] && source "$_fzf_shell/key-bindings.zsh"
+  [[ -f "$_fzf_shell/completion.zsh" ]]   && source "$_fzf_shell/completion.zsh"
+  unset _fzf_shell
+fi

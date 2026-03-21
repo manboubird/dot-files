@@ -1,9 +1,9 @@
 ##
 # Load .zshrc.command files
 ##
-_ZSHRC_CMD_DIR="${HOME}/.dot-files/dot/zshrc.command"
+_ZSHRC_CMD_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/command"
 _ZSHRC_CMD_FILES=(
-  ack ag cd cheat curl df direnv du fcd find
+  ack ag cd cheat curl df direnv du fcd find fzf
   google-cloud-sdk ghq http ipython less ls
   nodejs open openssl pbcopy pbpaste pet
   tmux tree w3m
@@ -14,7 +14,7 @@ source "${_ZSHRC_CMD_DIR}/functions"
 source_files "${_ZSHRC_CMD_DIR}" "${_ZSHRC_CMD_FILES[@]}"
 
 # Optional: define _ZSHRC_CMD_FILES_OPT in ~/.zshrc.local to load extra command files.
-# These files must also live in dot/zshrc.command/ (same _ZSHRC_CMD_DIR).
+# These files must also live under ~/.config/zsh/command/ (same _ZSHRC_CMD_DIR).
 if (( ${#_ZSHRC_CMD_FILES_OPT[@]} > 0 )); then
   source_files "${_ZSHRC_CMD_DIR}" "${_ZSHRC_CMD_FILES_OPT[@]}"
 fi
