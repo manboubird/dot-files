@@ -241,7 +241,7 @@ Report findings in three categories:
 **🟡 Warnings** — review needed (uncommented template values, suspicious patterns)
 **✅ Clean** — no issues found in this category
 
-For each finding: show the file, line number, and the matched content. If errors are found, suggest the fix (move the value to a `.local` file, add to `.gitignore`, or replace with a placeholder in `files.tpl/`).
+For each finding: show the file, line number, and the matched content. If errors are found, suggest the fix (move the value to a `.local` file, add to `.gitignore`, or replace with a placeholder in `dot.tpl/`).
 
 ---
 
