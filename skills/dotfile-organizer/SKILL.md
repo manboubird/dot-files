@@ -1,16 +1,17 @@
 ---
 name: dotfile-organizer
-description: Organize, audit, port, and security-scan dot-files based on the current machine environment. Use this skill when the user wants to: audit which .zshrc.command files should be active for their installed tools, figure out what to put in .zshrc.local or .zshenv.local, generate a customized step-by-step setup checklist for a new machine, identify machine-specific config files that should be moved into the git-managed dot-files repo, or scan tracked files for accidentally committed secrets, hardcoded usernames, or privacy leaks before pushing. Trigger whenever the user mentions organizing dot-files, setting up a new machine, porting configs into the repo, auditing their shell configuration, or checking dotfiles for security or privacy issues.
+description: Organize, audit, port, security-scan, and symlink-audit dot-files based on the current machine environment. Use this skill when the user wants to: audit which .zshrc.command files should be active for their installed tools, figure out what to put in .zshrc.local or .zshenv.local, generate a customized step-by-step setup checklist for a new machine, identify machine-specific config files that should be moved into the git-managed dot-files repo, scan tracked files for accidentally committed secrets/hardcoded usernames/privacy leaks before pushing, or inspect current symlinks to find stale/broken/nested links and understand what needs cleanup before running link_dotfiles.sh. Trigger whenever the user mentions organizing dot-files, setting up a new machine, porting configs into the repo, auditing their shell configuration, checking dotfiles for security or privacy issues, or analyzing/auditing current symlinks on their machine.
 ---
 
 # Dotfile Organizer
 
-Four modes — pick based on what the user is asking for:
+Five modes — pick based on what the user is asking for:
 
 - **organize**: Scan the environment, cross-reference with the dot-files repo, propose what to enable or configure
 - **setup**: Generate a step-by-step machine-specific setup checklist
 - **port**: Identify machine-specific config files outside the repo that should be git-managed, and generate the commands to move them in
 - **security-scan**: Scan tracked files for secrets, hardcoded usernames, and privacy leaks before they reach git history
+- **symlink-audit**: Inspect current symlinks in `~/` and `~/.config/` — find broken, stale, nested, and old-path links, then advise what to clean up before running `link_dotfiles.sh` or `link_dotfiles_local.sh`
 
 ---
 
@@ -242,6 +243,139 @@ Report findings in three categories:
 **✅ Clean** — no issues found in this category
 
 For each finding: show the file, line number, and the matched content. If errors are found, suggest the fix (move the value to a `.local` file, add to `.gitignore`, or replace with a placeholder in `dot.tpl/`).
+
+---
+
+## Mode 5: Symlink Audit
+
+Scan the current machine's symlinks and report what needs attention before running `link_dotfiles.sh` or `link_dotfiles_local.sh`. The goal is to surface anything that would produce unexpected results — or silently succeed while leaving stale state behind.
+
+### Step 1: Scan symlinks in `~/` and `~/.config/`
+
+Run all three scans in parallel:
+
+```bash
+# Symlinks in ~/ pointing to the dotfiles repos
+DOT_FILES="${DOT_FILES:-$HOME/.dot-files}"
+DOT_FILES_LOCAL="${DOT_FILE_LOCAL_DIR:-$HOME/.dot-files.local}"
+
+echo "=== HOME dotfile symlinks ==="
+for f in "$HOME"/.*; do
+  [ -L "$f" ] || continue
+  target=$(readlink "$f")
+  name=$(basename "$f")
+  [[ "$target" == "$DOT_FILES/"* || "$target" == "$DOT_FILES_LOCAL/"* ]] || continue
+  if [ -e "$f" ]; then
+    [ -d "$target" ] && state="dir-target" || state="ok"
+  else
+    state="BROKEN"
+  fi
+  echo "$state | $name | $target"
+done
+```
+
+```bash
+# Symlinks in ~/.config/ pointing to the dotfiles repos
+DOT_FILES="${DOT_FILES:-$HOME/.dot-files}"
+
+echo "=== XDG config symlinks ==="
+for f in "$HOME/.config"/*; do
+  [ -L "$f" ] || continue
+  target=$(readlink "$f")
+  [[ "$target" == "$DOT_FILES/"* ]] || continue
+  name=$(basename "$f")
+  if [ -e "$f" ]; then
+    [ -d "$target" ] && state="dir-target" || state="ok"
+  else
+    state="BROKEN"
+  fi
+  echo "$state | $name | $target"
+done
+```
+
+```bash
+# Find old-path symlinks (pre-refactoring layout: files/common/ or files/<host>/)
+echo "=== Old-path symlinks ==="
+for f in "$HOME"/.* "$HOME/.config"/*; do
+  [ -L "$f" ] || continue
+  target=$(readlink "$f")
+  [[ "$target" == *"/files/"* ]] && echo "OLD_PATH | $(basename "$f") | $target"
+done
+
+# Check for nested symlinks: evidence of ln -sf being called on an existing dir-target symlink
+echo "=== Nested symlinks (dir-inside-dir) ==="
+for f in "$HOME"/.* "$HOME/.config"/*; do
+  [ -L "$f" ] || continue
+  target=$(readlink -f "$f" 2>/dev/null)
+  [ -z "$target" ] && continue
+  name=$(basename "$f")
+  # Nested: target path ends in name/name (dir was already a symlink, got nested)
+  [[ "$target" == *"/$name/$name" ]] && echo "NESTED | $f | $target"
+done
+```
+
+### Step 2: Cross-reference with script configuration
+
+```bash
+# Load DOT_EXCLUDE and DOT_DEFAULT from the script source
+DOT_FILES="${DOT_FILES:-$HOME/.dot-files}"
+SCRIPT="$DOT_FILES/setup/link_dotfiles.sh"
+
+echo "=== DOT_EXCLUDE (never linked) ==="
+grep -A 30 'DOT_EXCLUDE=(' "$SCRIPT" | awk '/^\)/{exit} /^  /{print $1}'
+
+echo "=== DOT_DEFAULT (expected to be linked) ==="
+grep -A 10 'DOT_DEFAULT=(' "$SCRIPT" | awk '/^\)/{exit} /^  /{print $1}'
+```
+
+Then, for each entry in `DOT_EXCLUDE`: check if `~/.<name>` is still symlinked (it shouldn't be — flag as "excluded but still present").
+
+For each entry in `DOT_DEFAULT`: check if `~/.<name>` is symlinked to the repo's `dot/<name>` (it should be — flag as "expected but missing").
+
+### Step 3: Classify findings
+
+Group results into four categories:
+
+**🔴 Must fix before running link scripts**
+- **Broken symlinks** — target path no longer exists; the link script will not recreate these automatically if the file no longer exists in `dot/`
+- **Nested symlinks** — `~/.config/foo/foo` or similar; indicates the old script ran while the target was already a dir-symlink; requires manual cleanup first
+
+**🟡 Review recommended**
+- **Dir-target symlinks** — `link_one()` in the current script handles these correctly (removes before re-linking), but they're worth knowing about
+- **Old-path symlinks** — pointing to `files/common/` or `files/<host>/` from the pre-refactoring layout; the new script won't update these unless the file now lives under `dot/`
+- **Excluded but still present** — a file is in `DOT_EXCLUDE` but still symlinked; the link script won't remove it, so it'll persist indefinitely unless cleaned up manually
+
+**🟢 Expected and correct**
+- All `DOT_DEFAULT` entries present and pointing to the right `dot/<name>` path
+
+**ℹ️ Informational**
+- Symlinks pointing to `~/.dot-files.local/` (private overlay) — these are managed by `link_dotfiles_local.sh`, not `link_dotfiles.sh`
+
+### Step 4: Output cleanup commands
+
+For each finding that requires action, emit the exact command:
+
+```bash
+# Broken symlink — just remove it; re-run link script if you want it back
+rm ~/.zshrc.after    # broken: target /old/path/dot/zshrc.after no longer exists
+
+# Nested symlink — remove the outer dir-symlink, then re-run link script
+rm -rf ~/.config/cheat   # was: ~/.config/cheat -> dir, ln -sf then created ~/.config/cheat/cheat
+
+# Old-path symlink — re-link to new location
+ln -sf ~/.dot-files/dot/zshrc ~/.zshrc   # was: -> old/files/common/.zshrc
+```
+
+After cleanup commands, remind the user to re-run the appropriate script:
+```bash
+bash ~/.dot-files/setup/link_dotfiles.sh
+# and/or
+bash ~/local/bin/link_dotfiles_local.sh
+```
+
+### Output format
+
+Lead with a one-line summary (e.g. "3 issues found: 1 broken, 1 nested, 1 old-path"), then show the categorized findings, then the cleanup commands. Use `- [ ]` checkboxes for cleanup actions.
 
 ---
 
