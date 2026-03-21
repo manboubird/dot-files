@@ -45,6 +45,14 @@ is_excluded() {
   return 1
 }
 
+link_one() {
+  local src="$1" target="$2"
+  # Remove existing symlink so ln -sf replaces it rather than nesting inside it.
+  # Real directories are intentionally left alone.
+  [ -L "$target" ] && rm "$target"
+  ln -vsf "$src" "$target"
+}
+
 # Clone if not present
 if [ ! -d "$DOT_FILES_DIR" ]; then
   GIT_REPO="${DOT_FILES_GIT_REPO:-git://github.com/manboubird/dot-files.git}"
@@ -58,7 +66,7 @@ mkdir -p "$XDG_CONFIG_HOME"
 if [ -d "$DOT_DIR/config" ]; then
   for f in "$DOT_DIR/config"/*; do
     [ -e "$f" ] || continue  # guard against empty dir glob expansion
-    ln -vsf "$f" "$XDG_CONFIG_HOME/$(basename "$f")"
+    link_one "$f" "$XDG_CONFIG_HOME/$(basename "$f")"
   done
 fi
 
@@ -68,7 +76,7 @@ for f in "$DOT_DIR"/*; do
   name="$(basename "$f")"
   [ "$name" = "config" ] && continue
   is_excluded "$name" && continue
-  ln -vsf "$f" "$HOME/.$name"
+  link_one "$f" "$HOME/.$name"
 done
 
 # Verify expected defaults are present
@@ -81,7 +89,7 @@ mkdir -p "$HOME/local/bin"
 if [ -d "$DOT_FILES_DIR/local/bin" ]; then
   for f in "$DOT_FILES_DIR/local/bin"/*; do
     [ -e "$f" ] || continue  # guard against empty dir glob expansion
-    ln -vsf "$f" "$HOME/local/bin/$(basename "$f")"
+    link_one "$f" "$HOME/local/bin/$(basename "$f")"
   done
 fi
 
