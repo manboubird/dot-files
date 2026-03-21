@@ -1,4 +1,17 @@
 #!/bin/bash
+# link_dotfiles.sh — Bootstrap public dotfiles onto this machine.
+#
+# Clones the public dot-files repo if not present, then symlinks:
+#   dot/*         → ~/.<name>         (dot prefix added at link time)
+#   dot/config/*  → ~/.config/<name>  (XDG config, no dot prefix)
+#   local/bin/*   → ~/local/bin/<name>
+#
+# Safe to re-run: existing symlinks are replaced, real directories left alone.
+# Run once on a new machine, and again after pulling repo updates.
+#
+# Usage:
+#   bash setup/link_dotfiles.sh
+#   DOT_FILES_DIR=/path/to/repo bash setup/link_dotfiles.sh
 set -euo pipefail
 
 DOT_FILES_DIR="${DOT_FILES_DIR:-$HOME/.dot-files}"

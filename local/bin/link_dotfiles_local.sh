@@ -1,4 +1,19 @@
 #!/bin/bash
+# link_dotfiles_local.sh — Link private local dotfiles onto this machine.
+#
+# Links files from ~/.dot-files.local/ (private local repo) to $HOME.
+# Runs on top of the public dotfiles already set up by link_dotfiles.sh.
+#
+# PREDEFINED_DEFAULTS are linked silently without prompting.
+# All other files are shown in an interactive numbered menu — select which
+# extras to link (space-separated numbers, 'a'=all, 'n'=none).
+#
+# Safe to re-run: existing symlinks are replaced, real directories left alone.
+# Run whenever you update your private ~/.dot-files.local repo.
+#
+# Usage:
+#   link_dotfiles_local.sh
+#   DOT_FILE_LOCAL_DIR=/path/to/local bash link_dotfiles_local.sh
 set -euo pipefail
 
 DOT_FILE_LOCAL_DIR="${DOT_FILE_LOCAL_DIR:-$HOME/.dot-files.local}"
