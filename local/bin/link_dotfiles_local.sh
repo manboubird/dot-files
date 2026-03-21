@@ -115,6 +115,22 @@ main() {
     interactive_select "${extras[@]}"
   fi
 
+  # Link extra dot/ entries declared in DOT_EXTRA_SYMLINKS (set in ~/.zshenv.local)
+  # Format: space-separated names without leading dot, e.g. "source-highlight vimrc"
+  if [ -n "${DOT_EXTRA_SYMLINKS:-}" ]; then
+    local dot_files_dir="${DOT_FILES:-$HOME/.dot-files}"
+    log "Linking DOT_EXTRA_SYMLINKS extras"
+    for name in $DOT_EXTRA_SYMLINKS; do
+      local src="$dot_files_dir/dot/$name"
+      if [ -e "$src" ]; then
+        [ -L "$HOME/.$name" ] && rm "$HOME/.$name"
+        ln -vsf "$src" "$HOME/.$name"
+      else
+        echo "  [warn] DOT_EXTRA_SYMLINKS: $src not found, skipping"
+      fi
+    done
+  fi
+
   # Link local binaries
   if [ -d "$LOCAL_BIN_SRC" ]; then
     log "Linking local binaries to $LOCAL_BIN_DEST"
