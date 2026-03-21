@@ -1,0 +1,1 @@
+/Users/toshi/.dot-files/dot/zshrc.command

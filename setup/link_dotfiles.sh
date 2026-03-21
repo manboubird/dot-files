@@ -11,11 +11,11 @@
 #
 # Usage:
 #   bash setup/link_dotfiles.sh
-#   DOT_FILES_DIR=/path/to/repo bash setup/link_dotfiles.sh
+#   DOT_FILES=/path/to/repo bash setup/link_dotfiles.sh
 set -euo pipefail
 
-DOT_FILES_DIR="${DOT_FILES_DIR:-$HOME/.dot-files}"
-DOT_DIR="$DOT_FILES_DIR/dot"
+DOT_FILES="${DOT_FILES:-$HOME/.dot-files}"
+DOT_DIR="$DOT_FILES/dot"
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # Files in dot/ that are never symlinked (legacy, machine-specific, or unused)
@@ -67,10 +67,10 @@ link_one() {
 }
 
 # Clone if not present
-if [ ! -d "$DOT_FILES_DIR" ]; then
-  GIT_REPO="${DOT_FILES_GIT_REPO:-git://github.com/manboubird/dot-files.git}"
-  echo "Cloning $GIT_REPO into $DOT_FILES_DIR ..."
-  git clone "$GIT_REPO" "$DOT_FILES_DIR"
+if [ ! -d "$DOT_FILES" ]; then
+  GIT_REPO="${DOT_FILES_GIT_REPO:-https://github.com/manboubird/dot-files.git}"
+  echo "Cloning $GIT_REPO into $DOT_FILES ..."
+  git clone "$GIT_REPO" "$DOT_FILES"
 fi
 
 mkdir -p "$XDG_CONFIG_HOME"
@@ -99,8 +99,8 @@ done
 
 # local/bin/* → ~/local/bin/<name>  (no dot prefix)
 mkdir -p "$HOME/local/bin"
-if [ -d "$DOT_FILES_DIR/local/bin" ]; then
-  for f in "$DOT_FILES_DIR/local/bin"/*; do
+if [ -d "$DOT_FILES/local/bin" ]; then
+  for f in "$DOT_FILES/local/bin"/*; do
     [ -e "$f" ] || continue  # guard against empty dir glob expansion
     link_one "$f" "$HOME/local/bin/$(basename "$f")"
   done
