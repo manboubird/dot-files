@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A personal dotfiles repository for macOS. Files in `dot/` are symlinked to `$HOME` via `setup/clone_and_link.sh`. Filenames under `dot/` have **no leading dots** in the repo — the `.` prefix is prepended at symlink time. Files in `dot/config/` are symlinked to `$XDG_CONFIG_HOME` (`~/.config/`) without a dot prefix. Files in `dot.tpl/` are templates to copy manually — never symlinked, never committed with real values. Machine-specific env files live in `env/<profile>/` within a private fork of this repo (see env/ fork workflow below).
 
+## Shell safety rules
+
+- Never use `rm -rf` in Bash tool calls. Instead, move use `trash` for safe cleanup.
+
 ## Verification commands
 
 After editing any zsh config file, always syntax-check it:
