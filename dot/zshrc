@@ -1,13 +1,14 @@
 # vim binding + zsh completion via homebrew
 _BREW_PREFIX="$(brew --prefix 2>/dev/null)"
 if [[ -n "$_BREW_PREFIX" ]]; then
+  # compinit must run before sourcing zsh-vi-mode:
+  # zsh-vi-mode calls zvm_after_init() synchronously during source,
+  # so zoxide init (registered in zvm_after_init) needs compinit to have run.
+  FPATH="${_BREW_PREFIX}/share/zsh-completions:$FPATH"
+  autoload -Uz compinit && compinit
+
   _ZVM_PLUGIN="${_BREW_PREFIX}/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
   [[ -f "$_ZVM_PLUGIN" ]] && source "$_ZVM_PLUGIN"
-  unset _ZVM_PLUGIN
-
-  FPATH="${_BREW_PREFIX}/share/zsh-completions:$FPATH"
-  autoload -Uz compinit
-  compinit
 fi
 unset _BREW_PREFIX
 
@@ -21,13 +22,8 @@ if command -v pyenv &>/dev/null; then
   [[ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]] && eval "$(pyenv virtualenv-init -)"
 fi
 
-# zoxide
-if command -v zoxide &>/dev/null; then
-  eval "$(zoxide init zsh)"
-fi
-
 # Load machine-specific overrides first (defines _ZSHRC_CMD_FILES_OPT if needed)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# Load command files
+# Load command files (zoxide init is in zshrc.command/zoxide, called via zvm_after_init)
 [[ -f ~/.zshrc.after ]] && source ~/.zshrc.after

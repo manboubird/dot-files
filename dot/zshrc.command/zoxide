@@ -1,0 +1,5 @@
+if [[ $(is_command_exists zoxide) -eq 0 ]]; then
+  function zvm_after_init() {
+    eval "$(zoxide init zsh)"
+  }
+fi

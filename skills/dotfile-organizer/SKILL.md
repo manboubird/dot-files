@@ -31,7 +31,7 @@ cat ~/.zshrc.local 2>/dev/null || echo "(no ~/.zshrc.local)"
 cat ~/.zshenv.local 2>/dev/null || echo "(no ~/.zshenv.local)"
 
 # What's in the standard command file list
-grep '_ZSHRC_CMD_FILES=' ~/dot-files/files/.zshrc.after 2>/dev/null
+grep '_ZSHRC_CMD_FILES=' ~/.dot-files/dot/zshrc.after 2>/dev/null
 ```
 
 ### Step 2: Map tools to command files
@@ -87,30 +87,23 @@ Run the same environment scan from Mode 1 first, then generate a numbered, copy-
 # Dot-files setup — <hostname> (<YYYY-MM-DD>)
 
 ## 1. Clone and link (skip if already done)
-git clone git@github.com:<user>/dot-files.git ~/dot-files
-ln -s ~/dot-files ~/.dot-files
-bash ~/dot-files/setup/clone_and_link.sh
+git clone git@your-private-server:you/dot-files.git ~/.dot-files
+bash ~/.dot-files/setup/clone_and_link.sh
 
-## 2. Install .claude files
-mkdir -p ~/.claude
-ln -sf ~/dot-files/files/.claude/statusline.sh ~/.claude/statusline.sh
+## 2. Link machine env profile
+DOTFILE_MACHINE_PROFILE=<profile> bash ~/.dot-files/setup/link_dot_env.sh
 
-## 3. Install dotfile-organizer skill
+## 3. Install .claude files
+ln -sf ~/.dot-files/dot/claude/statusline.sh ~/.claude/statusline.sh
+
+## 4. Install dotfile-organizer skill
 mkdir -p ~/.claude/skills
-ln -sf ~/dot-files/skills/dotfile-organizer ~/.claude/skills/dotfile-organizer
+ln -sf ~/.dot-files/skills/dotfile-organizer ~/.claude/skills/dotfile-organizer
 
-## 4. Install missing tools
+## 5. Install missing tools
 brew install <only what's detected as missing>
 
-## 5. Configure ~/.zshenv.local
-cp ~/dot-files/files.tpl/.zshenv.local ~/.zshenv.local
-# <exact lines to uncomment based on what's installed>
-
-## 6. Configure ~/.zshrc.local
-cp ~/dot-files/files.tpl/.zshrc.local ~/.zshrc.local
-# <exact lines to set: EDITOR, PATH entries>
-
-## 7. Verify
+## 6. Verify
 zsh -i -c exit; echo "Exit: $?"
 zsh -i -c "alias ll; type is_command_exists"
 ```
@@ -130,7 +123,7 @@ Identify config files on this machine that are currently untracked but shareable
 ls -la ~/.claude/*.sh ~/.claude/*.json 2>/dev/null | grep -v settings.json
 
 # Already in repo?
-ls ~/dot-files/files/.claude/ 2>/dev/null
+ls ~/.dot-files/dot/claude/ 2>/dev/null
 
 # Custom scripts
 ls ~/.local/bin/ ~/local/bin/ 2>/dev/null
@@ -145,14 +138,15 @@ For each file found, decide:
 
 | Destination | When to use |
 |---|---|
-| `files/.claude/<file>` | Shareable as-is, no secrets, same on every machine |
-| `files.tpl/.claude/<file>` | Has machine-specific values; share as template with placeholders |
-| `files/<dotfile>` | Standard dotfile, symlinked by `clone_and_link.sh` |
+| `dot/claude/<file>` | Shareable as-is, no secrets, same on every machine |
+| `dot.tpl/` | Has machine-specific values that are generic; share as template with placeholders |
+| `dot/<dotfile>` | Standard dotfile (no leading dot), symlinked as `~/.<name>` by `clone_and_link.sh` |
+| `env/<profile>/` | Machine-specific values with real data; only in private fork |
 | Skip | Dynamic state, secrets, or machine-specific data that doesn't generalize |
 
 **Key rules:**
-- `~/.claude/settings.json` → `files.tpl/.claude/` (contains machine-specific paths/keys, share as template)
-- `~/.claude/statusline.sh` → `files/.claude/` (fully shareable script)
+- `~/.claude/settings.json` → `dot.tpl/` (contains machine-specific paths/keys, share as template)
+- `~/.claude/statusline.sh` → `dot/claude/` (fully shareable script)
 - `~/.claude/` dynamic dirs (`projects/`, `sessions/`, `cache/`, etc.) → skip always
 
 ### Step 3: Generate port commands
@@ -161,9 +155,9 @@ For each file to port, output the exact commands:
 
 ```bash
 # Example: statusline.sh
-cp ~/.claude/statusline.sh ~/dot-files/files/.claude/statusline.sh
-ln -sf ~/dot-files/files/.claude/statusline.sh ~/.claude/statusline.sh
-# Then: git add ~/dot-files/files/.claude/statusline.sh
+cp ~/.claude/statusline.sh ~/.dot-files/dot/claude/statusline.sh
+ln -sf ~/.dot-files/dot/claude/statusline.sh ~/.claude/statusline.sh
+# Then: git add ~/.dot-files/dot/claude/statusline.sh
 ```
 
 **Note:** `~/.claude/` cannot be fully symlinked by `clone_and_link.sh` (the directory already exists with dynamic content). Individual files within it must be symlinked one by one. The setup mode generates these individual symlink commands.
@@ -186,23 +180,23 @@ Scan the tracked and staged files for secrets, personal data, and privacy leaks 
 # Secret patterns in tracked files
 git grep -n -E \
   'export [A-Z_]*(TOKEN|KEY|SECRET|PASSWORD|CREDENTIAL|AUTH)[=\s][^$(<"'"'"']' \
-  -- 'files/' 'files.tpl/'
+  -- 'dot/' 'dot.tpl/' 'env/'
 
 # Private key material
-git grep -n 'BEGIN.*PRIVATE KEY' -- 'files/' 'files.tpl/'
+git grep -n 'BEGIN.*PRIVATE KEY' -- 'dot/' 'dot.tpl/'
 
 # Common token formats
 git grep -n -E \
   '(ghp_|gho_|ghu_|ghs_)[A-Za-z0-9]{36}|AKIA[0-9A-Z]{16}' \
-  -- 'files/' 'files.tpl/'
+  -- 'dot/' 'dot.tpl/'
 ```
 
 ### Step 2: Scan for hardcoded personal paths
 
 ```bash
 # Username in paths (should always use $HOME or ~)
-git grep -n -E '/Users/[a-zA-Z0-9_]+/' -- 'files/' 'files.tpl/'
-git grep -n -E '/home/[a-zA-Z0-9_]+/' -- 'files/' 'files.tpl/'
+git grep -n -E '/Users/[a-zA-Z0-9_]+/' -- 'dot/' 'dot.tpl/'
+git grep -n -E '/home/[a-zA-Z0-9_]+/' -- 'dot/' 'dot.tpl/'
 ```
 
 ### Step 3: Check for dangerous files accidentally tracked
@@ -216,16 +210,16 @@ git ls-files | grep -E \
 git ls-files | grep '\.local$'
 ```
 
-### Step 4: Validate files.tpl/ contains no real values
+### Step 4: Validate dot.tpl/ and env/default/ contain no real values
 
 Templates are safe to commit only if values are commented out or use placeholders. Check:
 
 ```bash
-# Lines in files.tpl/ that look like active (uncommented) credential exports
-grep -rn -E '^export [A-Z_]*(TOKEN|KEY|SECRET|PASSWORD)=' files.tpl/
+# Lines in dot.tpl/ or env/default/ that look like active (uncommented) credential exports
+grep -rn -E '^export [A-Z_]*(TOKEN|KEY|SECRET|PASSWORD)=' dot.tpl/ env/default/
 
 # Active (uncommented) path entries that look real (not <PLACEHOLDER>)
-grep -rn -E '^export PATH=.*/(bin|lib)' files.tpl/ | grep -v '#'
+grep -rn -E '^export PATH=.*/(bin|lib)' dot.tpl/ env/default/ | grep -v '#'
 ```
 
 ### Step 5: Check .gitignore coverage
@@ -247,13 +241,13 @@ Report findings in three categories:
 **🟡 Warnings** — review needed (uncommented template values, suspicious patterns)
 **✅ Clean** — no issues found in this category
 
-For each finding: show the file, line number, and the matched content. If errors are found, suggest the fix (move the value to a `.local` file, add to `.gitignore`, or replace with a placeholder in `files.tpl/`).
+For each finding: show the file, line number, and the matched content. If errors are found, suggest the fix (move the value to a `.local` file, add to `.gitignore`, or replace with a placeholder in `dot.tpl/`).
 
 ---
 
 ## Style rules
 
 - Use `- [ ]` checkboxes for all action items
-- Always explain *why* a file belongs where it does ("no secrets + same content on any machine → `files/`")
+- Always explain *why* a file belongs where it does ("no secrets + same content on any machine → `dot/`")
 - Show exact commands — no abstract descriptions
 - Distinguish "already in repo" (nothing to do) from "missing" (action required)

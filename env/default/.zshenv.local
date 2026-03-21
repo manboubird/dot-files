@@ -1,0 +1,13 @@
+# Machine-specific non-interactive environment variables.
+# Copy this file to env/<your-profile>/.zshenv.local with real values.
+# All values below are commented out — this is the placeholder template.
+
+# Set your machine profile name (used by setup/link_dot_env.sh)
+# export DOTFILE_MACHINE_PROFILE=<your-profile-name>
+
+# Additional PATH entries for non-interactive shells
+# export PATH="$HOME/.local/bin:$PATH"
+
+# bun
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"

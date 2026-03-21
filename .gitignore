@@ -15,3 +15,8 @@ files/.vim/bundle/vundle
 files/.vim/dein/
 files/.vim/sessions
 target/
+
+# Machine-specific env profiles (only default/ is public)
+env/*/
+!env/default/
+!env/default/**

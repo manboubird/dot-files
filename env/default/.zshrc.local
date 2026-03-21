@@ -1,0 +1,9 @@
+# Machine-specific interactive shell overrides.
+# Copy this file to env/<your-profile>/.zshrc.local with real values.
+# All values below are commented out — this is the placeholder template.
+
+# Preferred editor
+# export EDITOR=nvim
+
+# Optional extra command files to load (from dot/zshrc.command/)
+# _ZSHRC_CMD_FILES_OPT=(pyenv rbenv)

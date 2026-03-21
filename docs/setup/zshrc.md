@@ -1,106 +1,66 @@
 # Zsh Environment Setup
 
-## Prerequisites
+## New machine setup
 
-- macOS with zsh (default since macOS Catalina)
-- [Homebrew](https://brew.sh) installed
-- dot-files repo cloned (or run setup script below)
+### Prerequisites
+- Homebrew installed
+- Private fork of this repo set up on your private network with `env/<profile>/` committed
 
-## Step 1: Clone and link dot-files
+### Steps
 
-If starting fresh on a new machine:
+1. **Prepare your private fork** (one-time per machine):
+   In your private fork, create `env/<profile>/` with real values and commit:
+   - `env/<profile>/.zshenv.local` — set `export DOTFILE_MACHINE_PROFILE=<profile>` and PATH additions
+   - `env/<profile>/.zshrc.local` — set `EDITOR`, tool configs, etc.
 
-```bash
-git clone git@github.com:<your-username>/dot-files.git ~/dot-files
-```
+2. **Clone and link dotfiles:**
+   ```bash
+   git clone git@your-private-server:you/dot-files.git ~/.dot-files
+   bash ~/.dot-files/setup/clone_and_link.sh
+   ```
+   This links `dot/*` → `~/.*`, `dot/config/*` → `~/.config/*`, and `local/bin/*` → `~/local/bin/*`.
 
-Then create the symlink used by the zsh config:
+3. **Link your machine env profile** (pass profile name explicitly on first run):
+   ```bash
+   DOTFILE_MACHINE_PROFILE=<profile> bash ~/.dot-files/setup/link_dot_env.sh
+   ```
+   After this, `~/.zshenv.local` is a symlink to `env/<profile>/.zshenv.local` (which sets `DOTFILE_MACHINE_PROFILE` for future shells).
 
-```bash
-ln -s ~/dot-files ~/.dot-files
-```
+4. **Link private local dotfiles** (if you have a `.dot-files.local` repo):
+   ```bash
+   link_dot_files_local.sh
+   ```
+   (`link_dot_files_local.sh` is now on PATH via step 2.)
 
-## Step 2: Symlink config files
+5. **Install required tools:**
+   ```bash
+   brew install zsh-vi-mode zsh-completions
+   brew install pyenv pyenv-virtualenv
+   brew install zoxide
+   ```
 
-Run the setup script to symlink all files from `files/` to your home directory:
+6. **Verify shell starts cleanly:**
+   ```bash
+   zsh -i -c exit; echo "Exit: $?"
+   ```
+   Expected: `Exit: 0`
 
-```bash
-bash ~/dot-files/setup/clone_and_link.sh
-```
-
-This script symlinks every dotfile in `files/` to the home directory. It will create:
-- `~/.zshrc` → `~/dot-files/files/.zshrc`
-- `~/.zshrc.after` → `~/dot-files/files/.zshrc.after`
-- `~/.zshrc.command/` → `~/dot-files/files/.zshrc.command/`
-- (and all other files in `files/`)
-
-Files in `files.tpl/` are NOT touched by this script — they are templates to copy manually (see Step 3).
-
-## Step 3: Copy the local config templates
-
-Copy both local config templates and customize for this machine:
-
-```bash
-cp ~/dot-files/files.tpl/.zshenv.local ~/.zshenv.local
-cp ~/dot-files/files.tpl/.zshrc.local ~/.zshrc.local
-```
-
-**`~/.zshenv.local`** — environment variables needed by all shells (interactive and non-interactive):
-
-| Entry | Tool | Notes |
-|-------|------|-------|
-| Bun | `~/.bun/_bun` | Uncomment if bun is installed |
-
-**`~/.zshrc.local`** — interactive shell settings (tool paths, optional plugins):
-
-| Entry | Tool | Notes |
-|-------|------|-------|
-| `EDITOR` | preferred editor | Uncomment and set (e.g. `nvim`) |
-| `PATH` LM Studio | `~/.lmstudio/bin` | Uncomment if LM Studio is installed |
-| `PATH` Antigravity | `~/.antigravity/...` | Uncomment if Antigravity is installed |
-| `claude-mem` alias | Claude plugin | Update `<VERSION>` to match installed version |
-| `_ZSHRC_CMD_FILES_OPT` | Optional command files | Add file names to load extra `.zshrc.command/` files |
-
-## Step 4: Install required tools
-
-Install zsh plugins and tools used by the config:
+### Pulling upstream public updates
 
 ```bash
-brew install zsh-vi-mode zsh-completions
-brew install pyenv pyenv-virtualenv
-brew install zoxide
-```
-
-Optional tools (uncomment in `~/.zshrc.local` if installed):
-
-```bash
-brew install --cask lm-studio
-brew install bun
-```
-
-## Step 5: Reload shell
-
-```bash
-exec zsh
-```
-
-Or open a new terminal. Verify startup is clean:
-
-```bash
-zsh -i -c exit; echo "Exit: $?"
-# Expected: Exit: 0
+cd ~/.dot-files
+git remote add upstream git://github.com/manboubird/dot-files.git
+git fetch upstream && git merge upstream/main
 ```
 
 ## Files reference
 
 | File | Type | Purpose |
 |------|------|---------|
-| `~/dot-files/files/.zshenv` | Symlinked | Environment variables for all shells (PATH, etc.) |
-| `~/dot-files/files/.zshrc` | Symlinked | Base zsh config (machine-agnostic, interactive only) |
-| `~/dot-files/files/.zshrc.after` | Symlinked | Command file loader |
-| `~/dot-files/files/.zshrc.command/` | Symlinked dir | Per-tool aliases and functions |
-| `~/dot-files/files.tpl/.zshenv.local` | Template | Copy to `~/.zshenv.local`, do not symlink |
-| `~/dot-files/files.tpl/.zshrc.local` | Template | Copy to `~/.zshrc.local`, do not symlink |
-| `~/.zshenv.local` | Local only | Machine-specific env vars (bun, etc.) |
-| `~/.zshrc.local` | Local only | Machine-specific interactive settings |
-| `~/.dot-files` | Symlink | Points to `~/dot-files` |
+| `~/.dot-files/dot/zshenv` | Symlinked as `~/.zshenv` | Environment variables for all shells (PATH, XDG, etc.) |
+| `~/.dot-files/dot/zshrc` | Symlinked as `~/.zshrc` | Base zsh config (machine-agnostic, interactive only) |
+| `~/.dot-files/dot/zshrc.after` | Symlinked as `~/.zshrc.after` | Command file loader |
+| `~/.dot-files/dot/zshrc.command/` | Symlinked as `~/.zshrc.command/` | Per-tool aliases and functions |
+| `~/.dot-files/env/<profile>/.zshenv.local` | Symlinked as `~/.zshenv.local` | Machine-specific env vars (set via `link_dot_env.sh`) |
+| `~/.dot-files/env/<profile>/.zshrc.local` | Symlinked as `~/.zshrc.local` | Machine-specific interactive settings |
+| `~/.dot-files/dot.tpl/gitconfig.local.tpl` | Template | Copy to `~/.config/git/config.local`, do not symlink |
