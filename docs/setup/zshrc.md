@@ -16,34 +16,58 @@
 2. **Clone and link dotfiles:**
    ```bash
    git clone git@your-private-server:you/dot-files.git ~/.dot-files
-   bash ~/.dot-files/setup/clone_and_link.sh
+   bash ~/.dot-files/setup/link_dotfiles.sh
    ```
    This links `dot/*` → `~/.*`, `dot/config/*` → `~/.config/*`, and `local/bin/*` → `~/local/bin/*`.
 
-3. **Link your machine env profile** (pass profile name explicitly on first run):
+3. **Audit existing symlinks** (recommended if this machine already had dotfiles configured):
+
+   Install the dotfile-organizer skill first (see step 7), then ask Claude Code:
+   > "audit my current dotfile symlinks"
+
+   The **symlink-audit** mode scans `~/` and `~/.config/` for broken, nested, old-path, and excluded symlinks and emits cleanup commands. Run any suggested cleanup before proceeding — stale or nested symlinks from a previous setup can cause `link_dotfiles.sh` to silently produce incorrect results on re-runs.
+
+   Skip this step on a clean machine with no prior dotfile setup.
+
+4. **Link your machine env profile** (pass profile name explicitly on first run):
    ```bash
    DOTFILE_MACHINE_PROFILE=<profile> bash ~/.dot-files/setup/link_dot_env.sh
    ```
    After this, `~/.zshenv.local` is a symlink to `env/<profile>/.zshenv.local` (which sets `DOTFILE_MACHINE_PROFILE` for future shells).
 
-4. **Link private local dotfiles** (if you have a `.dot-files.local` repo):
+5. **Create `~/.config/git/config.local`** from the template:
    ```bash
-   link_dot_files_local.sh
+   cp ~/.dot-files/dot.tpl/gitconfig.local.tpl ~/.config/git/config.local
+   # Edit and fill in your name, email, and GitHub username
    ```
-   (`link_dot_files_local.sh` is now on PATH via step 2.)
 
-5. **Install required tools:**
+6. **Link private local dotfiles** (if you have a `.dot-files.local` repo):
+   ```bash
+   link_dotfiles_local.sh
+   ```
+   (`link_dotfiles_local.sh` is on PATH via step 2 — it lives in `local/bin/`.)
+
+7. **Install the dotfile-organizer skill:**
+   ```bash
+   mkdir -p ~/.claude/skills
+   ln -sf ~/.dot-files/skills/dotfile-organizer ~/.claude/skills/dotfile-organizer
+   ```
+   See [`docs/setup/dotfile-organizer.md`](dotfile-organizer.md) for full setup options including the Claude marketplace config method.
+
+8. **Install required tools:**
    ```bash
    brew install zsh-vi-mode zsh-completions
    brew install pyenv pyenv-virtualenv
    brew install zoxide
    ```
 
-6. **Verify shell starts cleanly:**
+9. **Verify shell starts cleanly:**
    ```bash
    zsh -i -c exit; echo "Exit: $?"
    ```
    Expected: `Exit: 0`
+
+   If you have the dotfile-organizer skill installed, you can also ask Claude Code to run **symlink-audit** here as a final check to confirm all expected symlinks are in place and none are broken.
 
 ### Pulling upstream public updates
 
@@ -63,4 +87,14 @@ git fetch upstream && git merge upstream/main
 | `~/.dot-files/dot/zshrc.command/` | Symlinked as `~/.zshrc.command/` | Per-tool aliases and functions |
 | `~/.dot-files/env/<profile>/.zshenv.local` | Symlinked as `~/.zshenv.local` | Machine-specific env vars (set via `link_dot_env.sh`) |
 | `~/.dot-files/env/<profile>/.zshrc.local` | Symlinked as `~/.zshrc.local` | Machine-specific interactive settings |
-| `~/.dot-files/dot.tpl/gitconfig.local.tpl` | Template | Copy to `~/.config/git/config.local`, do not symlink |
+| `~/.dot-files/dot/claude/statusline.sh` | Symlinked as `~/.claude/statusline.sh` | Claude Code status line script |
+| `~/.dot-files/skills/dotfile-organizer/` | Symlinked as `~/.claude/skills/dotfile-organizer/` | Dotfile organizer Claude skill |
+| `~/.config/git/config.local` | Not symlinked — copy from `dot.tpl/gitconfig.local.tpl` | Git user identity (name, email, GitHub username) |
+
+## Setup scripts reference
+
+| Script | Purpose |
+|--------|---------|
+| `setup/link_dotfiles.sh` | Bootstrap: clone repo if absent, symlink all `dot/` files to `~/` and `~/.config/` |
+| `setup/link_dot_env.sh` | Link `env/<profile>/` files to `~/` (`.zshenv.local`, `.zshrc.local`) |
+| `local/bin/link_dotfiles_local.sh` | Link private `~/.dot-files.local/` overlay files to `~/` |
