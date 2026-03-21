@@ -29,14 +29,15 @@ is_predefined() {
 collect_files() {
   local src_dir="$1"
   [ -d "$src_dir" ] || return 0
-  shopt -s dotglob nullglob
-  for f in "$src_dir"/*; do
-    local name
-    name="$(basename "$f")"
-    [[ "$name" == ".git" ]] && continue
-    echo "$f"
-  done
-  shopt -u dotglob nullglob
+  (
+    shopt -s dotglob nullglob
+    for f in "$src_dir"/*; do
+      local name
+      name="$(basename "$f")"
+      [[ "$name" == ".git" ]] && continue
+      echo "$f"
+    done
+  )
 }
 
 link_file() {
@@ -61,7 +62,8 @@ interactive_select() {
   elif [ "$input" = "n" ] || [ -z "$input" ]; then
     log "Skipped all extras."
   else
-    for num in $input; do
+    read -ra selections <<< "$input"
+    for num in "${selections[@]}"; do
       if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le "${#extras[@]}" ]; then
         link_file "${extras[$((num-1))]}"
       else
@@ -78,7 +80,7 @@ main() {
   fi
 
   local -a extras=()
-  local all_files=()
+  local -a all_files=()
 
   while IFS= read -r f; do
     all_files+=("$f")
@@ -100,8 +102,8 @@ main() {
 
   # Link local binaries
   if [ -d "$LOCAL_BIN_SRC" ]; then
-    mkdir -p "$LOCAL_BIN_DEST"
     log "Linking local binaries to $LOCAL_BIN_DEST"
+    mkdir -p "$LOCAL_BIN_DEST"
     shopt -s nullglob
     for f in "$LOCAL_BIN_SRC"/*; do
       ln -vsf "$f" "$LOCAL_BIN_DEST/$(basename "$f")"
