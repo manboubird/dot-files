@@ -1,39 +1,66 @@
 # Dotfile Organizer Skill — Setup
 
-The `dotfile-organizer` skill helps you audit, configure, and port dot-files based on your machine's installed tools.
+The `dotfile-organizer` skill helps you audit, configure, port, and recover dot-files based on your machine's environment. It is bundled in the dot-files repo under `skills/dotfile-organizer/`.
 
 ## Install the skill
 
-The skill is bundled in the dot-files repo as a Claude Code plugin. Install it once via the Claude Code `/plugin` command.
+### Option A: Symlink (recommended for local use)
 
-**If you installed the dot-files repo from GitHub:**
-
-```
-/plugin marketplace add manboubird/dot-files
-/plugin install dotfile-organizer@dot-files
-```
-
-**If you have the repo cloned locally:**
-
-```
-/plugin marketplace add ~/dot-files
-/plugin install dotfile-organizer@dot-files
-```
-
-Run `/reload-plugins` if the skill doesn't appear immediately.
-
-## Install .claude files
-
-Files in `files/.claude/` are git-managed but require a manual one-time copy since `clone_and_link.sh` cannot safely replace your live `~/.claude/` directory.
+Make the skill available to Claude Code by symlinking it from the repo into `~/.claude/skills/`:
 
 ```bash
-cp ~/dot-files/files/.claude/statusline.sh ~/.claude/statusline.sh
+mkdir -p ~/.claude/skills
+ln -sf ~/.dot-files/skills/dotfile-organizer ~/.claude/skills/dotfile-organizer
 ```
+
+Claude Code discovers skills in `~/.claude/skills/` automatically — no restart needed.
+
+### Option B: Claude marketplace config (GitHub-hosted repo)
+
+If your dot-files repo is hosted on GitHub and you want Claude Code to manage the skill as a plugin, add the repo as a marketplace in `~/.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "dot-files": {
+      "source": {
+        "source": "github",
+        "repo": "manboubird/dot-files"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "dotfile-organizer@dot-files": true
+  }
+}
+```
+
+Then install via Claude Code:
+
+```
+/add-plugin-marketplace dot-files manboubird/dot-files
+/install-plugin dotfile-organizer@dot-files
+```
+
+> **Note:** Option B requires the repo to be publicly accessible on GitHub. For a private fork, use Option A.
+
+## Install `.claude` files
+
+`dot/claude/` contains files managed by git that must be individually symlinked into `~/.claude/` (Claude Code's live directory cannot be fully replaced by a symlink):
+
+```bash
+ln -sf ~/.dot-files/dot/claude/statusline.sh ~/.claude/statusline.sh
+```
+
+This is handled automatically by `setup/link_dotfiles.sh` — no manual step needed after the initial setup.
 
 ## What the skill does
 
 | Mode | Example trigger | Output |
 |------|----------------|--------|
-| **organize** | "what should I configure in .zshrc.local?" | Checklist of .zshenv.local and .zshrc.local entries based on installed tools |
+| **organize** | "what should I configure in .zshrc.local?" | Checklist of `.zshenv.local` and `.zshrc.local` entries based on installed tools |
 | **setup** | "generate a setup checklist for this machine" | Numbered guide saved to `docs/setup/setup-<hostname>.md` |
-| **port** | "what configs should I move into the repo?" | Candidate files with exact move + copy commands |
+| **port** | "what configs should I move into the repo?" | Candidate files with exact move + symlink commands |
+| **security-scan** | "scan for secrets before I push" | Report of secrets, hardcoded paths, and dangerous files in tracked files |
+| **symlink-audit** | "audit my current symlinks" | Broken/nested/old-path/excluded symlinks in `~/` and `~/.config/`, with cleanup commands |
+| **recover** | "restore my deleted .local files" | Scans a backup folder (e.g. `~/.Trash`) for private dotfiles, confirms, and copies them back |
