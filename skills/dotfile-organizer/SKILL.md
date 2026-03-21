@@ -436,6 +436,8 @@ For each candidate found, determine the restore destination:
 
 **If the user mentioned a specific file or set of files, prioritize those.** If multiple timestamped versions of the same file are found, show them all and ask the user which one to use.
 
+**Alternative source — `~/.config/gh/hosts.yml`:** If `~/.config/git/config.local` is missing or has placeholder values but the backup folder has nothing useful, check `~/.config/gh/hosts.yml` (or the repo-tracked copy at `~/.dot-files/dot/config/gh/hosts.yml`) for the GitHub username. Use it to seed the `[user]` block and ask the user to supply `user.name` and `user.email` for the remaining fields.
+
 **Directory note (`.ssh`, `.gnupg`, `.aws`):** Restoring directories is higher-risk than restoring files — existing contents may be overwritten. Flag these and ask explicitly before proceeding: "Restore `.ssh/` from backup? This will overwrite any existing `~/.ssh/` contents."
 
 ### Step 4: Confirm with the user
